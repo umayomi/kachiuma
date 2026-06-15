@@ -1,0 +1,31 @@
+name: bootstrap (zipを展開して配置)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unzip & place at repo root
+        run: |
+          set -e
+          if [ ! -f kachiuma.zip ]; then
+            echo "kachiuma.zip が無い。先にzipをアップロードしてください"; exit 1
+          fi
+          mkdir -p __unpack && unzip -o kachiuma.zip -d __unpack
+          if [ -d __unpack/kachiuma ]; then SRC=__unpack/kachiuma; else SRC=__unpack; fi
+          cp -a "$SRC"/. .
+          rm -rf __unpack kachiuma.zip
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "bootstrap: リポジトリ展開"
+            git push
+          fi
