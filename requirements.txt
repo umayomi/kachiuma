@@ -1,0 +1,9 @@
+# Phase 1（収集・分析）
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+pandas>=2.1
+
+# Phase 4（機械学習）で有効化する:
+# scikit-learn>=1.4
+# lightgbm>=4.3

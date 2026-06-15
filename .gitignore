@@ -1,0 +1,28 @@
+# === 生の収集データはコミットしない（公開リポジトリのため）===
+data/raw/
+*.raw.json
+*.raw.csv
+*.html
+
+# === 分析の中間生成物 ===
+data/cache/
+*.pkl
+*.joblib
+
+# === Python ===
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.ipynb_checkpoints/
+
+# === OS / エディタ ===
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# === コミットしてよいもの（除外しない）===
+# data/predictions/   ← 自作の分析出力。コミットOK
+# data/sample/        ← サンプル。コミットOK

@@ -1,0 +1,7 @@
+{
+  "updated_at": "2026-06-21T09:30:00+09:00",
+  "races": [
+    {"race_id": "20260621_tokyo_11", "date": "2026-06-21", "track": "東京", "race_no": 11,
+     "race_name": "サンプルステークス (G3)", "best_mark_umaban": 7, "best_ev": 1.17, "value_count": 2}
+  ]
+}

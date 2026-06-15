@@ -1,0 +1,43 @@
+{
+  "race_id": "20260621_tokyo_11",
+  "date": "2026-06-21",
+  "track": "東京",
+  "race_no": 11,
+  "race_name": "サンプルステークス (G3)",
+  "distance_m": 1600,
+  "surface": "芝",
+  "going": "良",
+  "updated_at": "2026-06-21T09:30:00+09:00",
+  "note": "これはサンプルです。実データはPhase1の収集実装後に置き換わります。",
+  "horses": [
+    {"umaban": 3, "name": "テンプレキング", "jockey": "C.ルメール", "odds_win": 2.8, "popularity": 1,
+     "p_win": 0.315, "q_win": 0.336, "ev_win": 0.882, "edge": -0.021, "mark": "",
+     "reasons": ["1番人気だが、人気以上には買われ過ぎ（妙味 -2.1pt）", "前走勝ちは展開利の面があり、能力差ほどの安心感はない"]},
+    {"umaban": 7, "name": "バリューボルト", "jockey": "戸崎圭太", "odds_win": 4.5, "popularity": 2,
+     "p_win": 0.26, "q_win": 0.209, "ev_win": 1.17, "edge": 0.051, "mark": "◎",
+     "reasons": ["期待値 1.17（理論上プラス圏）", "同コース・同距離で過去2戦が0.1秒差以内の好走", "市場想定よりこちらの評価が高く妙味あり（+5.1pt）"]},
+    {"umaban": 1, "name": "ハイポップ", "jockey": "川田将雅", "odds_win": 6.0, "popularity": 3,
+     "p_win": 0.13, "q_win": 0.157, "ev_win": 0.78, "edge": -0.027, "mark": "",
+     "reasons": ["人気の割に距離適性が微妙（妙味 -2.7pt）", "枠が内すぎて包まれるリスク"]},
+    {"umaban": 10, "name": "ロングショット", "jockey": "横山武史", "odds_win": 8.5, "popularity": 4,
+     "p_win": 0.13, "q_win": 0.111, "ev_win": 1.105, "edge": 0.019, "mark": "○",
+     "reasons": ["期待値 1.11（理論上プラス圏）", "前走は不利があっての敗戦で、能力は上位", "市場がやや軽視（妙味 +1.9pt）"]},
+    {"umaban": 5, "name": "ミドルレンジ", "jockey": "横山典弘", "odds_win": 11.0, "popularity": 5,
+     "p_win": 0.07, "q_win": 0.086, "ev_win": 0.77, "edge": -0.016, "mark": "",
+     "reasons": ["近走が頭打ちで上積みが見えにくい（妙味 -1.6pt）"]},
+    {"umaban": 12, "name": "ダークホース", "jockey": "松山弘平", "odds_win": 18.0, "popularity": 6,
+     "p_win": 0.05, "q_win": 0.052, "ev_win": 0.90, "edge": -0.002, "mark": "▲",
+     "reasons": ["EVは1未満だが上位（0.90）。少額の押さえ候補", "馬場が渋れば一発の余地"]},
+    {"umaban": 8, "name": "アウトサイダー", "jockey": "鮫島克駿", "odds_win": 30.0, "popularity": 7,
+     "p_win": 0.03, "q_win": 0.031, "ev_win": 0.90, "edge": -0.001, "mark": "△",
+     "reasons": ["EVは1未満（0.90）。買うなら最小限", "展開がはまれば掲示板の目"]},
+    {"umaban": 4, "name": "ノーチャンス", "jockey": "（見習）", "odds_win": 60.0, "popularity": 8,
+     "p_win": 0.015, "q_win": 0.016, "ev_win": 0.90, "edge": -0.001, "mark": "",
+     "reasons": ["能力的に厳しく、買い目からは外す"]}
+  ],
+  "tickets": [
+    {"type": "単勝", "target": "7", "ev": 1.17, "stake_unit": 1, "note": "本命の妙味"},
+    {"type": "単勝", "target": "10", "ev": 1.105, "stake_unit": 1, "note": "対抗の妙味"},
+    {"type": "ワイド", "target": "7-10", "ev": 1.08, "stake_unit": 1, "note": "上位2頭の組合せで的中率を確保"}
+  ]
+}
