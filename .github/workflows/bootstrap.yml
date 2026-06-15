@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Unzip & place at repo root
+      - name: Unzip & place (workflowsは除外)
         run: |
           set -e
           if [ ! -f kachiuma.zip ]; then
@@ -16,6 +16,8 @@ jobs:
           fi
           mkdir -p __unpack && unzip -o kachiuma.zip -d __unpack
           if [ -d __unpack/kachiuma ]; then SRC=__unpack/kachiuma; else SRC=__unpack; fi
+          # GITHUB_TOKENはワークフローを push できないので除外する
+          rm -rf "$SRC/.github/workflows"
           cp -a "$SRC"/. .
           rm -rf __unpack kachiuma.zip
       - name: Commit
