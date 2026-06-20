@@ -1,0 +1,329 @@
+{
+  "updated_at": "2026-06-20T14:01:17+09:00",
+  "races": [
+    {
+      "race_id": "202602010201",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 1,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010202",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 2,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010203",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 3,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010204",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 4,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010205",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010206",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 6,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010207",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010208",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 8,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010209",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 9,
+      "race_name": "八雲特別",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010210",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 10,
+      "race_name": "津軽海峡特別",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010211",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 11,
+      "race_name": "函館日刊スポーツ杯",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202602010212",
+      "date": "2026-06-14",
+      "track": "函館",
+      "race_no": 12,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030401",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 1,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030402",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 2,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030403",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 3,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030404",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 4,
+      "race_name": "2歳新馬",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030405",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030406",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 6,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030407",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030408",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 8,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030409",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 9,
+      "race_name": "芦ノ湖特別",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030410",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 10,
+      "race_name": "江の島S",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030411",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 11,
+      "race_name": "パラダイスS",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202605030412",
+      "date": "2026-06-14",
+      "track": "東京",
+      "race_no": 12,
+      "race_name": "3歳以上2勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030401",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 1,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030402",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 2,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030403",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 3,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030404",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 4,
+      "race_name": "3歳未勝利",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030405",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030406",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 6,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030407",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030408",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 8,
+      "race_name": "逆瀬川特別",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030409",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 9,
+      "race_name": "武庫川特別",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030410",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 10,
+      "race_name": "花のみちS",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030411",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 11,
+      "race_name": "宝塚記念",
+      "best_mark_umaban": null,
+      "best_ev": null
+    },
+    {
+      "race_id": "202609030412",
+      "date": "2026-06-14",
+      "track": "阪神",
+      "race_no": 12,
+      "race_name": "リボン賞",
+      "best_mark_umaban": null,
+      "best_ev": null
+    }
+  ]
+}
