@@ -12,21 +12,16 @@ jobs:
           from bs4 import BeautifulSoup
           ua = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
           rid = "202602010211"
-          # 馬柱（過去走入りの出馬表）= 1ページで全馬の近走
-          u = f"https://race.netkeiba.com/race/shutuba_past.html?race_id={rid}"
-          h = requests.get(u, headers=ua, timeout=20).text
-          print("shutuba_past LEN:", len(h))
+          h = requests.get(f"https://race.netkeiba.com/race/shutuba_past.html?race_id={rid}", headers=ua, timeout=20).text
           soup = BeautifulSoup(h, "lxml")
-          rows = soup.select("tr.HorseList")
-          print("HorseList rows:", len(rows))
-          print("過去走リンク数(/race/result):", h.count("/race/result"))
-          if rows:
-              r0 = rows[0]
-              tds = r0.select("td")
-              print("row0 tds:", len(tds))
-              for i, td in enumerate(tds[:7]):
-                  print(i, td.get("class"), "|", td.get_text(" ", strip=True)[:28])
-          # db.netkeibaがブロックかの確認
-          r = requests.get("https://db.netkeiba.com/horse/2023105203/", headers=ua, timeout=20); r.encoding="euc-jp"
-          print("db LEN:", len(r.text), "| has成績表str:", "db_h_race_results" in r.text)
+          row = soup.select_one("tr.HorseList")
+          pasts = row.select("td.Past")
+          print("Past cells:", len(pasts))
+          p = pasts[0]
+          print("TEXT:", p.get_text("|", strip=True)[:260])
+          print("--- child elems ---")
+          for c in p.select("div,span")[:14]:
+              t = c.get_text(" ", strip=True)
+              if t:
+                  print(c.get("class"), "|", t[:22])
           PY
