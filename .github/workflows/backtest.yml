@@ -1,0 +1,66 @@
+name: backtest
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "開始日 YYYYMMDD（例 20260613）"
+        required: true
+      end:
+        description: "終了日 YYYYMMDD（空なら開始日のみ）"
+        required: false
+        default: ""
+permissions:
+  contents: write
+jobs:
+  bt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - name: collect results & backtest
+        run: |
+          python - << 'PY'
+          import sys, datetime, pathlib
+          sys.path += ["scraper", "analysis"]
+          import netkeiba as nk, backtest
+          start = "${{ github.event.inputs.start }}"
+          end = "${{ github.event.inputs.end }}".strip() or start
+          d0 = datetime.datetime.strptime(start, "%Y%m%d").date()
+          d1 = datetime.datetime.strptime(end, "%Y%m%d").date()
+          races, day = [], d0
+          while day <= d1:
+              ds = day.strftime("%Y%m%d")
+              ids = nk.find_race_ids(ds)
+              print(f"{ds}: {len(ids)} races")
+              for rid in ids:
+                  try:
+                      html = nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}")
+                      r = nk.parse_result(html, rid)
+                      if any(h.get("finish_pos") == 1 for h in r["horses"]):
+                          races.append(r)
+                  except Exception as e:
+                      print("skip", rid, e)
+              day += datetime.timedelta(days=1)
+          print(f"\n検証対象レース: {len(races)}\n")
+          rep = backtest.report(backtest.run(races))
+          print(rep)
+          pathlib.Path("data").mkdir(exist_ok=True)
+          pathlib.Path("data/backtest_report.md").write_text(
+              f"# カチウマ バックテスト結果\n\n対象期間: {start} 〜 {end}\n\n```\n{rep}\n```\n",
+              encoding="utf-8")
+          PY
+      - name: commit report
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/backtest_report.md
+          if git diff --staged --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "backtest: レポート更新"
+            git push
+          fi
