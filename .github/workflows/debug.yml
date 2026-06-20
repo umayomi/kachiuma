@@ -8,19 +8,27 @@ jobs:
       - name: inspect
         run: |
           python - << 'PY'
-          import requests
+          import re, requests
           from bs4 import BeautifulSoup
-          rid = "202602010211"
           ua = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
-          url = f"https://race.netkeiba.com/race/result.html?race_id={rid}"
-          html = requests.get(url, headers=ua, timeout=20).text
-          print("LEN", len(html), "has HorseList:", "HorseList" in html)
-          soup = BeautifulSoup(html, "lxml")
-          rows = soup.select("tr.HorseList")
-          print("HorseList rows:", len(rows))
-          if rows:
-              row = rows[0]
-              print("tds:", len(row.select("td")))
-              for i, td in enumerate(row.select("td")):
-                  print(i, td.get("class"), "|", td.get_text(strip=True)[:14])
+          # 1) 結果ページから実在する horse_id を1つ取得
+          rid = "202602010211"
+          res = requests.get(f"https://race.netkeiba.com/race/result.html?race_id={rid}", headers=ua, timeout=20).text
+          hid = re.search(r"/horse/(\d+)", res).group(1)
+          print("horse_id:", hid)
+          # 2) 馬ページ取得（db.netkeiba は EUC-JP）
+          r = requests.get(f"https://db.netkeiba.com/horse/{hid}/", headers=ua, timeout=20)
+          r.encoding = "euc-jp"
+          soup = BeautifulSoup(r.text, "lxml")
+          print("LEN", len(r.text))
+          print("tables:", [t.get("class") for t in soup.find_all("table")][:8])
+          tbl = soup.select_one("table.db_h_race_results") or soup.select_one("table.nk_tb_common")
+          print("results table found:", tbl is not None)
+          if tbl:
+              rows = tbl.select("tr")
+              print("rows:", len(rows))
+              print("HEADERS:", [c.get_text(strip=True) for c in rows[0].select("th,td")])
+              if len(rows) > 1:
+                  for i, td in enumerate(rows[1].select("td")):
+                      print(i, "|", td.get_text(strip=True)[:14])
           PY
