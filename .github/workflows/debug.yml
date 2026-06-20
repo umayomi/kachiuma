@@ -1,0 +1,33 @@
+name: debug-shutuba
+on: workflow_dispatch
+jobs:
+  dbg:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pip install requests beautifulsoup4 lxml
+      - name: inspect
+        run: |
+          python - << 'PY'
+          import requests
+          from bs4 import BeautifulSoup
+          from collections import Counter
+          rid = "202602010211"
+          ua = {"User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15"}
+          url = f"https://race.netkeiba.com/race/shutuba.html?race_id={rid}"
+          r = requests.get(url, headers=ua, timeout=20); r.encoding="utf-8"
+          html = r.text
+          print("STATUS", r.status_code, "LEN", len(html))
+          print("has HorseList:", "HorseList" in html)
+          soup = BeautifulSoup(html, "lxml")
+          print("tables:", [t.get("class") for t in soup.find_all("table")][:6])
+          trs = soup.find_all("tr")
+          print("tr total:", len(trs))
+          for cls, n in Counter(tuple(tr.get("class") or []) for tr in trs).most_common(10):
+              print("  tr", cls, "x", n)
+          links = soup.select("a[href*='/horse/']")
+          print("horse links:", len(links))
+          for a in links[:3]:
+              print("   ", a.get_text(strip=True))
+          o = requests.get(f"https://race.netkeiba.com/api/api_get_jra_odds.html?race_id={rid}&type=1&action=init", headers=ua, timeout=20)
+          print("ODDS status", o.status_code, "len", len(o.text), "head", o.text[:120])
+          PY
