@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-20T14:01:17+09:00",
+  "updated_at": "2026-06-20T14:59:15+09:00",
   "races": [
     {
       "race_id": "202602010201",
@@ -7,8 +7,8 @@
       "track": "函館",
       "race_no": 1,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 11,
+      "best_ev": 4.133
     },
     {
       "race_id": "202602010202",
@@ -16,8 +16,8 @@
       "track": "函館",
       "race_no": 2,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 6,
+      "best_ev": 4.13
     },
     {
       "race_id": "202602010203",
@@ -25,8 +25,8 @@
       "track": "函館",
       "race_no": 3,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 2,
+      "best_ev": 3.229
     },
     {
       "race_id": "202602010204",
@@ -34,8 +34,8 @@
       "track": "函館",
       "race_no": 4,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 11,
+      "best_ev": 4.434
     },
     {
       "race_id": "202602010205",
@@ -43,8 +43,8 @@
       "track": "函館",
       "race_no": 5,
       "race_name": "2歳新馬",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 7,
+      "best_ev": 1.411
     },
     {
       "race_id": "202602010206",
@@ -52,8 +52,8 @@
       "track": "函館",
       "race_no": 6,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 10,
+      "best_ev": 3.821
     },
     {
       "race_id": "202602010207",
@@ -61,8 +61,8 @@
       "track": "函館",
       "race_no": 7,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 5,
+      "best_ev": 4.697
     },
     {
       "race_id": "202602010208",
@@ -70,8 +70,8 @@
       "track": "函館",
       "race_no": 8,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 7,
+      "best_ev": 2.145
     },
     {
       "race_id": "202602010209",
@@ -79,8 +79,8 @@
       "track": "函館",
       "race_no": 9,
       "race_name": "八雲特別",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 2,
+      "best_ev": 4.374
     },
     {
       "race_id": "202602010210",
@@ -88,8 +88,8 @@
       "track": "函館",
       "race_no": 10,
       "race_name": "津軽海峡特別",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 1,
+      "best_ev": 1.814
     },
     {
       "race_id": "202602010211",
@@ -97,8 +97,8 @@
       "track": "函館",
       "race_no": 11,
       "race_name": "函館日刊スポーツ杯",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 11,
+      "best_ev": 1.873
     },
     {
       "race_id": "202602010212",
@@ -106,8 +106,8 @@
       "track": "函館",
       "race_no": 12,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 3,
+      "best_ev": 2.372
     },
     {
       "race_id": "202605030401",
@@ -115,8 +115,8 @@
       "track": "東京",
       "race_no": 1,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 4,
+      "best_ev": 5.578
     },
     {
       "race_id": "202605030402",
@@ -124,8 +124,8 @@
       "track": "東京",
       "race_no": 2,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 1,
+      "best_ev": 5.074
     },
     {
       "race_id": "202605030403",
@@ -133,8 +133,8 @@
       "track": "東京",
       "race_no": 3,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 6,
+      "best_ev": 4.705
     },
     {
       "race_id": "202605030404",
@@ -142,8 +142,8 @@
       "track": "東京",
       "race_no": 4,
       "race_name": "2歳新馬",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 11,
+      "best_ev": 3.035
     },
     {
       "race_id": "202605030405",
@@ -151,8 +151,8 @@
       "track": "東京",
       "race_no": 5,
       "race_name": "2歳新馬",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 7,
+      "best_ev": 1.77
     },
     {
       "race_id": "202605030406",
@@ -160,8 +160,8 @@
       "track": "東京",
       "race_no": 6,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 7,
+      "best_ev": 2.29
     },
     {
       "race_id": "202605030407",
@@ -169,8 +169,8 @@
       "track": "東京",
       "race_no": 7,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 5,
+      "best_ev": 2.759
     },
     {
       "race_id": "202605030408",
@@ -178,8 +178,8 @@
       "track": "東京",
       "race_no": 8,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 9,
+      "best_ev": 5.364
     },
     {
       "race_id": "202605030409",
@@ -187,8 +187,8 @@
       "track": "東京",
       "race_no": 9,
       "race_name": "芦ノ湖特別",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 2,
+      "best_ev": 3.969
     },
     {
       "race_id": "202605030410",
@@ -196,8 +196,8 @@
       "track": "東京",
       "race_no": 10,
       "race_name": "江の島S",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 14,
+      "best_ev": 3.084
     },
     {
       "race_id": "202605030411",
@@ -205,8 +205,8 @@
       "track": "東京",
       "race_no": 11,
       "race_name": "パラダイスS",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 3,
+      "best_ev": 1.533
     },
     {
       "race_id": "202605030412",
@@ -214,8 +214,8 @@
       "track": "東京",
       "race_no": 12,
       "race_name": "3歳以上2勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 4,
+      "best_ev": 5.113
     },
     {
       "race_id": "202609030401",
@@ -223,8 +223,8 @@
       "track": "阪神",
       "race_no": 1,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 9,
+      "best_ev": 3.166
     },
     {
       "race_id": "202609030402",
@@ -232,8 +232,8 @@
       "track": "阪神",
       "race_no": 2,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 15,
+      "best_ev": 4.113
     },
     {
       "race_id": "202609030403",
@@ -241,8 +241,8 @@
       "track": "阪神",
       "race_no": 3,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 6,
+      "best_ev": 4.82
     },
     {
       "race_id": "202609030404",
@@ -250,8 +250,8 @@
       "track": "阪神",
       "race_no": 4,
       "race_name": "3歳未勝利",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 16,
+      "best_ev": 5.244
     },
     {
       "race_id": "202609030405",
@@ -259,8 +259,8 @@
       "track": "阪神",
       "race_no": 5,
       "race_name": "2歳新馬",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 1,
+      "best_ev": 1.908
     },
     {
       "race_id": "202609030406",
@@ -268,8 +268,8 @@
       "track": "阪神",
       "race_no": 6,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 4,
+      "best_ev": 4.95
     },
     {
       "race_id": "202609030407",
@@ -277,8 +277,8 @@
       "track": "阪神",
       "race_no": 7,
       "race_name": "3歳以上1勝クラス",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 5,
+      "best_ev": 3.652
     },
     {
       "race_id": "202609030408",
@@ -286,8 +286,8 @@
       "track": "阪神",
       "race_no": 8,
       "race_name": "逆瀬川特別",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 3,
+      "best_ev": 4.398
     },
     {
       "race_id": "202609030409",
@@ -295,8 +295,8 @@
       "track": "阪神",
       "race_no": 9,
       "race_name": "武庫川特別",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 8,
+      "best_ev": 1.241
     },
     {
       "race_id": "202609030410",
@@ -304,8 +304,8 @@
       "track": "阪神",
       "race_no": 10,
       "race_name": "花のみちS",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 13,
+      "best_ev": 1.661
     },
     {
       "race_id": "202609030411",
@@ -313,8 +313,8 @@
       "track": "阪神",
       "race_no": 11,
       "race_name": "宝塚記念",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 7,
+      "best_ev": 3.046
     },
     {
       "race_id": "202609030412",
@@ -322,8 +322,8 @@
       "track": "阪神",
       "race_no": 12,
       "race_name": "リボン賞",
-      "best_mark_umaban": null,
-      "best_ev": null
+      "best_mark_umaban": 3,
+      "best_ev": 3.297
     }
   ]
 }

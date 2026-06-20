@@ -7,7 +7,387 @@
   "distance_m": 1300,
   "surface": "ダート",
   "going": null,
-  "updated_at": "2026-06-20T14:01:17+09:00",
-  "horses": [],
-  "tickets": []
+  "updated_at": "2026-06-20T14:59:15+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "スウェーバック",
+      "horse_id": "2023106133",
+      "sex_age": "牝3",
+      "jockey": "野中",
+      "trainer": "美浦天間",
+      "weight_carried": 55.0,
+      "horse_weight": "436(-6)",
+      "odds_win": 68.6,
+      "popularity": 8,
+      "q_win": 0.0114,
+      "p_win": 0.0197,
+      "ev_win": 1.351,
+      "edge": 0.0083,
+      "reasons": [
+        "期待値 1.351（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "8番人気（オッズ 68.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "イナンナ",
+      "horse_id": "2023102211",
+      "sex_age": "牝3",
+      "jockey": "▲上里",
+      "trainer": "美浦奥村武",
+      "weight_carried": 52.0,
+      "horse_weight": "464(0)",
+      "odds_win": 167.9,
+      "popularity": 12,
+      "q_win": 0.0047,
+      "p_win": 0.014,
+      "ev_win": 2.351,
+      "edge": 0.0093,
+      "reasons": [
+        "期待値 2.351（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "12番人気（オッズ 167.9倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 3,
+      "name": "スピニンググローブ",
+      "horse_id": "2023100240",
+      "sex_age": "牡3",
+      "jockey": "木幡巧",
+      "trainer": "美浦黒岩",
+      "weight_carried": 57.0,
+      "horse_weight": "496(-2)",
+      "odds_win": 13.1,
+      "popularity": 5,
+      "q_win": 0.0596,
+      "p_win": 0.0607,
+      "ev_win": 0.795,
+      "edge": 0.0011,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.1pt)",
+        "5番人気（オッズ 13.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "リオンアンサー",
+      "horse_id": "2023100328",
+      "sex_age": "牝3",
+      "jockey": "嶋田",
+      "trainer": "美浦佐藤吉",
+      "weight_carried": 55.0,
+      "horse_weight": "418(+6)",
+      "odds_win": 489.3,
+      "popularity": 15,
+      "q_win": 0.0016,
+      "p_win": 0.0114,
+      "ev_win": 5.578,
+      "edge": 0.0098,
+      "reasons": [
+        "期待値 5.578（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "15番人気（オッズ 489.3倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 5,
+      "name": "ヴィスクレス",
+      "horse_id": "2023106167",
+      "sex_age": "牡3",
+      "jockey": "原",
+      "trainer": "美浦矢嶋",
+      "weight_carried": 57.0,
+      "horse_weight": "454(-4)",
+      "odds_win": 6.9,
+      "popularity": 3,
+      "q_win": 0.1132,
+      "p_win": 0.1062,
+      "ev_win": 0.733,
+      "edge": -0.007,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.7pt)",
+        "3番人気（オッズ 6.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 6,
+      "name": "ブライティアビーム",
+      "horse_id": "2023100571",
+      "sex_age": "牝3",
+      "jockey": "▲土田",
+      "trainer": "美浦田村",
+      "weight_carried": 52.0,
+      "horse_weight": "424(-8)",
+      "odds_win": 321.6,
+      "popularity": 13,
+      "q_win": 0.0024,
+      "p_win": 0.012,
+      "ev_win": 3.859,
+      "edge": 0.0096,
+      "reasons": [
+        "期待値 3.859（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "13番人気（オッズ 321.6倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 7,
+      "name": "レゲンデ",
+      "horse_id": "2023107255",
+      "sex_age": "牝3",
+      "jockey": "荻野極",
+      "trainer": "美浦斎藤誠",
+      "weight_carried": 55.0,
+      "horse_weight": "400(+4)",
+      "odds_win": 9.4,
+      "popularity": 4,
+      "q_win": 0.0831,
+      "p_win": 0.0806,
+      "ev_win": 0.758,
+      "edge": -0.0025,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.2pt)",
+        "4番人気（オッズ 9.4倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 8,
+      "name": "テンカラットレター",
+      "horse_id": "2023104554",
+      "sex_age": "牡3",
+      "jockey": "木幡初",
+      "trainer": "美浦本間",
+      "weight_carried": 57.0,
+      "horse_weight": "464(0)",
+      "odds_win": 19.0,
+      "popularity": 6,
+      "q_win": 0.0411,
+      "p_win": 0.0449,
+      "ev_win": 0.853,
+      "edge": 0.0038,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.4pt)",
+        "6番人気（オッズ 19.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 9,
+      "name": "ノアソノマ",
+      "horse_id": "2023100512",
+      "sex_age": "セ3",
+      "jockey": "武藤",
+      "trainer": "美浦武藤",
+      "weight_carried": 57.0,
+      "horse_weight": "458(0)",
+      "odds_win": 147.5,
+      "popularity": 11,
+      "q_win": 0.0053,
+      "p_win": 0.0145,
+      "ev_win": 2.139,
+      "edge": 0.0092,
+      "reasons": [
+        "期待値 2.139（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "11番人気（オッズ 147.5倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 10,
+      "name": "クアラトレンガヌ",
+      "horse_id": "2023101869",
+      "sex_age": "牡3",
+      "jockey": "石川",
+      "trainer": "美浦小笠",
+      "weight_carried": 57.0,
+      "horse_weight": "440(-18)",
+      "odds_win": 98.7,
+      "popularity": 9,
+      "q_win": 0.0079,
+      "p_win": 0.0167,
+      "ev_win": 1.648,
+      "edge": 0.0088,
+      "reasons": [
+        "期待値 1.648（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "9番人気（オッズ 98.7倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 11,
+      "name": "スティールヴォーグ",
+      "horse_id": "2023102958",
+      "sex_age": "牡3",
+      "jockey": "三浦",
+      "trainer": "美浦田村",
+      "weight_carried": 57.0,
+      "horse_weight": "464(+2)",
+      "odds_win": 3.7,
+      "popularity": 2,
+      "q_win": 0.2111,
+      "p_win": 0.1894,
+      "ev_win": 0.701,
+      "edge": -0.0217,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.2pt)",
+        "2番人気（オッズ 3.7倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 12,
+      "name": "ブラックゲイル",
+      "horse_id": "2023105909",
+      "sex_age": "牡3",
+      "jockey": "▲水沼",
+      "trainer": "美浦加藤和",
+      "weight_carried": 54.0,
+      "horse_weight": "476(+6)",
+      "odds_win": 464.7,
+      "popularity": 14,
+      "q_win": 0.0017,
+      "p_win": 0.0114,
+      "ev_win": 5.298,
+      "edge": 0.0097,
+      "reasons": [
+        "期待値 5.298（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "14番人気（オッズ 464.7倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 13,
+      "name": "テルケンレンタッチ",
+      "horse_id": "2023102159",
+      "sex_age": "牡3",
+      "jockey": "菊沢",
+      "trainer": "美浦勢司",
+      "weight_carried": 57.0,
+      "horse_weight": "516(-8)",
+      "odds_win": 51.3,
+      "popularity": 7,
+      "q_win": 0.0152,
+      "p_win": 0.0229,
+      "ev_win": 1.175,
+      "edge": 0.0077,
+      "reasons": [
+        "期待値 1.175（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "7番人気（オッズ 51.3倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 14,
+      "name": "ヌビアン",
+      "horse_id": "2023103299",
+      "sex_age": "牡3",
+      "jockey": "▲石田",
+      "trainer": "美浦清水英",
+      "weight_carried": 54.0,
+      "horse_weight": "446(0)",
+      "odds_win": 99.8,
+      "popularity": 10,
+      "q_win": 0.0078,
+      "p_win": 0.0166,
+      "ev_win": 1.657,
+      "edge": 0.0088,
+      "reasons": [
+        "期待値 1.657（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "10番人気（オッズ 99.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 15,
+      "name": "ツクバヴァンガード",
+      "horse_id": "2023101037",
+      "sex_age": "牡3",
+      "jockey": "▲佐藤",
+      "trainer": "美浦奥平",
+      "weight_carried": 54.0,
+      "horse_weight": "484(+4)",
+      "odds_win": 1.8,
+      "popularity": 1,
+      "q_win": 0.4339,
+      "p_win": 0.3788,
+      "ev_win": 0.682,
+      "edge": -0.0551,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-5.5pt)",
+        "1番人気（オッズ 1.8倍）"
+      ],
+      "mark": ""
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "1",
+      "ev": 1.351,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "2",
+      "ev": 2.351,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "4",
+      "ev": 5.578,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "6",
+      "ev": 3.859,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "9",
+      "ev": 2.139,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "10",
+      "ev": 1.648,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "12",
+      "ev": 5.298,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "13",
+      "ev": 1.175,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "14",
+      "ev": 1.657,
+      "stake_unit": 1
+    }
+  ]
 }

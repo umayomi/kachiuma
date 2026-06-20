@@ -7,7 +7,198 @@
   "distance_m": 2000,
   "surface": "芝",
   "going": "良",
-  "updated_at": "2026-06-20T14:01:17+09:00",
-  "horses": [],
-  "tickets": []
+  "updated_at": "2026-06-20T14:59:15+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ウインドラート",
+      "horse_id": "2021106199",
+      "sex_age": "牡5",
+      "jockey": "▲石神道",
+      "trainer": "美浦水野",
+      "weight_carried": 55.0,
+      "horse_weight": "482(+4)",
+      "odds_win": 19.1,
+      "popularity": 6,
+      "q_win": 0.0408,
+      "p_win": 0.0534,
+      "ev_win": 1.02,
+      "edge": 0.0126,
+      "reasons": [
+        "期待値 1.02（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.3pt)",
+        "6番人気（オッズ 19.1倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 2,
+      "name": "コスモアチーブ",
+      "horse_id": "2022106792",
+      "sex_age": "牡4",
+      "jockey": "石川",
+      "trainer": "美浦相沢",
+      "weight_carried": 58.0,
+      "horse_weight": "476(+8)",
+      "odds_win": 16.7,
+      "popularity": 5,
+      "q_win": 0.0466,
+      "p_win": 0.0584,
+      "ev_win": 0.975,
+      "edge": 0.0118,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+1.2pt)",
+        "5番人気（オッズ 16.7倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 3,
+      "name": "シーギリヤロック",
+      "horse_id": "2023107317",
+      "sex_age": "牡3",
+      "jockey": "ディー",
+      "trainer": "美浦田中博",
+      "weight_carried": 55.0,
+      "horse_weight": "452(+4)",
+      "odds_win": 5.6,
+      "popularity": 2,
+      "q_win": 0.1391,
+      "p_win": 0.137,
+      "ev_win": 0.767,
+      "edge": -0.0021,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.2pt)",
+        "2番人気（オッズ 5.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "ショウグンマサムネ",
+      "horse_id": "2023103897",
+      "sex_age": "牡3",
+      "jockey": "荻野極",
+      "trainer": "栗東佐藤悠",
+      "weight_carried": 55.0,
+      "horse_weight": "476(-2)",
+      "odds_win": 6.8,
+      "popularity": 3,
+      "q_win": 0.1146,
+      "p_win": 0.1162,
+      "ev_win": 0.79,
+      "edge": 0.0016,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.2pt)",
+        "3番人気（オッズ 6.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 5,
+      "name": "キョウエイグッド",
+      "horse_id": "2022104362",
+      "sex_age": "牡4",
+      "jockey": "木幡巧",
+      "trainer": "美浦千葉",
+      "weight_carried": 58.0,
+      "horse_weight": "446(0)",
+      "odds_win": 111.7,
+      "popularity": 8,
+      "q_win": 0.007,
+      "p_win": 0.0247,
+      "ev_win": 2.759,
+      "edge": 0.0177,
+      "reasons": [
+        "期待値 2.759（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.8pt)",
+        "8番人気（オッズ 111.7倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 6,
+      "name": "ユーディキウム",
+      "horse_id": "2022104981",
+      "sex_age": "牝4",
+      "jockey": "菊沢",
+      "trainer": "美浦平岩",
+      "weight_carried": 56.0,
+      "horse_weight": "498(0)",
+      "odds_win": 51.2,
+      "popularity": 7,
+      "q_win": 0.0152,
+      "p_win": 0.0317,
+      "ev_win": 1.623,
+      "edge": 0.0165,
+      "reasons": [
+        "期待値 1.623（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.7pt)",
+        "7番人気（オッズ 51.2倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 7,
+      "name": "シンドリームシン",
+      "horse_id": "2021105382",
+      "sex_age": "牡5",
+      "jockey": "津村",
+      "trainer": "栗東武幸",
+      "weight_carried": 58.0,
+      "horse_weight": "502(-4)",
+      "odds_win": 9.7,
+      "popularity": 4,
+      "q_win": 0.0803,
+      "p_win": 0.087,
+      "ev_win": 0.844,
+      "edge": 0.0067,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
+        "4番人気（オッズ 9.7倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 8,
+      "name": "ジャスティンシカゴ",
+      "horse_id": "2023106924",
+      "sex_age": "牡3",
+      "jockey": "原",
+      "trainer": "美浦宮田",
+      "weight_carried": 55.0,
+      "horse_weight": "506(0)",
+      "odds_win": 1.4,
+      "popularity": 1,
+      "q_win": 0.5564,
+      "p_win": 0.4917,
+      "ev_win": 0.688,
+      "edge": -0.0647,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-6.5pt)",
+        "1番人気（オッズ 1.4倍）"
+      ],
+      "mark": ""
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "1",
+      "ev": 1.02,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "5",
+      "ev": 2.759,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "6",
+      "ev": 1.623,
+      "stake_unit": 1
+    }
+  ]
 }

@@ -7,7 +7,197 @@
   "distance_m": 1600,
   "surface": "芝",
   "going": "良",
-  "updated_at": "2026-06-20T14:01:17+09:00",
-  "horses": [],
-  "tickets": []
+  "updated_at": "2026-06-20T14:59:15+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "レッドインサイト",
+      "horse_id": "2024106449",
+      "sex_age": "牡2",
+      "jockey": "津村",
+      "trainer": "美浦手塚久",
+      "weight_carried": 55.0,
+      "horse_weight": "454(0)",
+      "odds_win": 2.5,
+      "popularity": 1,
+      "q_win": 0.3156,
+      "p_win": 0.287,
+      "ev_win": 0.717,
+      "edge": -0.0286,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.9pt)",
+        "1番人気（オッズ 2.5倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "ジュネストレイル",
+      "horse_id": "2024103827",
+      "sex_age": "牡2",
+      "jockey": "石川",
+      "trainer": "美浦手塚徳",
+      "weight_carried": 55.0,
+      "horse_weight": "454(0)",
+      "odds_win": 53.7,
+      "popularity": 7,
+      "q_win": 0.0147,
+      "p_win": 0.0312,
+      "ev_win": 1.675,
+      "edge": 0.0165,
+      "reasons": [
+        "期待値 1.675（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.7pt)",
+        "7番人気（オッズ 53.7倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 3,
+      "name": "ベルウッドディープ",
+      "horse_id": "2024101333",
+      "sex_age": "牡2",
+      "jockey": "三浦",
+      "trainer": "美浦室井",
+      "weight_carried": 55.0,
+      "horse_weight": "444(0)",
+      "odds_win": 2.8,
+      "popularity": 2,
+      "q_win": 0.2817,
+      "p_win": 0.2582,
+      "ev_win": 0.723,
+      "edge": -0.0235,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.4pt)",
+        "2番人気（オッズ 2.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "ニースケンス",
+      "horse_id": "2024107189",
+      "sex_age": "牡2",
+      "jockey": "原",
+      "trainer": "美浦小島",
+      "weight_carried": 55.0,
+      "horse_weight": "446(0)",
+      "odds_win": 14.0,
+      "popularity": 5,
+      "q_win": 0.0563,
+      "p_win": 0.0666,
+      "ev_win": 0.932,
+      "edge": 0.0103,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "5番人気（オッズ 14.0倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 5,
+      "name": "タイセイアドーレ",
+      "horse_id": "2024104822",
+      "sex_age": "牡2",
+      "jockey": "菊沢",
+      "trainer": "美浦伊藤圭",
+      "weight_carried": 55.0,
+      "horse_weight": "480(0)",
+      "odds_win": 20.1,
+      "popularity": 6,
+      "q_win": 0.0392,
+      "p_win": 0.0521,
+      "ev_win": 1.047,
+      "edge": 0.0129,
+      "reasons": [
+        "期待値 1.047（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.3pt)",
+        "6番人気（オッズ 20.1倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 6,
+      "name": "ソウカイウォーリア",
+      "horse_id": "2024104658",
+      "sex_age": "牡2",
+      "jockey": "ゴンサルベ",
+      "trainer": "美浦尾関",
+      "weight_carried": 55.0,
+      "horse_weight": "456(0)",
+      "odds_win": 5.2,
+      "popularity": 3,
+      "q_win": 0.1517,
+      "p_win": 0.1477,
+      "ev_win": 0.768,
+      "edge": -0.004,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.4pt)",
+        "3番人気（オッズ 5.2倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 7,
+      "name": "ソナタテソーロ",
+      "horse_id": "2024101297",
+      "sex_age": "牝2",
+      "jockey": "野中",
+      "trainer": "美浦牧",
+      "weight_carried": 55.0,
+      "horse_weight": "454(0)",
+      "odds_win": 58.6,
+      "popularity": 8,
+      "q_win": 0.0135,
+      "p_win": 0.0302,
+      "ev_win": 1.77,
+      "edge": 0.0167,
+      "reasons": [
+        "期待値 1.77（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.7pt)",
+        "8番人気（オッズ 58.6倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 8,
+      "name": "ルクスマグナ",
+      "horse_id": "2024100134",
+      "sex_age": "牡2",
+      "jockey": "荻野極",
+      "trainer": "美浦高柳瑞",
+      "weight_carried": 55.0,
+      "horse_weight": "462(0)",
+      "odds_win": 6.2,
+      "popularity": 4,
+      "q_win": 0.1272,
+      "p_win": 0.1269,
+      "ev_win": 0.787,
+      "edge": -0.0003,
+      "reasons": [
+        "4番人気（オッズ 6.2倍）"
+      ],
+      "mark": ""
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "2",
+      "ev": 1.675,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "5",
+      "ev": 1.047,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "7",
+      "ev": 1.77,
+      "stake_unit": 1
+    }
+  ]
 }

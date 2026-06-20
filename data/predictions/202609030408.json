@@ -7,7 +7,233 @@
   "distance_m": 1800,
   "surface": "ダート",
   "going": "良",
-  "updated_at": "2026-06-20T14:01:17+09:00",
-  "horses": [],
-  "tickets": []
+  "updated_at": "2026-06-20T14:59:15+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ハギノコラソン",
+      "horse_id": "2022100439",
+      "sex_age": "牝4",
+      "jockey": "岩田望",
+      "trainer": "栗東寺島",
+      "weight_carried": 56.0,
+      "horse_weight": "470(-4)",
+      "odds_win": 5.4,
+      "popularity": 3,
+      "q_win": 0.1464,
+      "p_win": 0.1411,
+      "ev_win": 0.762,
+      "edge": -0.0053,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.5pt)",
+        "3番人気（オッズ 5.4倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "メイショウリリー",
+      "horse_id": "2021103209",
+      "sex_age": "牝5",
+      "jockey": "丹内",
+      "trainer": "栗東高橋忠",
+      "weight_carried": 56.0,
+      "horse_weight": "442(-2)",
+      "odds_win": 29.7,
+      "popularity": 6,
+      "q_win": 0.0266,
+      "p_win": 0.0393,
+      "ev_win": 1.167,
+      "edge": 0.0127,
+      "reasons": [
+        "期待値 1.167（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.3pt)",
+        "6番人気（オッズ 29.7倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 3,
+      "name": "ビッグデイメイク",
+      "horse_id": "2022102532",
+      "sex_age": "牝4",
+      "jockey": "森田",
+      "trainer": "美浦和田雄",
+      "weight_carried": 56.0,
+      "horse_weight": "428(-4)",
+      "odds_win": 224.4,
+      "popularity": 9,
+      "q_win": 0.0035,
+      "p_win": 0.0196,
+      "ev_win": 4.398,
+      "edge": 0.0161,
+      "reasons": [
+        "期待値 4.398（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.6pt)",
+        "9番人気（オッズ 224.4倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 4,
+      "name": "サイモンコーラル",
+      "horse_id": "2020100629",
+      "sex_age": "牝6",
+      "jockey": "藤懸",
+      "trainer": "栗東羽月",
+      "weight_carried": 56.0,
+      "horse_weight": "466(+4)",
+      "odds_win": 120.2,
+      "popularity": 8,
+      "q_win": 0.0066,
+      "p_win": 0.0223,
+      "ev_win": 2.68,
+      "edge": 0.0157,
+      "reasons": [
+        "期待値 2.68（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.6pt)",
+        "8番人気（オッズ 120.2倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 5,
+      "name": "メイショウコマチ",
+      "horse_id": "2023102243",
+      "sex_age": "牝3",
+      "jockey": "太宰",
+      "trainer": "栗東千田",
+      "weight_carried": 53.0,
+      "horse_weight": "476(+12)",
+      "odds_win": 1.6,
+      "popularity": 1,
+      "q_win": 0.4939,
+      "p_win": 0.4365,
+      "ev_win": 0.698,
+      "edge": -0.0574,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-5.7pt)",
+        "1番人気（オッズ 1.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 6,
+      "name": "アイブリンク",
+      "horse_id": "2022100358",
+      "sex_age": "牝4",
+      "jockey": "松山",
+      "trainer": "栗東大久保",
+      "weight_carried": 56.0,
+      "horse_weight": "482(+10)",
+      "odds_win": 9.7,
+      "popularity": 4,
+      "q_win": 0.0815,
+      "p_win": 0.0859,
+      "ev_win": 0.833,
+      "edge": 0.0044,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.4pt)",
+        "4番人気（オッズ 9.7倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 7,
+      "name": "ユウェンタース",
+      "horse_id": "2022103515",
+      "sex_age": "牝4",
+      "jockey": "高杉",
+      "trainer": "栗東宮",
+      "weight_carried": 56.0,
+      "horse_weight": "490(+6)",
+      "odds_win": 29.2,
+      "popularity": 5,
+      "q_win": 0.0271,
+      "p_win": 0.0397,
+      "ev_win": 1.159,
+      "edge": 0.0126,
+      "reasons": [
+        "期待値 1.159（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.3pt)",
+        "5番人気（オッズ 29.2倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 8,
+      "name": "ヴァンアグレアブル",
+      "horse_id": "2022105058",
+      "sex_age": "牝4",
+      "jockey": "北村友",
+      "trainer": "栗東橋口",
+      "weight_carried": 56.0,
+      "horse_weight": "524(+6)",
+      "odds_win": 4.1,
+      "popularity": 2,
+      "q_win": 0.1928,
+      "p_win": 0.1805,
+      "ev_win": 0.74,
+      "edge": -0.0123,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.2pt)",
+        "2番人気（オッズ 4.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 9,
+      "name": "ラヴァブル",
+      "horse_id": "2022104687",
+      "sex_age": "牝4",
+      "jockey": "西村淳",
+      "trainer": "栗東松下",
+      "weight_carried": 56.0,
+      "horse_weight": "504(+6)",
+      "odds_win": 36.4,
+      "popularity": 7,
+      "q_win": 0.0217,
+      "p_win": 0.0351,
+      "ev_win": 1.278,
+      "edge": 0.0134,
+      "reasons": [
+        "期待値 1.278（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.3pt)",
+        "7番人気（オッズ 36.4倍）"
+      ],
+      "mark": "▲"
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "2",
+      "ev": 1.167,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "3",
+      "ev": 4.398,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "4",
+      "ev": 2.68,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "7",
+      "ev": 1.159,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "9",
+      "ev": 1.278,
+      "stake_unit": 1
+    }
+  ]
 }

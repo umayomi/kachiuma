@@ -7,7 +7,343 @@
   "distance_m": 2400,
   "surface": "芝",
   "going": "良",
-  "updated_at": "2026-06-20T14:01:17+09:00",
-  "horses": [],
-  "tickets": []
+  "updated_at": "2026-06-20T14:59:15+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ベトルス",
+      "horse_id": "2021104976",
+      "sex_age": "セ5",
+      "jockey": "ディー",
+      "trainer": "栗東友道",
+      "weight_carried": 58.0,
+      "horse_weight": "508(-4)",
+      "odds_win": 3.3,
+      "popularity": 1,
+      "q_win": 0.2408,
+      "p_win": 0.2154,
+      "ev_win": 0.711,
+      "edge": -0.0254,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.5pt)",
+        "1番人気（オッズ 3.3倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "レッドテリオス",
+      "horse_id": "2021105066",
+      "sex_age": "牡5",
+      "jockey": "荻野極",
+      "trainer": "美浦古賀慎",
+      "weight_carried": 58.0,
+      "horse_weight": "486(-2)",
+      "odds_win": 10.1,
+      "popularity": 4,
+      "q_win": 0.0787,
+      "p_win": 0.0776,
+      "ev_win": 0.784,
+      "edge": -0.0011,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.1pt)",
+        "4番人気（オッズ 10.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 3,
+      "name": "シャドウメテオ",
+      "horse_id": "2022105454",
+      "sex_age": "牝4",
+      "jockey": "大野",
+      "trainer": "美浦金成",
+      "weight_carried": 56.0,
+      "horse_weight": "464(+2)",
+      "odds_win": 15.0,
+      "popularity": 8,
+      "q_win": 0.053,
+      "p_win": 0.0558,
+      "ev_win": 0.837,
+      "edge": 0.0028,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.3pt)",
+        "8番人気（オッズ 15.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "ダノンホイットニー",
+      "horse_id": "2021105639",
+      "sex_age": "牝5",
+      "jockey": "丸田",
+      "trainer": "美浦大竹",
+      "weight_carried": 56.0,
+      "horse_weight": "438(+8)",
+      "odds_win": 87.2,
+      "popularity": 13,
+      "q_win": 0.0091,
+      "p_win": 0.0184,
+      "ev_win": 1.604,
+      "edge": 0.0093,
+      "reasons": [
+        "期待値 1.604（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "13番人気（オッズ 87.2倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 5,
+      "name": "スピードリッチ",
+      "horse_id": "2021105438",
+      "sex_age": "牡5",
+      "jockey": "ゴンサルベ",
+      "trainer": "栗東藤岡健",
+      "weight_carried": 58.0,
+      "horse_weight": "492(+2)",
+      "odds_win": 6.3,
+      "popularity": 3,
+      "q_win": 0.1261,
+      "p_win": 0.1179,
+      "ev_win": 0.743,
+      "edge": -0.0082,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.8pt)",
+        "3番人気（オッズ 6.3倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 6,
+      "name": "バレンタインガール",
+      "horse_id": "2021102577",
+      "sex_age": "牝5",
+      "jockey": "北村宏",
+      "trainer": "美浦古賀慎",
+      "weight_carried": 56.0,
+      "horse_weight": "478(-2)",
+      "odds_win": 10.9,
+      "popularity": 5,
+      "q_win": 0.0729,
+      "p_win": 0.0727,
+      "ev_win": 0.792,
+      "edge": -0.0002,
+      "reasons": [
+        "5番人気（オッズ 10.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 7,
+      "name": "エコロレイズ",
+      "horse_id": "2021103976",
+      "sex_age": "牡5",
+      "jockey": "菊沢",
+      "trainer": "美浦岩戸",
+      "weight_carried": 58.0,
+      "horse_weight": "504(0)",
+      "odds_win": 50.1,
+      "popularity": 11,
+      "q_win": 0.0159,
+      "p_win": 0.0242,
+      "ev_win": 1.212,
+      "edge": 0.0083,
+      "reasons": [
+        "期待値 1.212（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "11番人気（オッズ 50.1倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 8,
+      "name": "ジョイボーイ",
+      "horse_id": "2022103787",
+      "sex_age": "牡4",
+      "jockey": "石橋脩",
+      "trainer": "栗東四位",
+      "weight_carried": 58.0,
+      "horse_weight": "478(-6)",
+      "odds_win": 11.6,
+      "popularity": 6,
+      "q_win": 0.0685,
+      "p_win": 0.0689,
+      "ev_win": 0.799,
+      "edge": 0.0004,
+      "reasons": [
+        "6番人気（オッズ 11.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 9,
+      "name": "ウインルーティン",
+      "horse_id": "2020105206",
+      "sex_age": "牡6",
+      "jockey": "松岡",
+      "trainer": "栗東長谷川",
+      "weight_carried": 58.0,
+      "horse_weight": "478(+2)",
+      "odds_win": 58.7,
+      "popularity": 12,
+      "q_win": 0.0135,
+      "p_win": 0.0222,
+      "ev_win": 1.303,
+      "edge": 0.0087,
+      "reasons": [
+        "期待値 1.303（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "12番人気（オッズ 58.7倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 10,
+      "name": "ベンサレム",
+      "horse_id": "2021105352",
+      "sex_age": "牡5",
+      "jockey": "石川",
+      "trainer": "美浦稲垣",
+      "weight_carried": 58.0,
+      "horse_weight": "498(-4)",
+      "odds_win": 44.7,
+      "popularity": 10,
+      "q_win": 0.0178,
+      "p_win": 0.0258,
+      "ev_win": 1.153,
+      "edge": 0.008,
+      "reasons": [
+        "期待値 1.153（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "10番人気（オッズ 44.7倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 11,
+      "name": "キングノジョー",
+      "horse_id": "2022104959",
+      "sex_age": "牡4",
+      "jockey": "三浦",
+      "trainer": "美浦田中博",
+      "weight_carried": 58.0,
+      "horse_weight": "456(0)",
+      "odds_win": 14.5,
+      "popularity": 7,
+      "q_win": 0.0548,
+      "p_win": 0.0573,
+      "ev_win": 0.831,
+      "edge": 0.0025,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.2pt)",
+        "7番人気（オッズ 14.5倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 12,
+      "name": "オストラヴァ",
+      "horse_id": "2022105456",
+      "sex_age": "牡4",
+      "jockey": "津村",
+      "trainer": "美浦林",
+      "weight_carried": 58.0,
+      "horse_weight": "482(+2)",
+      "odds_win": 3.6,
+      "popularity": 2,
+      "q_win": 0.2207,
+      "p_win": 0.1983,
+      "ev_win": 0.714,
+      "edge": -0.0224,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.2pt)",
+        "2番人気（オッズ 3.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 13,
+      "name": "ログラール",
+      "horse_id": "2021105662",
+      "sex_age": "セ5",
+      "jockey": "丸山",
+      "trainer": "栗東松永幹",
+      "weight_carried": 58.0,
+      "horse_weight": "476(+2)",
+      "odds_win": 32.0,
+      "popularity": 9,
+      "q_win": 0.0248,
+      "p_win": 0.0318,
+      "ev_win": 1.018,
+      "edge": 0.007,
+      "reasons": [
+        "期待値 1.018（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
+        "9番人気（オッズ 32.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 14,
+      "name": "キントリヒ",
+      "horse_id": "2019103885",
+      "sex_age": "牡7",
+      "jockey": "原",
+      "trainer": "美浦矢野",
+      "weight_carried": 58.0,
+      "horse_weight": "482(0)",
+      "odds_win": 223.5,
+      "popularity": 14,
+      "q_win": 0.0036,
+      "p_win": 0.0138,
+      "ev_win": 3.084,
+      "edge": 0.0102,
+      "reasons": [
+        "期待値 3.084（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "14番人気（オッズ 223.5倍）"
+      ],
+      "mark": "◎"
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "4",
+      "ev": 1.604,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "7",
+      "ev": 1.212,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "9",
+      "ev": 1.303,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "10",
+      "ev": 1.153,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "13",
+      "ev": 1.018,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "14",
+      "ev": 3.084,
+      "stake_unit": 1
+    }
+  ]
 }
