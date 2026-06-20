@@ -42,6 +42,8 @@
   .race-title{font-weight:700;font-size:18px;margin:14px 0 2px}
   .race-sub{color:var(--ink-faint);font-size:13px}
 
+  .value-note{font-size:12.5px;color:var(--paper-2);background:var(--ground-2);
+    border:1px solid var(--ground-edge);border-radius:10px;padding:10px 12px;margin:13px 0 0}
   /* ---- legend (the "わかる" key) ---- */
   .legend{background:var(--ground-2);border:1px solid var(--ground-edge);border-radius:var(--r);
     padding:13px 14px;margin:16px 0;font-size:12.5px;color:var(--paper-2)}
@@ -126,6 +128,7 @@
     <div class="meta-row" id="meta"></div>
     <div class="race-title" id="raceTitle"></div>
     <div class="race-sub" id="raceSub"></div>
+    <div class="value-note" id="valueNote" style="display:none"></div>
   </header>
 
   <div class="legend">
@@ -187,6 +190,9 @@ function renderRace(race){
   document.getElementById("raceTitle").textContent = race.race_name;
   document.getElementById("raceSub").textContent =
     `${race.date} ・ ${race.horses.length}頭 ・ 妙味(EV>1) ${race.horses.filter(h=>h.ev_win>1).length}頭`;
+  const vn = document.getElementById("valueNote");
+  vn.textContent = race.value_note || "";
+  vn.style.display = race.value_note ? "block" : "none";
   const maxScale = Math.max(...race.horses.map(h=>Math.max(h.p_win,h.q_win)), 0.4);
   document.getElementById("horses").innerHTML = race.horses
     .slice().sort((a,b)=> (b.ev_win||0)-(a.ev_win||0))
