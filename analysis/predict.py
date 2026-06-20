@@ -1,130 +1,165 @@
 #!/usr/bin/env python3
 """
-カチウマ — 分析（予想＋期待値）（雛形 / Phase 0〜1の橋渡し）
+カチウマ — 分析エンジン（Phase 2: 市場ベース＋人気-穴バイアス補正）
 
-入力: data/raw/<date>_shutuba.raw.json （Phase1で本実装）
-出力: data/predictions/<race_id>.json と index.json
+考え方:
+  1) de-vig: 単勝オッズから控除率を除いた「市場確率 q」を算出（合計=1に正規化）
+  2) 推定勝率 p: 市場確率を土台に、人気-穴バイアスを補正（q^TAU を正規化, TAU>1で本命寄り）
+     → 公開オッズは過小評価されがちな本命をやや高く、過大評価されがちな穴を低く見積もる
+  3) EV = p × odるds, edge = p − q
+  4) 印(◎○▲△)= 予想の強さ p の上位（本命・対抗・単穴・連下）
+  5) 買い目(tickets)= EV ≧ しきい値 の「妙味」だけ（無ければ"見送り"）
 
-この雛形は「期待値(EV)・妙味(edge)・印・根拠」の計算ロジックの“骨格”を示す。
-推定勝率 p の出し方は Phase 2 で本格化する（今は人気ベースの暫定式）。
+正直な注意:
+  公開オッズだけが入力の場合、控除率(約20%)の壁でEV>1はめったに出ない。
+  「妙味なし＝見送り」が多いのは正しい。本物の優位性は特徴量を足すPhase4で。
 
 使い方:
-    python analysis/predict.py --in data/raw --out data/predictions
-    # 入力が無い場合はサンプルで動作確認:
-    python analysis/predict.py --demo
+  python analysis/predict.py --in data/raw --out data/predictions
+  python analysis/predict.py --demo
 """
 
+from __future__ import annotations
 import argparse
 import json
-import math
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 JST = timezone(timedelta(hours=9))
-MARKS = ["◎", "○", "▲", "△"]  # EV順に上位へ付与
+
+# --- チューニング可能パラメータ -------------------------------------------
+TAU = 1.15           # 人気-穴バイアス補正の指数（>1で本命寄り。1.0で市場そのまま）
+EV_THRESHOLD = 1.0   # これ以上を「妙味（理論上プラス）」とみなす
+# 印の定義（予想の強さ順）
+MARKS = [("◎", "本命"), ("○", "対抗"), ("▲", "単穴"), ("△", "連下")]
 
 
-def market_prob_from_odds(odds: float) -> float:
-    """オッズから市場想定勝率 q（控除前の素朴な逆数）。"""
-    if not odds or odds <= 1.0:
-        return 0.0
-    return 1.0 / odds
+def market_devig(rated: list[dict]) -> float:
+    """単勝オッズ → 市場確率 q（合計1に正規化）。overround(控除込み合計)を返す。"""
+    raw = [1.0 / h["odds_win"] for h in rated]
+    overround = sum(raw) or 1.0
+    for h, r in zip(rated, raw):
+        h["q_win"] = round(r / overround, 4)
+    return overround
 
 
-def normalize_market_probs(horses: list[dict]) -> None:
-    """単勝オッズ由来の q を、合計が1になるよう正規化（控除分を均す）。"""
-    raw = [market_prob_from_odds(h.get("odds_win", 0)) for h in horses]
-    total = sum(raw) or 1.0
-    for h, r in zip(horses, raw):
-        h["q_win"] = round(r / total, 4)
+def estimate_p(rated: list[dict], tau: float = TAU) -> None:
+    """推定勝率 p：市場確率 q を土台に人気-穴バイアスを補正（q^tau を正規化）。"""
+    pows = [h["q_win"] ** tau for h in rated]
+    s = sum(pows) or 1.0
+    for h, pw in zip(rated, pows):
+        h["p_win"] = round(pw / s, 4)
 
 
-def estimate_p_win(horses: list[dict]) -> None:
-    """推定勝率 p（暫定）。
-    Phase2: ここを「指数 / 近走 / コース適性」へ、Phase4: LightGBM へ差し替える。
-    暫定式: 市場想定 q を土台に、人気の偏りを少し補正しただけのプレースホルダ。
-    """
-    n = len(horses) or 1
-    for h in horses:
-        q = h.get("q_win", 1.0 / n)
-        # 暫定: 市場をほぼ信じつつ、わずかにフラット方向へ寄せる（穴に妙味が出やすい簡易版）
-        p = 0.85 * q + 0.15 * (1.0 / n)
-        h["p_win"] = round(p, 4)
+def compute_ev(rated: list[dict]) -> None:
+    for h in rated:
+        h["ev_win"] = round(h["p_win"] * h["odds_win"], 3)
+        h["edge"] = round(h["p_win"] - h["q_win"], 4)
 
 
-def compute_ev_and_marks(horses: list[dict]) -> None:
-    """EV・edge を計算し、EV上位に印を付ける。根拠も生成。"""
-    for h in horses:
-        odds = h.get("odds_win", 0) or 0
-        p = h.get("p_win", 0)
-        q = h.get("q_win", 0)
-        h["ev_win"] = round(p * odds, 3) if odds else 0.0
-        h["edge"] = round(p - q, 4)
-        h["reasons"] = build_reasons(h)
+def assign_popularity(rated: list[dict]) -> None:
+    """オッズ昇順で人気を採番（収集側に無くても必ず入るように）。"""
+    for rank, h in enumerate(sorted(rated, key=lambda x: x["odds_win"]), start=1):
+        h["popularity"] = rank
 
-    # EV降順で印付け（EV>1.0 のものを優先、足りなければ妙味順）
-    ranked = sorted(horses, key=lambda x: (x["ev_win"], x["edge"]), reverse=True)
-    for i, h in enumerate(ranked):
-        h["mark"] = MARKS[i] if i < len(MARKS) and h["ev_win"] > 0 else ""
+
+def assign_marks(rated: list[dict]) -> None:
+    """印は予想の強さ p の上位に付ける（◎○▲△＝本命/対抗/単穴/連下）。"""
+    for i, h in enumerate(sorted(rated, key=lambda x: -x["p_win"])):
+        h["_prank"] = i + 1
+        h["mark"] = MARKS[i][0] if i < len(MARKS) else ""
 
 
 def build_reasons(h: dict) -> list[str]:
-    """根拠の自動生成（“わかる設計”の核）。Phase2で材料を増やす。"""
-    reasons = []
-    edge_pt = round(h.get("edge", 0) * 100, 1)
-    if h.get("ev_win", 0) > 1.0:
-        reasons.append(f"期待値 {h['ev_win']}（理論上プラス圏）")
-    if edge_pt > 0:
-        reasons.append(f"市場想定よりこちらの評価が高く、妙味あり(+{edge_pt}pt)")
-    elif edge_pt < 0:
-        reasons.append(f"人気先行で、評価ほどの妙味は薄い({edge_pt}pt)")
-    if h.get("popularity"):
-        reasons.append(f"{h['popularity']}番人気（オッズ {h.get('odds_win','?')}倍）")
-    return reasons or ["判断材料が少ないため保留"]
+    """根拠（2行）。強さ→市場との比較とEV。穴を持ち上げない正直な文。"""
+    p = h["p_win"] * 100
+    ev = h["ev_win"]
+    edge_pt = round(h["edge"] * 100, 1)
+    pop = h.get("popularity", "?")
+    line1 = f"予想勝率 {p:.1f}%・{h['_prank']}番手評価"
+    if ev >= EV_THRESHOLD:
+        line2 = f"{pop}番人気 / EV {ev}（理論上プラス＝妙味 +{edge_pt}pt）"
+    elif edge_pt <= -1.0:
+        line2 = f"{pop}番人気 / EV {ev}（やや過剰人気・妙味なし）"
+    else:
+        line2 = f"{pop}番人気 / EV {ev}（控除率の壁で理論上マイナス）"
+    return [line1, line2]
+
+
+def build_tickets(rated: list[dict]) -> list[dict]:
+    """買い目候補：EV≧しきい値の単勝のみ（妙味）。無ければ空＝見送り。"""
+    vals = sorted([h for h in rated if h["ev_win"] >= EV_THRESHOLD],
+                  key=lambda x: -x["ev_win"])
+    return [{
+        "type": "単勝", "target": str(h["umaban"]), "ev": h["ev_win"], "stake_unit": 1,
+        "note": f"{h['_prank']}番手評価・妙味 +{round(h['edge']*100,1)}pt",
+    } for h in vals]
 
 
 def build_race_prediction(race: dict) -> dict:
     horses = race.get("horses", [])
-    normalize_market_probs(horses)
-    estimate_p_win(horses)
-    compute_ev_and_marks(horses)
+    rated = [h for h in horses if h.get("odds_win") and h["odds_win"] > 1.0]
+    unrated = [h for h in horses if not (h.get("odds_win") and h["odds_win"] > 1.0)]
 
-    # EVベースの買い目候補（単勝のみの簡易版。Phase2で複勝/ワイド対応）
-    tickets = [
-        {"type": "単勝", "target": str(h["umaban"]), "ev": h["ev_win"], "stake_unit": 1}
-        for h in horses
-        if h.get("ev_win", 0) > 1.0
-    ]
+    overround = 1.0
+    tickets: list[dict] = []
+    if rated:
+        overround = market_devig(rated)
+        estimate_p(rated)
+        compute_ev(rated)
+        assign_popularity(rated)
+        assign_marks(rated)
+        for h in rated:
+            h["reasons"] = build_reasons(h)
+        tickets = build_tickets(rated)
+        for h in rated:
+            h.pop("_prank", None)
+
+    for h in unrated:
+        h.update({"q_win": 0, "p_win": 0, "ev_win": 0, "edge": 0,
+                  "mark": "", "reasons": ["オッズ無し（出走取消の可能性）"]})
+
+    takeout_pct = round((overround - 1.0) * 100)
+    if tickets:
+        value_note = f"妙味のある馬 {len(tickets)}頭（EV≧{EV_THRESHOLD}）。"
+    else:
+        value_note = (f"EV>1の馬なし。控除率 約{takeout_pct}%の壁で、"
+                      f"オッズだけでは妙味は出にくい回。妙味の面では見送り目線。")
 
     return {
         **{k: race.get(k) for k in
            ("race_id", "date", "track", "race_no", "race_name",
             "distance_m", "surface", "going")},
         "updated_at": datetime.now(JST).isoformat(timespec="seconds"),
+        "market_overround": round(overround, 3),
+        "value_note": value_note,
         "horses": horses,
         "tickets": tickets,
     }
 
 
 def demo_race() -> dict:
-    """サンプルレース（入力が無くても動作確認できる）。"""
+    """サンプル（人気〜穴まで。穴に◎が付かない/EVが暴れないことを確認できる）。"""
     return {
         "race_id": "20260621_tokyo_11",
         "date": "2026-06-21", "track": "東京", "race_no": 11,
         "race_name": "サンプルステークス", "distance_m": 1600,
         "surface": "芝", "going": "良",
         "horses": [
-            {"umaban": 1, "name": "アルファ", "jockey": "騎手A", "odds_win": 3.1, "popularity": 1},
-            {"umaban": 5, "name": "ブラボー", "jockey": "騎手B", "odds_win": 6.8, "popularity": 3},
-            {"umaban": 8, "name": "チャーリー", "jockey": "騎手C", "odds_win": 4.5, "popularity": 2},
-            {"umaban": 11, "name": "デルタ", "jockey": "騎手D", "odds_win": 21.0, "popularity": 6},
-            {"umaban": 14, "name": "エコー", "jockey": "騎手E", "odds_win": 12.0, "popularity": 4},
+            {"umaban": 3,  "name": "テンプレキング", "jockey": "C.ルメール", "odds_win": 2.8},
+            {"umaban": 7,  "name": "バリューボルト", "jockey": "戸崎圭太",  "odds_win": 4.5},
+            {"umaban": 1,  "name": "ハイポップ",     "jockey": "川田将雅",  "odds_win": 6.0},
+            {"umaban": 10, "name": "ロングショット", "jockey": "横山武史",  "odds_win": 8.5},
+            {"umaban": 5,  "name": "ミドルレンジ",   "jockey": "横山典弘",  "odds_win": 11.0},
+            {"umaban": 12, "name": "ダークホース",   "jockey": "松山弘平",  "odds_win": 18.0},
+            {"umaban": 8,  "name": "アウトサイダー", "jockey": "鮫島克駿",  "odds_win": 30.0},
+            {"umaban": 4,  "name": "ロングオッズ",   "jockey": "（見習）",  "odds_win": 120.0},
         ],
     }
 
 
 def main():
-    ap = argparse.ArgumentParser(description="カチウマ 分析")
+    ap = argparse.ArgumentParser(description="カチウマ 分析エンジン (Phase 2)")
     ap.add_argument("--in", dest="indir", default="data/raw")
     ap.add_argument("--out", dest="outdir", default="data/predictions")
     ap.add_argument("--demo", action="store_true", help="サンプルで動作確認")
@@ -140,7 +175,7 @@ def main():
         indir = Path(args.indir)
         files = sorted(indir.glob("*_shutuba.raw.json")) if indir.exists() else []
         if not files:
-            print("入力が見つからないため --demo 相当で動作します")
+            print("入力が無いため --demo 相当で動作します")
             races = [demo_race()]
         else:
             for f in files:
@@ -151,19 +186,21 @@ def main():
         pred = build_race_prediction(race)
         out = outdir / f"{pred['race_id']}.json"
         out.write_text(json.dumps(pred, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"  wrote {out}")
-        top = max(pred["horses"], key=lambda x: x.get("ev_win", 0), default=None)
+        honma = next((h for h in pred["horses"] if h.get("mark") == "◎"), None)
+        best_ev = max((h.get("ev_win", 0) for h in pred["horses"]), default=0)
         index.append({
             "race_id": pred["race_id"], "date": pred["date"], "track": pred["track"],
             "race_no": pred["race_no"], "race_name": pred["race_name"],
-            "best_mark_umaban": top["umaban"] if top else None,
-            "best_ev": top["ev_win"] if top else None,
+            "best_mark_umaban": honma["umaban"] if honma else None,
+            "best_ev": best_ev,
+            "value_count": len(pred["tickets"]),
         })
 
+    index.sort(key=lambda r: (str(r["track"]), r["race_no"] or 0))
     (outdir / "index.json").write_text(
         json.dumps({"updated_at": datetime.now(JST).isoformat(timespec="seconds"),
                     "races": index}, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"  wrote {outdir/'index.json'} ({len(index)} races)")
+    print(f"  wrote {len(index)} races -> {outdir}")
 
 
 if __name__ == "__main__":
