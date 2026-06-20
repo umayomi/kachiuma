@@ -14,14 +14,8 @@ jobs:
           rid = "202602010211"
           h = requests.get(f"https://race.netkeiba.com/race/shutuba_past.html?race_id={rid}", headers=ua, timeout=20).text
           soup = BeautifulSoup(h, "lxml")
-          row = soup.select_one("tr.HorseList")
-          pasts = row.select("td.Past")
-          print("Past cells:", len(pasts))
-          p = pasts[0]
-          print("TEXT:", p.get_text("|", strip=True)[:260])
-          print("--- child elems ---")
-          for c in p.select("div,span")[:14]:
-              t = c.get_text(" ", strip=True)
-              if t:
-                  print(c.get("class"), "|", t[:22])
+          p = soup.select_one("tr.HorseList").select_one("td.Past")
+          print("Past class:", p.get("class"))
+          for el in p.find_all(True):
+              print(el.name, el.get("class"), "=", el.get_text(" ", strip=True)[:14])
           PY
