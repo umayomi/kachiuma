@@ -30,7 +30,9 @@ BASE_RACE = "https://race.netkeiba.com"
 BASE_DB = "https://db.netkeiba.com"
 
 HEADERS = {
-    "User-Agent": "kachiuma-personal-tool/0.1 (individual use)",
+    # netkeibaは非ブラウザUAやiPhone UAだと簡易ページを返すため、PC版Chrome相当を名乗る
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"),
     "Accept-Language": "ja,en;q=0.8",
 }
 INTERVAL_SEC = 1.5  # アクセス間隔（負荷をかけない）
@@ -127,7 +129,8 @@ def parse_shutuba(html: str, race_id: str, odds_map: dict[int, float] | None = N
         log.warning("出馬表の行(tr.HorseList)が見つからない: %s", race_id)
 
     for tr in rows:
-        umaban = _to_int(_text(tr.select_one("td.Umaban")))
+        # 馬番クラスは枠番が後ろに付く(Umaban1, Umaban2…)ので前方一致で取る
+        umaban = _to_int(_text(tr.select_one("td[class^='Umaban']")))
         a = tr.select_one("td.HorseInfo a[href*='/horse/']") or tr.select_one(".HorseName a")
         name = _text(a)
         horse_id = None
@@ -135,8 +138,12 @@ def parse_shutuba(html: str, race_id: str, odds_map: dict[int, float] | None = N
             hm = re.search(r"/horse/(\d+)", a["href"])
             horse_id = hm.group(1) if hm else None
         sex_age = _text(tr.select_one("td.Barei"))
+        # 斤量は専用クラスが無く、性齢(Barei)の次のtd
+        barei_td = tr.select_one("td.Barei")
+        weight_carried = _to_float(_text(barei_td.find_next_sibling("td"))) if barei_td else None
         jockey = _text(tr.select_one("td.Jockey a")) or _text(tr.select_one("td.Jockey"))
-        weight_carried = _to_float(_text(tr.select_one("td.Txt_C.Jockey")))  # 環境差あり
+        trainer = _text(tr.select_one("td.Trainer"))
+        horse_weight = _text(tr.select_one("td.Weight"))  # 例 "468(+10)"
 
         h = {
             "umaban": umaban,
@@ -144,7 +151,9 @@ def parse_shutuba(html: str, race_id: str, odds_map: dict[int, float] | None = N
             "horse_id": horse_id,
             "sex_age": sex_age,
             "jockey": jockey,
+            "trainer": trainer,
             "weight_carried": weight_carried,
+            "horse_weight": horse_weight,
             "odds_win": None,
             "popularity": None,
         }
