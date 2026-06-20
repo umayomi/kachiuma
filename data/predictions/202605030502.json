@@ -1,0 +1,352 @@
+{
+  "race_id": "202605030502",
+  "date": "2026-06-20",
+  "track": "東京",
+  "race_no": 2,
+  "race_name": "3歳未勝利",
+  "distance_m": 1400,
+  "surface": "ダート",
+  "going": null,
+  "updated_at": "2026-06-20T16:17:22+09:00",
+  "market_overround": 1.262,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "サクラドール",
+      "horse_id": "2023102868",
+      "sex_age": "牡3",
+      "jockey": "戸崎圭",
+      "trainer": "美浦田島",
+      "weight_carried": 57.0,
+      "horse_weight": "494(-6)",
+      "odds_win": 2.2,
+      "popularity": 1,
+      "q_win": 0.3603,
+      "p_win": 0.4011,
+      "ev_win": 0.882,
+      "edge": 0.0408,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 40.1%・1番手評価",
+        "1番人気 / EV 0.882（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "ヴェントベローチェ",
+      "horse_id": "2023103133",
+      "sex_age": "牡3",
+      "jockey": "北村宏",
+      "trainer": "美浦勢司",
+      "weight_carried": 57.0,
+      "horse_weight": "466(+2)",
+      "odds_win": 45.8,
+      "popularity": 7,
+      "q_win": 0.0173,
+      "p_win": 0.0122,
+      "ev_win": 0.559,
+      "edge": -0.0051,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.2%・7番手評価",
+        "7番人気 / EV 0.559（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "パッサージュワイズ",
+      "horse_id": "2023109122",
+      "sex_age": "牡3",
+      "jockey": "菅原隆",
+      "trainer": "美浦天間",
+      "weight_carried": 57.0,
+      "horse_weight": "452(0)",
+      "odds_win": 348.9,
+      "popularity": 14,
+      "q_win": 0.0023,
+      "p_win": 0.0012,
+      "ev_win": 0.419,
+      "edge": -0.0011,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.1%・14番手評価",
+        "14番人気 / EV 0.419（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "リオダプラタ",
+      "horse_id": "2023102866",
+      "sex_age": "牡3",
+      "jockey": "▲上里",
+      "trainer": "美浦西田",
+      "weight_carried": 54.0,
+      "horse_weight": "548(+8)",
+      "odds_win": 164.8,
+      "popularity": 11,
+      "q_win": 0.0048,
+      "p_win": 0.0028,
+      "ev_win": 0.461,
+      "edge": -0.002,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.3%・11番手評価",
+        "11番人気 / EV 0.461（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "スウィートラキ",
+      "horse_id": "2023101489",
+      "sex_age": "牝3",
+      "jockey": "木幡初",
+      "trainer": "美浦堀内",
+      "weight_carried": 55.0,
+      "horse_weight": "446(+4)",
+      "odds_win": 219.2,
+      "popularity": 12,
+      "q_win": 0.0036,
+      "p_win": 0.002,
+      "ev_win": 0.438,
+      "edge": -0.0016,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.2%・12番手評価",
+        "12番人気 / EV 0.438（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "エッジランナー",
+      "horse_id": "2023106686",
+      "sex_age": "牡3",
+      "jockey": "松岡",
+      "trainer": "美浦戸田",
+      "weight_carried": 57.0,
+      "horse_weight": "436(+4)",
+      "odds_win": 294.7,
+      "popularity": 13,
+      "q_win": 0.0027,
+      "p_win": 0.0014,
+      "ev_win": 0.413,
+      "edge": -0.0013,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.1%・13番手評価",
+        "13番人気 / EV 0.413（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "ブルーミーティア",
+      "horse_id": "2023100647",
+      "sex_age": "牡3",
+      "jockey": "横山典",
+      "trainer": "美浦鈴木伸",
+      "weight_carried": 57.0,
+      "horse_weight": "494(0)",
+      "odds_win": 4.4,
+      "popularity": 3,
+      "q_win": 0.1801,
+      "p_win": 0.1807,
+      "ev_win": 0.795,
+      "edge": 0.0006,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 18.1%・3番手評価",
+        "3番人気 / EV 0.795（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "セキテイロックス",
+      "horse_id": "2023105355",
+      "sex_age": "牡3",
+      "jockey": "小林脩",
+      "trainer": "美浦嘉藤",
+      "weight_carried": 57.0,
+      "horse_weight": "494(+4)",
+      "odds_win": 12.1,
+      "popularity": 4,
+      "q_win": 0.0655,
+      "p_win": 0.0565,
+      "ev_win": 0.684,
+      "edge": -0.009,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 5.7%・4番手評価",
+        "4番人気 / EV 0.684（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "ソーマッチ",
+      "horse_id": "2023104870",
+      "sex_age": "牝3",
+      "jockey": "木幡育",
+      "trainer": "美浦鈴木伸",
+      "weight_carried": 55.0,
+      "horse_weight": "430(+4)",
+      "odds_win": 474.8,
+      "popularity": 16,
+      "q_win": 0.0017,
+      "p_win": 0.0008,
+      "ev_win": 0.38,
+      "edge": -0.0009,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.1%・16番手評価",
+        "16番人気 / EV 0.38（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "ショウナンタヅナ",
+      "horse_id": "2023100531",
+      "sex_age": "牡3",
+      "jockey": "津村",
+      "trainer": "美浦武市",
+      "weight_carried": 57.0,
+      "horse_weight": "468(+2)",
+      "odds_win": 12.8,
+      "popularity": 5,
+      "q_win": 0.0619,
+      "p_win": 0.0529,
+      "ev_win": 0.677,
+      "edge": -0.009,
+      "mark": "",
+      "reasons": [
+        "予想勝率 5.3%・5番手評価",
+        "5番人気 / EV 0.677（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 11,
+      "name": "キイチムーブメント",
+      "horse_id": "2023101656",
+      "sex_age": "セ3",
+      "jockey": "原",
+      "trainer": "美浦青木",
+      "weight_carried": 57.0,
+      "horse_weight": "478(+14)",
+      "odds_win": 22.0,
+      "popularity": 6,
+      "q_win": 0.036,
+      "p_win": 0.0284,
+      "ev_win": 0.625,
+      "edge": -0.0076,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.8%・6番手評価",
+        "6番人気 / EV 0.625（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 12,
+      "name": "ブレイブシュガー",
+      "horse_id": "2023103997",
+      "sex_age": "牡3",
+      "jockey": "吉田豊",
+      "trainer": "美浦高橋文",
+      "weight_carried": 57.0,
+      "horse_weight": "476(+2)",
+      "odds_win": 55.9,
+      "popularity": 8,
+      "q_win": 0.0142,
+      "p_win": 0.0097,
+      "ev_win": 0.542,
+      "edge": -0.0045,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.0%・8番手評価",
+        "8番人気 / EV 0.542（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 13,
+      "name": "ステラゲイル",
+      "horse_id": "2023101246",
+      "sex_age": "牡3",
+      "jockey": "丸田",
+      "trainer": "美浦石栗",
+      "weight_carried": 57.0,
+      "horse_weight": "478(+1)",
+      "odds_win": 370.4,
+      "popularity": 15,
+      "q_win": 0.0021,
+      "p_win": 0.0011,
+      "ev_win": 0.407,
+      "edge": -0.001,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.1%・15番手評価",
+        "15番人気 / EV 0.407（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 14,
+      "name": "レイズレガシー",
+      "horse_id": "2023102978",
+      "sex_age": "牡3",
+      "jockey": "松山",
+      "trainer": "美浦高柳瑞",
+      "weight_carried": 57.0,
+      "horse_weight": "500(-6)",
+      "odds_win": 3.5,
+      "popularity": 2,
+      "q_win": 0.2265,
+      "p_win": 0.2352,
+      "ev_win": 0.823,
+      "edge": 0.0087,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 23.5%・2番手評価",
+        "2番人気 / EV 0.823（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 15,
+      "name": "ガヤーズベース",
+      "horse_id": "2023105114",
+      "sex_age": "牡3",
+      "jockey": "菊沢",
+      "trainer": "美浦田中勝",
+      "weight_carried": 57.0,
+      "horse_weight": "462(-4)",
+      "odds_win": 59.8,
+      "popularity": 9,
+      "q_win": 0.0133,
+      "p_win": 0.009,
+      "ev_win": 0.538,
+      "edge": -0.0043,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.9%・9番手評価",
+        "9番人気 / EV 0.538（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 16,
+      "name": "トゥントゥントゥン",
+      "horse_id": "2023104606",
+      "sex_age": "牡3",
+      "jockey": "嶋田",
+      "trainer": "美浦手塚久",
+      "weight_carried": 57.0,
+      "horse_weight": "424(+4)",
+      "odds_win": 102.2,
+      "popularity": 10,
+      "q_win": 0.0078,
+      "p_win": 0.0049,
+      "ev_win": 0.501,
+      "edge": -0.0029,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.5%・10番手評価",
+        "10番人気 / EV 0.501（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

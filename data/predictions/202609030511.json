@@ -1,0 +1,331 @@
+{
+  "race_id": "202609030511",
+  "date": "2026-06-20",
+  "track": "阪神",
+  "race_no": 11,
+  "race_name": "天保山S",
+  "distance_m": 1400,
+  "surface": "ダート",
+  "going": "重",
+  "updated_at": "2026-06-20T16:17:22+09:00",
+  "market_overround": 1.265,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ハセドン",
+      "horse_id": "2019103593",
+      "sex_age": "牡7",
+      "jockey": "Ｍデムーロ",
+      "trainer": "美浦大和田",
+      "weight_carried": 58.0,
+      "horse_weight": "482(+4)",
+      "odds_win": 106.6,
+      "popularity": 11,
+      "q_win": 0.0074,
+      "p_win": 0.0047,
+      "ev_win": 0.501,
+      "edge": -0.0027,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.5%・11番手評価",
+        "11番人気 / EV 0.501（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "ロードアウォード",
+      "horse_id": "2020100162",
+      "sex_age": "セ6",
+      "jockey": "高杉",
+      "trainer": "栗東吉岡",
+      "weight_carried": 58.0,
+      "horse_weight": "486(+10)",
+      "odds_win": 14.3,
+      "popularity": 6,
+      "q_win": 0.0553,
+      "p_win": 0.0478,
+      "ev_win": 0.684,
+      "edge": -0.0075,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.8%・6番手評価",
+        "6番人気 / EV 0.684（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ベルジュロネット",
+      "horse_id": "2022106658",
+      "sex_age": "牡4",
+      "jockey": "西村淳",
+      "trainer": "栗東大久保",
+      "weight_carried": 57.0,
+      "horse_weight": "550(0)",
+      "odds_win": 2.5,
+      "popularity": 1,
+      "q_win": 0.3162,
+      "p_win": 0.3554,
+      "ev_win": 0.888,
+      "edge": 0.0392,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 35.5%・1番手評価",
+        "1番人気 / EV 0.888（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "アッチャゴーラ",
+      "horse_id": "2020102843",
+      "sex_age": "牡6",
+      "jockey": "小崎",
+      "trainer": "美浦浅利",
+      "weight_carried": 57.0,
+      "horse_weight": "518(-2)",
+      "odds_win": 84.6,
+      "popularity": 10,
+      "q_win": 0.0093,
+      "p_win": 0.0062,
+      "ev_win": 0.525,
+      "edge": -0.0031,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.6%・10番手評価",
+        "10番人気 / EV 0.525（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "イスラアネーロ",
+      "horse_id": "2019105741",
+      "sex_age": "牡7",
+      "jockey": "川又",
+      "trainer": "栗東吉村",
+      "weight_carried": 58.0,
+      "horse_weight": "456(0)",
+      "odds_win": 259.4,
+      "popularity": 14,
+      "q_win": 0.003,
+      "p_win": 0.0017,
+      "ev_win": 0.441,
+      "edge": -0.0013,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.2%・14番手評価",
+        "14番人気 / EV 0.441（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "ケイアイアニラ",
+      "horse_id": "2020104228",
+      "sex_age": "牡6",
+      "jockey": "菱田",
+      "trainer": "栗東吉岡",
+      "weight_carried": 57.0,
+      "horse_weight": "536(0)",
+      "odds_win": 74.3,
+      "popularity": 9,
+      "q_win": 0.0106,
+      "p_win": 0.0072,
+      "ev_win": 0.535,
+      "edge": -0.0034,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.7%・9番手評価",
+        "9番人気 / EV 0.535（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "タイセイブレイズ",
+      "horse_id": "2018102969",
+      "sex_age": "牡8",
+      "jockey": "田口",
+      "trainer": "栗東牧浦",
+      "weight_carried": 57.0,
+      "horse_weight": "466(-4)",
+      "odds_win": 118.2,
+      "popularity": 13,
+      "q_win": 0.0067,
+      "p_win": 0.0042,
+      "ev_win": 0.496,
+      "edge": -0.0025,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.4%・13番手評価",
+        "13番人気 / EV 0.496（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "ポールセン",
+      "horse_id": "2022110140",
+      "sex_age": "牡4",
+      "jockey": "吉村",
+      "trainer": "美浦斎藤誠",
+      "weight_carried": 57.0,
+      "horse_weight": "486(-4)",
+      "odds_win": 5.7,
+      "popularity": 3,
+      "q_win": 0.1387,
+      "p_win": 0.1378,
+      "ev_win": 0.785,
+      "edge": -0.0009,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 13.8%・3番手評価",
+        "3番人気 / EV 0.785（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "サクセスローレル",
+      "horse_id": "2019102454",
+      "sex_age": "牡7",
+      "jockey": "秋山稔",
+      "trainer": "栗東北出",
+      "weight_carried": 57.0,
+      "horse_weight": "532(-6)",
+      "odds_win": 300.8,
+      "popularity": 15,
+      "q_win": 0.0026,
+      "p_win": 0.0014,
+      "ev_win": 0.421,
+      "edge": -0.0012,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.1%・15番手評価",
+        "15番人気 / EV 0.421（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "モンドプリューム",
+      "horse_id": "2020103876",
+      "sex_age": "牡6",
+      "jockey": "幸",
+      "trainer": "美浦水野",
+      "weight_carried": 58.0,
+      "horse_weight": "512(+4)",
+      "odds_win": 40.9,
+      "popularity": 8,
+      "q_win": 0.0193,
+      "p_win": 0.0143,
+      "ev_win": 0.585,
+      "edge": -0.005,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.4%・8番手評価",
+        "8番人気 / EV 0.585（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 11,
+      "name": "ノーブルロジャー",
+      "horse_id": "2021110148",
+      "sex_age": "牡5",
+      "jockey": "石川",
+      "trainer": "栗東吉岡",
+      "weight_carried": 59.0,
+      "horse_weight": "500(-2)",
+      "odds_win": 15.3,
+      "popularity": 7,
+      "q_win": 0.0517,
+      "p_win": 0.0443,
+      "ev_win": 0.678,
+      "edge": -0.0074,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.4%・7番手評価",
+        "7番人気 / EV 0.678（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 12,
+      "name": "ラファル",
+      "horse_id": "2022103680",
+      "sex_age": "牡4",
+      "jockey": "岩田望",
+      "trainer": "栗東田中克",
+      "weight_carried": 57.0,
+      "horse_weight": "516(-14)",
+      "odds_win": 7.1,
+      "popularity": 4,
+      "q_win": 0.1114,
+      "p_win": 0.1071,
+      "ev_win": 0.76,
+      "edge": -0.0043,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 10.7%・4番手評価",
+        "4番人気 / EV 0.76（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 13,
+      "name": "スマートフォルス",
+      "horse_id": "2020101707",
+      "sex_age": "牡6",
+      "jockey": "坂井",
+      "trainer": "栗東吉村",
+      "weight_carried": 57.0,
+      "horse_weight": "488(+2)",
+      "odds_win": 13.6,
+      "popularity": 5,
+      "q_win": 0.0581,
+      "p_win": 0.0506,
+      "ev_win": 0.688,
+      "edge": -0.0075,
+      "mark": "",
+      "reasons": [
+        "予想勝率 5.1%・5番手評価",
+        "5番人気 / EV 0.688（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 14,
+      "name": "ルークススペイ",
+      "horse_id": "2022101543",
+      "sex_age": "牡4",
+      "jockey": "川田",
+      "trainer": "美浦伊藤圭",
+      "weight_carried": 57.0,
+      "horse_weight": "486(-6)",
+      "odds_win": 3.9,
+      "popularity": 2,
+      "q_win": 0.2027,
+      "p_win": 0.2131,
+      "ev_win": 0.831,
+      "edge": 0.0104,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 21.3%・2番手評価",
+        "2番人気 / EV 0.831（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 15,
+      "name": "エティエンヌ",
+      "horse_id": "2019105761",
+      "sex_age": "セ7",
+      "jockey": "長岡",
+      "trainer": "栗東吉田",
+      "weight_carried": 57.0,
+      "horse_weight": "514(+4)",
+      "odds_win": 116.2,
+      "popularity": 12,
+      "q_win": 0.0068,
+      "p_win": 0.0043,
+      "ev_win": 0.5,
+      "edge": -0.0025,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.4%・12番手評価",
+        "12番人気 / EV 0.5（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

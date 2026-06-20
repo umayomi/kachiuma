@@ -1,0 +1,184 @@
+{
+  "race_id": "202602010310",
+  "date": "2026-06-20",
+  "track": "函館",
+  "race_no": 10,
+  "race_name": "駒ケ岳特別",
+  "distance_m": 2600,
+  "surface": "芝",
+  "going": "良",
+  "updated_at": "2026-06-20T16:17:22+09:00",
+  "market_overround": 1.264,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "シャインバオバブ",
+      "horse_id": "2022106180",
+      "sex_age": "牡4",
+      "jockey": "古川吉",
+      "trainer": "栗東本田",
+      "weight_carried": 58.0,
+      "horse_weight": "510(-10)",
+      "odds_win": 15.1,
+      "popularity": 6,
+      "q_win": 0.0524,
+      "p_win": 0.0442,
+      "ev_win": 0.667,
+      "edge": -0.0082,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.4%・6番手評価",
+        "6番人気 / EV 0.667（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "ローレルオーブ",
+      "horse_id": "2022106940",
+      "sex_age": "牡4",
+      "jockey": "斎藤",
+      "trainer": "栗東杉山佳",
+      "weight_carried": 58.0,
+      "horse_weight": "478(+8)",
+      "odds_win": 5.3,
+      "popularity": 4,
+      "q_win": 0.1493,
+      "p_win": 0.1472,
+      "ev_win": 0.78,
+      "edge": -0.0021,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 14.7%・4番手評価",
+        "4番人気 / EV 0.78（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "アスクファイアモア",
+      "horse_id": "2023105261",
+      "sex_age": "牡3",
+      "jockey": "古川奈",
+      "trainer": "栗東矢作",
+      "weight_carried": 54.0,
+      "horse_weight": "498(-8)",
+      "odds_win": 5.9,
+      "popularity": 5,
+      "q_win": 0.1341,
+      "p_win": 0.1301,
+      "ev_win": 0.768,
+      "edge": -0.004,
+      "mark": "",
+      "reasons": [
+        "予想勝率 13.0%・5番手評価",
+        "5番人気 / EV 0.768（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "ゴールデンパゴーダ",
+      "horse_id": "2023101116",
+      "sex_age": "牝3",
+      "jockey": "佐々木",
+      "trainer": "美浦上原佑",
+      "weight_carried": 52.0,
+      "horse_weight": "400(+10)",
+      "odds_win": 3.4,
+      "popularity": 1,
+      "q_win": 0.2327,
+      "p_win": 0.2452,
+      "ev_win": 0.834,
+      "edge": 0.0125,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 24.5%・1番手評価",
+        "1番人気 / EV 0.834（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "ペリプルス",
+      "horse_id": "2020105796",
+      "sex_age": "牡6",
+      "jockey": "横山琉",
+      "trainer": "美浦佐藤吉",
+      "weight_carried": 58.0,
+      "horse_weight": "436(-6)",
+      "odds_win": 25.1,
+      "popularity": 7,
+      "q_win": 0.0315,
+      "p_win": 0.0246,
+      "ev_win": 0.617,
+      "edge": -0.0069,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.5%・7番手評価",
+        "7番人気 / EV 0.617（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "バズアップビート",
+      "horse_id": "2022104973",
+      "sex_age": "セ4",
+      "jockey": "武豊",
+      "trainer": "栗東武幸",
+      "weight_carried": 58.0,
+      "horse_weight": "502(+10)",
+      "odds_win": 4.4,
+      "popularity": 3,
+      "q_win": 0.1798,
+      "p_win": 0.1823,
+      "ev_win": 0.802,
+      "edge": 0.0025,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 18.2%・3番手評価",
+        "3番人気 / EV 0.802（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "サイモンイロハニー",
+      "horse_id": "2022104164",
+      "sex_age": "牝4",
+      "jockey": "小沢",
+      "trainer": "栗東谷",
+      "weight_carried": 56.0,
+      "horse_weight": "428(+14)",
+      "odds_win": 124.5,
+      "popularity": 8,
+      "q_win": 0.0064,
+      "p_win": 0.0039,
+      "ev_win": 0.486,
+      "edge": -0.0025,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.4%・8番手評価",
+        "8番人気 / EV 0.486（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "マイネルゼウス",
+      "horse_id": "2022106828",
+      "sex_age": "牡4",
+      "jockey": "丹内",
+      "trainer": "美浦奥村武",
+      "weight_carried": 58.0,
+      "horse_weight": "418(0)",
+      "odds_win": 3.7,
+      "popularity": 2,
+      "q_win": 0.2138,
+      "p_win": 0.2225,
+      "ev_win": 0.823,
+      "edge": 0.0087,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 22.2%・2番手評価",
+        "2番人気 / EV 0.823（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

@@ -1,0 +1,226 @@
+{
+  "race_id": "202605030509",
+  "date": "2026-06-20",
+  "track": "東京",
+  "race_no": 9,
+  "race_name": "町田特別",
+  "distance_m": 2400,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T16:17:22+09:00",
+  "market_overround": 1.269,
+  "value_note": "EV>1の馬なし。控除率 約27%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "フルレゾン",
+      "horse_id": "2021104840",
+      "sex_age": "牝5",
+      "jockey": "武藤",
+      "trainer": "栗東池添",
+      "weight_carried": 53.0,
+      "horse_weight": "440(-18)",
+      "odds_win": 19.3,
+      "popularity": 5,
+      "q_win": 0.0408,
+      "p_win": 0.0312,
+      "ev_win": 0.602,
+      "edge": -0.0096,
+      "mark": "",
+      "reasons": [
+        "予想勝率 3.1%・5番手評価",
+        "5番人気 / EV 0.602（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "サイモンルモンド",
+      "horse_id": "2017106722",
+      "sex_age": "セ9",
+      "jockey": "木幡育",
+      "trainer": "美浦的場",
+      "weight_carried": 50.0,
+      "horse_weight": "460(0)",
+      "odds_win": 248.2,
+      "popularity": 10,
+      "q_win": 0.0032,
+      "p_win": 0.0017,
+      "ev_win": 0.422,
+      "edge": -0.0015,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.2%・10番手評価",
+        "10番人気 / EV 0.422（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ピックデムッシュ",
+      "horse_id": "2022104799",
+      "sex_age": "牡4",
+      "jockey": "ルメール",
+      "trainer": "美浦鹿戸",
+      "weight_carried": 57.0,
+      "horse_weight": "462(+4)",
+      "odds_win": 2.0,
+      "popularity": 1,
+      "q_win": 0.394,
+      "p_win": 0.4229,
+      "ev_win": 0.846,
+      "edge": 0.0289,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 42.3%・1番手評価",
+        "1番人気 / EV 0.846（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "バンフィエルド",
+      "horse_id": "2019104531",
+      "sex_age": "牡7",
+      "jockey": "柴田大",
+      "trainer": "美浦粕谷",
+      "weight_carried": 54.0,
+      "horse_weight": "440(+4)",
+      "odds_win": 163.7,
+      "popularity": 9,
+      "q_win": 0.0048,
+      "p_win": 0.0027,
+      "ev_win": 0.442,
+      "edge": -0.0021,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.3%・9番手評価",
+        "9番人気 / EV 0.442（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "オウケンボルト",
+      "horse_id": "2019103827",
+      "sex_age": "牡7",
+      "jockey": "吉田豊",
+      "trainer": "美浦松永康",
+      "weight_carried": 53.0,
+      "horse_weight": "460(-4)",
+      "odds_win": 52.2,
+      "popularity": 8,
+      "q_win": 0.0151,
+      "p_win": 0.0099,
+      "ev_win": 0.517,
+      "edge": -0.0052,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.0%・8番手評価",
+        "8番人気 / EV 0.517（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "ランツフート",
+      "horse_id": "2022105577",
+      "sex_age": "牡4",
+      "jockey": "三浦",
+      "trainer": "栗東大久保",
+      "weight_carried": 55.0,
+      "horse_weight": "466(+4)",
+      "odds_win": 17.0,
+      "popularity": 4,
+      "q_win": 0.0464,
+      "p_win": 0.0361,
+      "ev_win": 0.614,
+      "edge": -0.0103,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 3.6%・4番手評価",
+        "4番人気 / EV 0.614（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "チャリングクロス",
+      "horse_id": "2023107389",
+      "sex_age": "牡3",
+      "jockey": "戸崎圭",
+      "trainer": "美浦奥村武",
+      "weight_carried": 53.0,
+      "horse_weight": "488(+8)",
+      "odds_win": 2.1,
+      "popularity": 2,
+      "q_win": 0.3752,
+      "p_win": 0.3997,
+      "ev_win": 0.839,
+      "edge": 0.0245,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 40.0%・2番手評価",
+        "2番人気 / EV 0.839（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "レーヴドロペラ",
+      "horse_id": "2022106709",
+      "sex_age": "牝4",
+      "jockey": "ゴンサルベ",
+      "trainer": "美浦加藤士",
+      "weight_carried": 53.0,
+      "horse_weight": "468(+2)",
+      "odds_win": 9.6,
+      "popularity": 3,
+      "q_win": 0.0821,
+      "p_win": 0.0696,
+      "ev_win": 0.668,
+      "edge": -0.0125,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 7.0%・3番手評価",
+        "3番人気 / EV 0.668（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "クリフハンガー",
+      "horse_id": "2021101701",
+      "sex_age": "セ5",
+      "jockey": "原",
+      "trainer": "美浦上原博",
+      "weight_carried": 54.0,
+      "horse_weight": "444(-2)",
+      "odds_win": 37.7,
+      "popularity": 6,
+      "q_win": 0.0209,
+      "p_win": 0.0144,
+      "ev_win": 0.543,
+      "edge": -0.0065,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.4%・6番手評価",
+        "6番人気 / EV 0.543（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "シテフローラル",
+      "horse_id": "2018105086",
+      "sex_age": "セ8",
+      "jockey": "松山",
+      "trainer": "美浦堀",
+      "weight_carried": 55.0,
+      "horse_weight": "450(+12)",
+      "odds_win": 45.0,
+      "popularity": 7,
+      "q_win": 0.0175,
+      "p_win": 0.0118,
+      "ev_win": 0.531,
+      "edge": -0.0057,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.2%・7番手評価",
+        "7番人気 / EV 0.531（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

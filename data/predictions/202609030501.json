@@ -1,0 +1,205 @@
+{
+  "race_id": "202609030501",
+  "date": "2026-06-20",
+  "track": "阪神",
+  "race_no": 1,
+  "race_name": "3歳以上障害OP",
+  "distance_m": 3110,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T16:17:22+09:00",
+  "market_overround": 1.265,
+  "value_note": "EV>1の馬なし。控除率 約27%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ライツフォル",
+      "horse_id": "2020103398",
+      "sex_age": "牡6",
+      "jockey": "難波",
+      "trainer": "栗東高橋忠",
+      "weight_carried": 60.0,
+      "horse_weight": "500(+2)",
+      "odds_win": 9.8,
+      "popularity": 5,
+      "q_win": 0.0806,
+      "p_win": 0.0713,
+      "ev_win": 0.699,
+      "edge": -0.0093,
+      "mark": "",
+      "reasons": [
+        "予想勝率 7.1%・5番手評価",
+        "5番人気 / EV 0.699（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "グラニットピーク",
+      "horse_id": "2020103507",
+      "sex_age": "セ6",
+      "jockey": "▲坂口",
+      "trainer": "美浦田島",
+      "weight_carried": 57.0,
+      "horse_weight": "502(-10)",
+      "odds_win": 64.3,
+      "popularity": 7,
+      "q_win": 0.0123,
+      "p_win": 0.0082,
+      "ev_win": 0.527,
+      "edge": -0.0041,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.8%・7番手評価",
+        "7番人気 / EV 0.527（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "テイエムエメラルド",
+      "horse_id": "2018102822",
+      "sex_age": "牝8",
+      "jockey": "黒岩",
+      "trainer": "栗東小椋",
+      "weight_carried": 58.0,
+      "horse_weight": "462(0)",
+      "odds_win": 67.1,
+      "popularity": 8,
+      "q_win": 0.0118,
+      "p_win": 0.0078,
+      "ev_win": 0.523,
+      "edge": -0.004,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.8%・8番手評価",
+        "8番人気 / EV 0.523（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "オオキニ",
+      "horse_id": "2019100675",
+      "sex_age": "セ7",
+      "jockey": "森一",
+      "trainer": "栗東鈴木孝",
+      "weight_carried": 60.0,
+      "horse_weight": "468(+10)",
+      "odds_win": 2.2,
+      "popularity": 1,
+      "q_win": 0.3592,
+      "p_win": 0.3973,
+      "ev_win": 0.874,
+      "edge": 0.0381,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 39.7%・1番手評価",
+        "1番人気 / EV 0.874（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "タマモエース",
+      "horse_id": "2019104010",
+      "sex_age": "牡7",
+      "jockey": "▲水沼",
+      "trainer": "栗東宮地",
+      "weight_carried": 57.0,
+      "horse_weight": "482(-2)",
+      "odds_win": 13.2,
+      "popularity": 6,
+      "q_win": 0.0599,
+      "p_win": 0.0506,
+      "ev_win": 0.668,
+      "edge": -0.0093,
+      "mark": "",
+      "reasons": [
+        "予想勝率 5.1%・6番手評価",
+        "6番人気 / EV 0.668（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "シャンデルナゴル",
+      "horse_id": "2020103193",
+      "sex_age": "牡6",
+      "jockey": "中村",
+      "trainer": "栗東石坂",
+      "weight_carried": 60.0,
+      "horse_weight": "516(+16)",
+      "odds_win": 8.7,
+      "popularity": 4,
+      "q_win": 0.0908,
+      "p_win": 0.0817,
+      "ev_win": 0.711,
+      "edge": -0.0091,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 8.2%・4番手評価",
+        "4番人気 / EV 0.711（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "ネイチャーシップ",
+      "horse_id": "2018102917",
+      "sex_age": "牡8",
+      "jockey": "大江圭",
+      "trainer": "美浦畠山",
+      "weight_carried": 60.0,
+      "horse_weight": "504(0)",
+      "odds_win": 4.6,
+      "popularity": 3,
+      "q_win": 0.1718,
+      "p_win": 0.1701,
+      "ev_win": 0.782,
+      "edge": -0.0017,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 17.0%・3番手評価",
+        "3番人気 / EV 0.782（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "ロードリベラシオン",
+      "horse_id": "2022102821",
+      "sex_age": "牡4",
+      "jockey": "五十嵐",
+      "trainer": "美浦尾形",
+      "weight_carried": 60.0,
+      "horse_weight": "510(0)",
+      "odds_win": 3.9,
+      "popularity": 2,
+      "q_win": 0.2026,
+      "p_win": 0.2057,
+      "ev_win": 0.802,
+      "edge": 0.0031,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 20.6%・2番手評価",
+        "2番人気 / EV 0.802（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "タイセイジャスパー",
+      "horse_id": "2019100135",
+      "sex_age": "セ7",
+      "jockey": "上野",
+      "trainer": "美浦伊藤圭",
+      "weight_carried": 60.0,
+      "horse_weight": "494(-2)",
+      "odds_win": 71.8,
+      "popularity": 9,
+      "q_win": 0.011,
+      "p_win": 0.0072,
+      "ev_win": 0.517,
+      "edge": -0.0038,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.7%・9番手評価",
+        "9番人気 / EV 0.517（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

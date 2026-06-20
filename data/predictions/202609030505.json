@@ -1,0 +1,205 @@
+{
+  "race_id": "202609030505",
+  "date": "2026-06-20",
+  "track": "阪神",
+  "race_no": 5,
+  "race_name": "2歳新馬",
+  "distance_m": 1400,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T16:17:22+09:00",
+  "market_overround": 1.264,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "サンタンジェロ",
+      "horse_id": "2024106654",
+      "sex_age": "牝2",
+      "jockey": "西村淳",
+      "trainer": "栗東須貝",
+      "weight_carried": 55.0,
+      "horse_weight": "450(0)",
+      "odds_win": 3.5,
+      "popularity": 2,
+      "q_win": 0.226,
+      "p_win": 0.2395,
+      "ev_win": 0.838,
+      "edge": 0.0135,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 23.9%・2番手評価",
+        "2番人気 / EV 0.838（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "ルースソラール",
+      "horse_id": "2024107063",
+      "sex_age": "牡2",
+      "jockey": "吉村",
+      "trainer": "栗東吉岡",
+      "weight_carried": 55.0,
+      "horse_weight": "460(0)",
+      "odds_win": 32.8,
+      "popularity": 9,
+      "q_win": 0.0241,
+      "p_win": 0.0183,
+      "ev_win": 0.6,
+      "edge": -0.0058,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.8%・9番手評価",
+        "9番人気 / EV 0.6（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ハロナ",
+      "horse_id": "2024104988",
+      "sex_age": "牝2",
+      "jockey": "坂井",
+      "trainer": "栗東須貝",
+      "weight_carried": 55.0,
+      "horse_weight": "438(0)",
+      "odds_win": 14.4,
+      "popularity": 6,
+      "q_win": 0.0549,
+      "p_win": 0.047,
+      "ev_win": 0.677,
+      "edge": -0.0079,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.7%・6番手評価",
+        "6番人気 / EV 0.677（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "カツダルマ",
+      "horse_id": "2024101744",
+      "sex_age": "牡2",
+      "jockey": "幸",
+      "trainer": "栗東秋山",
+      "weight_carried": 55.0,
+      "horse_weight": "500(0)",
+      "odds_win": 8.3,
+      "popularity": 4,
+      "q_win": 0.0953,
+      "p_win": 0.0887,
+      "ev_win": 0.736,
+      "edge": -0.0066,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 8.9%・4番手評価",
+        "4番人気 / EV 0.736（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "ダノンヴェルサイユ",
+      "horse_id": "2024106442",
+      "sex_age": "牝2",
+      "jockey": "Ｍデムーロ",
+      "trainer": "栗東坂口",
+      "weight_carried": 55.0,
+      "horse_weight": "434(0)",
+      "odds_win": 32.1,
+      "popularity": 8,
+      "q_win": 0.0246,
+      "p_win": 0.0187,
+      "ev_win": 0.6,
+      "edge": -0.0059,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.9%・8番手評価",
+        "8番人気 / EV 0.6（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "クールタロウ",
+      "horse_id": "2024105496",
+      "sex_age": "牡2",
+      "jockey": "富田",
+      "trainer": "栗東宮地",
+      "weight_carried": 55.0,
+      "horse_weight": "472(0)",
+      "odds_win": 9.2,
+      "popularity": 5,
+      "q_win": 0.086,
+      "p_win": 0.0788,
+      "ev_win": 0.725,
+      "edge": -0.0072,
+      "mark": "",
+      "reasons": [
+        "予想勝率 7.9%・5番手評価",
+        "5番人気 / EV 0.725（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "ティンタアマレラ",
+      "horse_id": "2024100673",
+      "sex_age": "牡2",
+      "jockey": "川田",
+      "trainer": "栗東佐藤悠",
+      "weight_carried": 55.0,
+      "horse_weight": "450(0)",
+      "odds_win": 4.6,
+      "popularity": 3,
+      "q_win": 0.172,
+      "p_win": 0.1749,
+      "ev_win": 0.805,
+      "edge": 0.0029,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 17.5%・3番手評価",
+        "3番人気 / EV 0.805（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "ブラックミューズ",
+      "horse_id": "2024106131",
+      "sex_age": "牝2",
+      "jockey": "岩田望",
+      "trainer": "栗東松永幹",
+      "weight_carried": 55.0,
+      "horse_weight": "486(0)",
+      "odds_win": 2.9,
+      "popularity": 1,
+      "q_win": 0.2728,
+      "p_win": 0.2974,
+      "ev_win": 0.862,
+      "edge": 0.0246,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 29.7%・1番手評価",
+        "1番人気 / EV 0.862（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "リュウトウコヤク",
+      "horse_id": "2024107248",
+      "sex_age": "牡2",
+      "jockey": "△田山",
+      "trainer": "栗東鈴木孝",
+      "weight_carried": 53.0,
+      "horse_weight": "456(0)",
+      "odds_win": 17.9,
+      "popularity": 7,
+      "q_win": 0.0442,
+      "p_win": 0.0367,
+      "ev_win": 0.657,
+      "edge": -0.0075,
+      "mark": "",
+      "reasons": [
+        "予想勝率 3.7%・7番手評価",
+        "7番人気 / EV 0.657（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

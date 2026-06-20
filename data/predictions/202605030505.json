@@ -1,0 +1,226 @@
+{
+  "race_id": "202605030505",
+  "date": "2026-06-20",
+  "track": "東京",
+  "race_no": 5,
+  "race_name": "2歳新馬",
+  "distance_m": 1600,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T16:17:22+09:00",
+  "market_overround": 1.257,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "レッチュベルク",
+      "horse_id": "2024106687",
+      "sex_age": "牡2",
+      "jockey": "荻野極",
+      "trainer": "美浦久保田",
+      "weight_carried": 55.0,
+      "horse_weight": "478(0)",
+      "odds_win": 4.0,
+      "popularity": 2,
+      "q_win": 0.1989,
+      "p_win": 0.197,
+      "ev_win": 0.788,
+      "edge": -0.0019,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 19.7%・2番手評価",
+        "2番人気 / EV 0.788（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "コンクレデンツァ",
+      "horse_id": "2024106890",
+      "sex_age": "牡2",
+      "jockey": "武藤",
+      "trainer": "美浦戸田",
+      "weight_carried": 55.0,
+      "horse_weight": "468(0)",
+      "odds_win": 159.8,
+      "popularity": 10,
+      "q_win": 0.005,
+      "p_win": 0.0029,
+      "ev_win": 0.463,
+      "edge": -0.0021,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.3%・10番手評価",
+        "10番人気 / EV 0.463（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ニシノアイオーン",
+      "horse_id": "2024105388",
+      "sex_age": "牡2",
+      "jockey": "嶋田",
+      "trainer": "美浦手塚久",
+      "weight_carried": 55.0,
+      "horse_weight": "520(0)",
+      "odds_win": 66.9,
+      "popularity": 7,
+      "q_win": 0.0119,
+      "p_win": 0.0077,
+      "ev_win": 0.515,
+      "edge": -0.0042,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.8%・7番手評価",
+        "7番人気 / EV 0.515（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "マーズエクレール",
+      "horse_id": "2024106587",
+      "sex_age": "牡2",
+      "jockey": "戸崎圭",
+      "trainer": "栗東佐藤悠",
+      "weight_carried": 55.0,
+      "horse_weight": "520(0)",
+      "odds_win": 5.4,
+      "popularity": 3,
+      "q_win": 0.1473,
+      "p_win": 0.1395,
+      "ev_win": 0.753,
+      "edge": -0.0078,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 14.0%・3番手評価",
+        "3番人気 / EV 0.753（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "ホワイトフレアー",
+      "horse_id": "2024106066",
+      "sex_age": "牡2",
+      "jockey": "原",
+      "trainer": "美浦黒岩",
+      "weight_carried": 55.0,
+      "horse_weight": "472(0)",
+      "odds_win": 16.8,
+      "popularity": 6,
+      "q_win": 0.0474,
+      "p_win": 0.0379,
+      "ev_win": 0.637,
+      "edge": -0.0095,
+      "mark": "",
+      "reasons": [
+        "予想勝率 3.8%・6番手評価",
+        "6番人気 / EV 0.637（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "ペアスターロード",
+      "horse_id": "2024100732",
+      "sex_age": "牡2",
+      "jockey": "松山",
+      "trainer": "栗東前川",
+      "weight_carried": 55.0,
+      "horse_weight": "474(0)",
+      "odds_win": 12.7,
+      "popularity": 5,
+      "q_win": 0.0626,
+      "p_win": 0.0521,
+      "ev_win": 0.662,
+      "edge": -0.0105,
+      "mark": "",
+      "reasons": [
+        "予想勝率 5.2%・5番手評価",
+        "5番人気 / EV 0.662（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "ウィールズアップ",
+      "horse_id": "2024105762",
+      "sex_age": "牡2",
+      "jockey": "津村",
+      "trainer": "美浦池上",
+      "weight_carried": 55.0,
+      "horse_weight": "448(0)",
+      "odds_win": 10.8,
+      "popularity": 4,
+      "q_win": 0.0737,
+      "p_win": 0.0629,
+      "ev_win": 0.679,
+      "edge": -0.0108,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 6.3%・4番手評価",
+        "4番人気 / EV 0.679（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "ナナレイ",
+      "horse_id": "2024101227",
+      "sex_age": "牝2",
+      "jockey": "丸山",
+      "trainer": "美浦小野",
+      "weight_carried": 55.0,
+      "horse_weight": "418(0)",
+      "odds_win": 140.9,
+      "popularity": 8,
+      "q_win": 0.0056,
+      "p_win": 0.0032,
+      "ev_win": 0.451,
+      "edge": -0.0024,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.3%・8番手評価",
+        "8番人気 / EV 0.451（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "コナパームス",
+      "horse_id": "2024106309",
+      "sex_age": "牡2",
+      "jockey": "ルメール",
+      "trainer": "美浦森一",
+      "weight_carried": 55.0,
+      "horse_weight": "492(0)",
+      "odds_win": 1.8,
+      "popularity": 1,
+      "q_win": 0.442,
+      "p_win": 0.4936,
+      "ev_win": 0.888,
+      "edge": 0.0516,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 49.4%・1番手評価",
+        "1番人気 / EV 0.888（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "ジーティーフクジ",
+      "horse_id": "2024106044",
+      "sex_age": "牡2",
+      "jockey": "▲上里",
+      "trainer": "美浦武市",
+      "weight_carried": 52.0,
+      "horse_weight": "396(0)",
+      "odds_win": 143.8,
+      "popularity": 9,
+      "q_win": 0.0055,
+      "p_win": 0.0032,
+      "ev_win": 0.46,
+      "edge": -0.0023,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.3%・9番手評価",
+        "9番人気 / EV 0.46（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}
