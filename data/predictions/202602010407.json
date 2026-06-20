@@ -1,0 +1,274 @@
+{
+  "race_id": "202602010407",
+  "date": "2026-06-21",
+  "track": "函館",
+  "race_no": 7,
+  "race_name": "3歳以上1勝クラス",
+  "distance_m": 1200,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T15:29:12+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "グランテレーズ",
+      "horse_id": "2021102401",
+      "sex_age": "牝5",
+      "jockey": "小沢",
+      "trainer": "栗東渡辺",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 9.8,
+      "popularity": 5,
+      "q_win": 0.0819,
+      "p_win": 0.0833,
+      "ev_win": 0.816,
+      "edge": 0.0014,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.1pt)",
+        "5番人気（オッズ 9.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "アイムインディ",
+      "horse_id": "2023105263",
+      "sex_age": "牝3",
+      "jockey": "武豊",
+      "trainer": "美浦蛯名正",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 4.1,
+      "popularity": 3,
+      "q_win": 0.1958,
+      "p_win": 0.1801,
+      "ev_win": 0.738,
+      "edge": -0.0157,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.6pt)",
+        "3番人気（オッズ 4.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 3,
+      "name": "スプリングデイ",
+      "horse_id": "2021103322",
+      "sex_age": "牝5",
+      "jockey": "◇古川奈",
+      "trainer": "美浦伊藤大",
+      "weight_carried": 54.0,
+      "horse_weight": null,
+      "odds_win": 27.2,
+      "popularity": 8,
+      "q_win": 0.0295,
+      "p_win": 0.0387,
+      "ev_win": 1.053,
+      "edge": 0.0092,
+      "reasons": [
+        "期待値 1.053（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "8番人気（オッズ 27.2倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 4,
+      "name": "ダブルチャレンジ",
+      "horse_id": "2023104875",
+      "sex_age": "牝3",
+      "jockey": "吉田隼",
+      "trainer": "美浦深山",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 20.8,
+      "popularity": 6,
+      "q_win": 0.0386,
+      "p_win": 0.0464,
+      "ev_win": 0.965,
+      "edge": 0.0078,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "6番人気（オッズ 20.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 5,
+      "name": "ジュジュドール",
+      "horse_id": "2023106912",
+      "sex_age": "牝3",
+      "jockey": "☆長浜",
+      "trainer": "栗東西園翔",
+      "weight_carried": 52.0,
+      "horse_weight": null,
+      "odds_win": 81.0,
+      "popularity": 11,
+      "q_win": 0.0099,
+      "p_win": 0.0221,
+      "ev_win": 1.79,
+      "edge": 0.0122,
+      "reasons": [
+        "期待値 1.79（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.2pt)",
+        "11番人気（オッズ 81.0倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 6,
+      "name": "ツルノマイハシ",
+      "horse_id": "2023103528",
+      "sex_age": "牝3",
+      "jockey": "佐々木",
+      "trainer": "美浦杉浦",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 21.9,
+      "popularity": 7,
+      "q_win": 0.0366,
+      "p_win": 0.0447,
+      "ev_win": 0.979,
+      "edge": 0.0081,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "7番人気（オッズ 21.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 7,
+      "name": "マナボニート",
+      "horse_id": "2023100617",
+      "sex_age": "牝3",
+      "jockey": "丹内",
+      "trainer": "栗東北出",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 3.8,
+      "popularity": 2,
+      "q_win": 0.2112,
+      "p_win": 0.1932,
+      "ev_win": 0.734,
+      "edge": -0.018,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.8pt)",
+        "2番人気（オッズ 3.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 8,
+      "name": "アルバニー",
+      "horse_id": "2021105715",
+      "sex_age": "牝5",
+      "jockey": "△舟山",
+      "trainer": "栗東千田",
+      "weight_carried": 54.0,
+      "horse_weight": null,
+      "odds_win": 34.8,
+      "popularity": 9,
+      "q_win": 0.0231,
+      "p_win": 0.0333,
+      "ev_win": 1.159,
+      "edge": 0.0102,
+      "reasons": [
+        "期待値 1.159（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "9番人気（オッズ 34.8倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 9,
+      "name": "ファニーバニー",
+      "horse_id": "2023105277",
+      "sex_age": "牝3",
+      "jockey": "横山武",
+      "trainer": "栗東杉山佳",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 3.0,
+      "popularity": 1,
+      "q_win": 0.2675,
+      "p_win": 0.241,
+      "ev_win": 0.723,
+      "edge": -0.0265,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.6pt)",
+        "1番人気（オッズ 3.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 10,
+      "name": "ナンナンプー",
+      "horse_id": "2022102878",
+      "sex_age": "牝4",
+      "jockey": "岩田康",
+      "trainer": "美浦水野",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 36.0,
+      "popularity": 10,
+      "q_win": 0.0223,
+      "p_win": 0.0326,
+      "ev_win": 1.174,
+      "edge": 0.0103,
+      "reasons": [
+        "期待値 1.174（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "10番人気（オッズ 36.0倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 11,
+      "name": "ヴェガリア",
+      "horse_id": "2023104159",
+      "sex_age": "牝3",
+      "jockey": "斎藤",
+      "trainer": "美浦栗田",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 9.6,
+      "popularity": 4,
+      "q_win": 0.0836,
+      "p_win": 0.0847,
+      "ev_win": 0.813,
+      "edge": 0.0011,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.1pt)",
+        "4番人気（オッズ 9.6倍）"
+      ],
+      "mark": ""
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "3",
+      "ev": 1.053,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "5",
+      "ev": 1.79,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "8",
+      "ev": 1.159,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "10",
+      "ev": 1.174,
+      "stake_unit": 1
+    }
+  ]
+}

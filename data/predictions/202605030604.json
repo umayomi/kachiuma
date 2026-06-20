@@ -1,0 +1,239 @@
+{
+  "race_id": "202605030604",
+  "date": "2026-06-21",
+  "track": "東京",
+  "race_no": 4,
+  "race_name": "2歳新馬",
+  "distance_m": 1400,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T15:29:12+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "シュートザワークス",
+      "horse_id": "2024107076",
+      "sex_age": "牡2",
+      "jockey": "津村",
+      "trainer": "美浦千葉",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 9.1,
+      "popularity": 3,
+      "q_win": 0.0878,
+      "p_win": 0.0896,
+      "ev_win": 0.815,
+      "edge": 0.0018,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.2pt)",
+        "3番人気（オッズ 9.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "アラータス",
+      "horse_id": "2024106894",
+      "sex_age": "牡2",
+      "jockey": "丸田",
+      "trainer": "美浦秋本",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 18.3,
+      "popularity": 8,
+      "q_win": 0.0436,
+      "p_win": 0.0521,
+      "ev_win": 0.953,
+      "edge": 0.0085,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "8番人気（オッズ 18.3倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 3,
+      "name": "シャンパンアワー",
+      "horse_id": "2024106052",
+      "sex_age": "牡2",
+      "jockey": "戸崎圭",
+      "trainer": "美浦田中剛",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 13.9,
+      "popularity": 5,
+      "q_win": 0.0575,
+      "p_win": 0.0639,
+      "ev_win": 0.888,
+      "edge": 0.0064,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.6pt)",
+        "5番人気（オッズ 13.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "クラウンフラッグ",
+      "horse_id": "2024104825",
+      "sex_age": "牡2",
+      "jockey": "木幡巧",
+      "trainer": "美浦中川",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 15.5,
+      "popularity": 6,
+      "q_win": 0.0515,
+      "p_win": 0.0588,
+      "ev_win": 0.911,
+      "edge": 0.0073,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
+        "6番人気（オッズ 15.5倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 5,
+      "name": "エムアイブレイズ",
+      "horse_id": "2024101005",
+      "sex_age": "牡2",
+      "jockey": "原",
+      "trainer": "美浦青木",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 15.7,
+      "popularity": 7,
+      "q_win": 0.0509,
+      "p_win": 0.0583,
+      "ev_win": 0.915,
+      "edge": 0.0074,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
+        "7番人気（オッズ 15.7倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 6,
+      "name": "タクティシアン",
+      "horse_id": "2024106657",
+      "sex_age": "牡2",
+      "jockey": "ルメール",
+      "trainer": "美浦森一",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 2.2,
+      "popularity": 1,
+      "q_win": 0.3631,
+      "p_win": 0.3236,
+      "ev_win": 0.712,
+      "edge": -0.0395,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-4.0pt)",
+        "1番人気（オッズ 2.2倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 7,
+      "name": "ミエルモーサ",
+      "horse_id": "2024106629",
+      "sex_age": "牝2",
+      "jockey": "西村淳",
+      "trainer": "栗東松下",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 3.8,
+      "popularity": 2,
+      "q_win": 0.2102,
+      "p_win": 0.1937,
+      "ev_win": 0.736,
+      "edge": -0.0165,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.7pt)",
+        "2番人気（オッズ 3.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 8,
+      "name": "シーズザチャンス",
+      "horse_id": "2024107096",
+      "sex_age": "牝2",
+      "jockey": "ゴンサルベ",
+      "trainer": "美浦大和田",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 25.7,
+      "popularity": 9,
+      "q_win": 0.0311,
+      "p_win": 0.0414,
+      "ev_win": 1.064,
+      "edge": 0.0103,
+      "reasons": [
+        "期待値 1.064（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "9番人気（オッズ 25.7倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 9,
+      "name": "イサチルサリーレ",
+      "horse_id": "2024102434",
+      "sex_age": "牡2",
+      "jockey": "木幡初",
+      "trainer": "美浦竹内",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 10.0,
+      "popularity": 4,
+      "q_win": 0.0799,
+      "p_win": 0.0829,
+      "ev_win": 0.829,
+      "edge": 0.003,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.3pt)",
+        "4番人気（オッズ 10.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 10,
+      "name": "コールドスリープ",
+      "horse_id": "2024100469",
+      "sex_age": "牝2",
+      "jockey": "菊沢",
+      "trainer": "美浦深山",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 32.6,
+      "popularity": 10,
+      "q_win": 0.0245,
+      "p_win": 0.0358,
+      "ev_win": 1.167,
+      "edge": 0.0113,
+      "reasons": [
+        "期待値 1.167（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.1pt)",
+        "10番人気（オッズ 32.6倍）"
+      ],
+      "mark": "◎"
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "8",
+      "ev": 1.064,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "10",
+      "ev": 1.167,
+      "stake_unit": 1
+    }
+  ]
+}

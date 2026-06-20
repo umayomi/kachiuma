@@ -1,0 +1,407 @@
+{
+  "race_id": "202609030607",
+  "date": "2026-06-21",
+  "track": "阪神",
+  "race_no": 7,
+  "race_name": "3歳以上1勝クラス",
+  "distance_m": 1400,
+  "surface": "ダート",
+  "going": null,
+  "updated_at": "2026-06-20T15:29:12+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "インピッシュ",
+      "horse_id": "2022103469",
+      "sex_age": "牝4",
+      "jockey": "池添",
+      "trainer": "栗東中尾",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 45.1,
+      "popularity": 11,
+      "q_win": 0.0177,
+      "p_win": 0.0244,
+      "ev_win": 1.1,
+      "edge": 0.0067,
+      "reasons": [
+        "期待値 1.1（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
+        "11番人気（オッズ 45.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "タイセイレグノ",
+      "horse_id": "2022101403",
+      "sex_age": "セ4",
+      "jockey": "国分優",
+      "trainer": "栗東浜田",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 99.3,
+      "popularity": 12,
+      "q_win": 0.008,
+      "p_win": 0.0162,
+      "ev_win": 1.609,
+      "edge": 0.0082,
+      "reasons": [
+        "期待値 1.609（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "12番人気（オッズ 99.3倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 3,
+      "name": "ジューンアゲイン",
+      "horse_id": "2023101003",
+      "sex_age": "牡3",
+      "jockey": "吉村",
+      "trainer": "栗東長谷川",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 3.8,
+      "popularity": 2,
+      "q_win": 0.2099,
+      "p_win": 0.1878,
+      "ev_win": 0.714,
+      "edge": -0.0221,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.2pt)",
+        "2番人気（オッズ 3.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "ハッコウイチウ",
+      "horse_id": "2022104801",
+      "sex_age": "牡4",
+      "jockey": "坂井",
+      "trainer": "栗東杉山晴",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 5.6,
+      "popularity": 3,
+      "q_win": 0.1424,
+      "p_win": 0.1304,
+      "ev_win": 0.73,
+      "edge": -0.012,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.2pt)",
+        "3番人気（オッズ 5.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 5,
+      "name": "シュテルンビルト",
+      "horse_id": "2022102360",
+      "sex_age": "牡4",
+      "jockey": "北村友",
+      "trainer": "栗東森田",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 11.6,
+      "popularity": 5,
+      "q_win": 0.0688,
+      "p_win": 0.0679,
+      "ev_win": 0.788,
+      "edge": -0.0009,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.1pt)",
+        "5番人気（オッズ 11.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 6,
+      "name": "シンギタイ",
+      "horse_id": "2022100458",
+      "sex_age": "セ4",
+      "jockey": "田口",
+      "trainer": "栗東庄野",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 108.7,
+      "popularity": 13,
+      "q_win": 0.0073,
+      "p_win": 0.0156,
+      "ev_win": 1.696,
+      "edge": 0.0083,
+      "reasons": [
+        "期待値 1.696（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
+        "13番人気（オッズ 108.7倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 7,
+      "name": "アレーティア",
+      "horse_id": "2022100101",
+      "sex_age": "牝4",
+      "jockey": "川須",
+      "trainer": "栗東田中克",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 44.6,
+      "popularity": 10,
+      "q_win": 0.0179,
+      "p_win": 0.0246,
+      "ev_win": 1.097,
+      "edge": 0.0067,
+      "reasons": [
+        "期待値 1.097（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
+        "10番人気（オッズ 44.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 8,
+      "name": "ドレアンティア",
+      "horse_id": "2021107356",
+      "sex_age": "牝5",
+      "jockey": "△田山",
+      "trainer": "栗東飯田",
+      "weight_carried": 54.0,
+      "horse_weight": null,
+      "odds_win": 230.7,
+      "popularity": 16,
+      "q_win": 0.0035,
+      "p_win": 0.0123,
+      "ev_win": 2.838,
+      "edge": 0.0088,
+      "reasons": [
+        "期待値 2.838（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "16番人気（オッズ 230.7倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 9,
+      "name": "アパレイユ",
+      "horse_id": "2023106321",
+      "sex_age": "牝3",
+      "jockey": "岩田望",
+      "trainer": "栗東西園翔",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 3.1,
+      "popularity": 1,
+      "q_win": 0.2573,
+      "p_win": 0.2281,
+      "ev_win": 0.707,
+      "edge": -0.0292,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-2.9pt)",
+        "1番人気（オッズ 3.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 10,
+      "name": "ビスケットアソート",
+      "horse_id": "2023103517",
+      "sex_age": "牡3",
+      "jockey": "富田",
+      "trainer": "栗東武英",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 20.3,
+      "popularity": 7,
+      "q_win": 0.0393,
+      "p_win": 0.0428,
+      "ev_win": 0.869,
+      "edge": 0.0035,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.4pt)",
+        "7番人気（オッズ 20.3倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 11,
+      "name": "キアヌ",
+      "horse_id": "2022106585",
+      "sex_age": "牡4",
+      "jockey": "小崎",
+      "trainer": "栗東小崎",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 178.4,
+      "popularity": 14,
+      "q_win": 0.0045,
+      "p_win": 0.0132,
+      "ev_win": 2.355,
+      "edge": 0.0087,
+      "reasons": [
+        "期待値 2.355（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "14番人気（オッズ 178.4倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 12,
+      "name": "エイシンマールス",
+      "horse_id": "2022102624",
+      "sex_age": "牡4",
+      "jockey": "松山",
+      "trainer": "栗東今野",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 6.8,
+      "popularity": 4,
+      "q_win": 0.1173,
+      "p_win": 0.1091,
+      "ev_win": 0.742,
+      "edge": -0.0082,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.8pt)",
+        "4番人気（オッズ 6.8倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 13,
+      "name": "ラッキーバック",
+      "horse_id": "2023100126",
+      "sex_age": "牡3",
+      "jockey": "Ｍデムーロ",
+      "trainer": "栗東西村",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 16.1,
+      "popularity": 6,
+      "q_win": 0.0495,
+      "p_win": 0.0515,
+      "ev_win": 0.829,
+      "edge": 0.002,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.2pt)",
+        "6番人気（オッズ 16.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 14,
+      "name": "ゴッドカインド",
+      "horse_id": "2021106150",
+      "sex_age": "牝5",
+      "jockey": "◇今村",
+      "trainer": "栗東飯田",
+      "weight_carried": 54.0,
+      "horse_weight": null,
+      "odds_win": 180.4,
+      "popularity": 15,
+      "q_win": 0.0044,
+      "p_win": 0.0131,
+      "ev_win": 2.363,
+      "edge": 0.0087,
+      "reasons": [
+        "期待値 2.363（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "15番人気（オッズ 180.4倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 15,
+      "name": "エブリデイ",
+      "horse_id": "2023102902",
+      "sex_age": "牡3",
+      "jockey": "高杉",
+      "trainer": "栗東北出",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 26.5,
+      "popularity": 8,
+      "q_win": 0.0301,
+      "p_win": 0.035,
+      "ev_win": 0.928,
+      "edge": 0.0049,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.5pt)",
+        "8番人気（オッズ 26.5倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 16,
+      "name": "グディンナ",
+      "horse_id": "2021102162",
+      "sex_age": "牝5",
+      "jockey": "藤懸",
+      "trainer": "栗東牧田",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 36.3,
+      "popularity": 9,
+      "q_win": 0.022,
+      "p_win": 0.0281,
+      "ev_win": 1.02,
+      "edge": 0.0061,
+      "reasons": [
+        "期待値 1.02（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.6pt)",
+        "9番人気（オッズ 36.3倍）"
+      ],
+      "mark": ""
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "1",
+      "ev": 1.1,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "2",
+      "ev": 1.609,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "6",
+      "ev": 1.696,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "7",
+      "ev": 1.097,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "8",
+      "ev": 2.838,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "11",
+      "ev": 2.355,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "14",
+      "ev": 2.363,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "16",
+      "ev": 1.02,
+      "stake_unit": 1
+    }
+  ]
+}

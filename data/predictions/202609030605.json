@@ -1,0 +1,211 @@
+{
+  "race_id": "202609030605",
+  "date": "2026-06-21",
+  "track": "阪神",
+  "race_no": 5,
+  "race_name": "2歳新馬",
+  "distance_m": 1600,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T15:29:12+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ジーティーキャメル",
+      "horse_id": "2024106948",
+      "sex_age": "牡2",
+      "jockey": "岩田望",
+      "trainer": "栗東宮地",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 16.7,
+      "popularity": 7,
+      "q_win": 0.0479,
+      "p_win": 0.0574,
+      "ev_win": 0.959,
+      "edge": 0.0095,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "7番人気（オッズ 16.7倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 2,
+      "name": "ヴィヴェローネ",
+      "horse_id": "2024106976",
+      "sex_age": "牝2",
+      "jockey": "松山",
+      "trainer": "栗東高野",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 9.2,
+      "popularity": 5,
+      "q_win": 0.0869,
+      "p_win": 0.0905,
+      "ev_win": 0.833,
+      "edge": 0.0036,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.4pt)",
+        "5番人気（オッズ 9.2倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 3,
+      "name": "ブレイクガール",
+      "horse_id": "2024106674",
+      "sex_age": "牝2",
+      "jockey": "坂井",
+      "trainer": "栗東武幸",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 5.0,
+      "popularity": 3,
+      "q_win": 0.1599,
+      "p_win": 0.1526,
+      "ev_win": 0.763,
+      "edge": -0.0073,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.7pt)",
+        "3番人気（オッズ 5.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "ドラゴンドール",
+      "horse_id": "2024106229",
+      "sex_age": "牡2",
+      "jockey": "Ｍデムーロ",
+      "trainer": "栗東大久保",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 3.4,
+      "popularity": 1,
+      "q_win": 0.2351,
+      "p_win": 0.2165,
+      "ev_win": 0.736,
+      "edge": -0.0186,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.9pt)",
+        "1番人気（オッズ 3.4倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 5,
+      "name": "トップチェッカー",
+      "horse_id": "2024100521",
+      "sex_age": "牡2",
+      "jockey": "北村友",
+      "trainer": "栗東武英",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 10.2,
+      "popularity": 6,
+      "q_win": 0.0784,
+      "p_win": 0.0833,
+      "ev_win": 0.85,
+      "edge": 0.0049,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.5pt)",
+        "6番人気（オッズ 10.2倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 6,
+      "name": "マーゴットマシェリ",
+      "horse_id": "2024106461",
+      "sex_age": "牝2",
+      "jockey": "池添",
+      "trainer": "栗東小林",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 6.9,
+      "popularity": 4,
+      "q_win": 0.1159,
+      "p_win": 0.1152,
+      "ev_win": 0.795,
+      "edge": -0.0007,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.1pt)",
+        "4番人気（オッズ 6.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 7,
+      "name": "メイケイリチャード",
+      "horse_id": "2024105760",
+      "sex_age": "牡2",
+      "jockey": "幸",
+      "trainer": "栗東中竹",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 17.4,
+      "popularity": 8,
+      "q_win": 0.0459,
+      "p_win": 0.0557,
+      "ev_win": 0.969,
+      "edge": 0.0098,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "8番人気（オッズ 17.4倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 8,
+      "name": "バクソウシャチョウ",
+      "horse_id": "2024108273",
+      "sex_age": "牡2",
+      "jockey": "川田",
+      "trainer": "栗東森秀",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 3.9,
+      "popularity": 2,
+      "q_win": 0.205,
+      "p_win": 0.1909,
+      "ev_win": 0.745,
+      "edge": -0.0141,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.4pt)",
+        "2番人気（オッズ 3.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 9,
+      "name": "フランヴィア",
+      "horse_id": "2024106922",
+      "sex_age": "牝2",
+      "jockey": "高杉",
+      "trainer": "栗東庄野",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 31.9,
+      "popularity": 9,
+      "q_win": 0.0251,
+      "p_win": 0.038,
+      "ev_win": 1.212,
+      "edge": 0.0129,
+      "reasons": [
+        "期待値 1.212（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.3pt)",
+        "9番人気（オッズ 31.9倍）"
+      ],
+      "mark": "◎"
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "9",
+      "ev": 1.212,
+      "stake_unit": 1
+    }
+  ]
+}

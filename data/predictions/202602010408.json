@@ -1,0 +1,308 @@
+{
+  "race_id": "202602010408",
+  "date": "2026-06-21",
+  "track": "函館",
+  "race_no": 8,
+  "race_name": "3歳以上1勝クラス",
+  "distance_m": 1700,
+  "surface": "ダート",
+  "going": null,
+  "updated_at": "2026-06-20T15:29:12+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "アッシュバーグ",
+      "horse_id": "2021101383",
+      "sex_age": "牝5",
+      "jockey": "横山琉",
+      "trainer": "美浦高橋文",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 74.8,
+      "popularity": 10,
+      "q_win": 0.0108,
+      "p_win": 0.0217,
+      "ev_win": 1.623,
+      "edge": 0.0109,
+      "reasons": [
+        "期待値 1.623（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.1pt)",
+        "10番人気（オッズ 74.8倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 2,
+      "name": "ホウオウバローロ",
+      "horse_id": "2021105772",
+      "sex_age": "牡5",
+      "jockey": "△舟山",
+      "trainer": "栗東前川",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 21.3,
+      "popularity": 6,
+      "q_win": 0.0379,
+      "p_win": 0.0447,
+      "ev_win": 0.952,
+      "edge": 0.0068,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
+        "6番人気（オッズ 21.3倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 3,
+      "name": "テイクオンミー",
+      "horse_id": "2023102019",
+      "sex_age": "牡3",
+      "jockey": "丹内",
+      "trainer": "美浦水野",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 6.9,
+      "popularity": 3,
+      "q_win": 0.1171,
+      "p_win": 0.112,
+      "ev_win": 0.773,
+      "edge": -0.0051,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.5pt)",
+        "3番人気（オッズ 6.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "パーティーガール",
+      "horse_id": "2022106420",
+      "sex_age": "牝4",
+      "jockey": "▲遠藤",
+      "trainer": "美浦伊藤伸",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 341.0,
+      "popularity": 12,
+      "q_win": 0.0024,
+      "p_win": 0.0145,
+      "ev_win": 4.945,
+      "edge": 0.0121,
+      "reasons": [
+        "期待値 4.945（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.2pt)",
+        "12番人気（オッズ 341.0倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 5,
+      "name": "アスクガンバーレ",
+      "horse_id": "2022102300",
+      "sex_age": "牡4",
+      "jockey": "岩田康",
+      "trainer": "栗東福永",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 5.4,
+      "popularity": 2,
+      "q_win": 0.1497,
+      "p_win": 0.1397,
+      "ev_win": 0.754,
+      "edge": -0.01,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.0pt)",
+        "2番人気（オッズ 5.4倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 6,
+      "name": "ディースプレマシー",
+      "horse_id": "2022104312",
+      "sex_age": "牡4",
+      "jockey": "古川吉",
+      "trainer": "美浦牧",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 31.6,
+      "popularity": 8,
+      "q_win": 0.0256,
+      "p_win": 0.0343,
+      "ev_win": 1.084,
+      "edge": 0.0087,
+      "reasons": [
+        "期待値 1.084（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "8番人気（オッズ 31.6倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 7,
+      "name": "シーズザスローン",
+      "horse_id": "2023104414",
+      "sex_age": "牡3",
+      "jockey": "武豊",
+      "trainer": "栗東松永幹",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 1.9,
+      "popularity": 1,
+      "q_win": 0.4253,
+      "p_win": 0.374,
+      "ev_win": 0.711,
+      "edge": -0.0513,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-5.1pt)",
+        "1番人気（オッズ 1.9倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 8,
+      "name": "アラクラン",
+      "horse_id": "2023107086",
+      "sex_age": "牡3",
+      "jockey": "▲小林美",
+      "trainer": "美浦田村",
+      "weight_carried": 52.0,
+      "horse_weight": null,
+      "odds_win": 10.0,
+      "popularity": 5,
+      "q_win": 0.0808,
+      "p_win": 0.0812,
+      "ev_win": 0.812,
+      "edge": 0.0004,
+      "reasons": [
+        "5番人気（オッズ 10.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 9,
+      "name": "ナクライト",
+      "horse_id": "2022104847",
+      "sex_age": "牡4",
+      "jockey": "横山武",
+      "trainer": "美浦手塚徳",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 8.2,
+      "popularity": 4,
+      "q_win": 0.0986,
+      "p_win": 0.0963,
+      "ev_win": 0.79,
+      "edge": -0.0023,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.2pt)",
+        "4番人気（オッズ 8.2倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 10,
+      "name": "ライフイズ",
+      "horse_id": "2023105448",
+      "sex_age": "牝3",
+      "jockey": "▲和田陽",
+      "trainer": "美浦鈴木慎",
+      "weight_carried": 50.0,
+      "horse_weight": null,
+      "odds_win": 54.1,
+      "popularity": 9,
+      "q_win": 0.0149,
+      "p_win": 0.0252,
+      "ev_win": 1.363,
+      "edge": 0.0103,
+      "reasons": [
+        "期待値 1.363（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.0pt)",
+        "9番人気（オッズ 54.1倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 11,
+      "name": "フェニーチェドーロ",
+      "horse_id": "2022101408",
+      "sex_age": "牝4",
+      "jockey": "荻野琢",
+      "trainer": "栗東宮本",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 79.1,
+      "popularity": 11,
+      "q_win": 0.0102,
+      "p_win": 0.0212,
+      "ev_win": 1.677,
+      "edge": 0.011,
+      "reasons": [
+        "期待値 1.677（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.1pt)",
+        "11番人気（オッズ 79.1倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 12,
+      "name": "イサギ",
+      "horse_id": "2023101713",
+      "sex_age": "牡3",
+      "jockey": "小沢",
+      "trainer": "栗東小椋",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 30.3,
+      "popularity": 7,
+      "q_win": 0.0267,
+      "p_win": 0.0352,
+      "ev_win": 1.067,
+      "edge": 0.0085,
+      "reasons": [
+        "期待値 1.067（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "7番人気（オッズ 30.3倍）"
+      ],
+      "mark": ""
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "1",
+      "ev": 1.623,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "4",
+      "ev": 4.945,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "6",
+      "ev": 1.084,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "10",
+      "ev": 1.363,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "11",
+      "ev": 1.677,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "12",
+      "ev": 1.067,
+      "stake_unit": 1
+    }
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "race_id": "202602010402",
+  "date": "2026-06-21",
+  "track": "函館",
+  "race_no": 2,
+  "race_name": "3歳未勝利",
+  "distance_m": 2400,
+  "surface": "ダート",
+  "going": null,
+  "updated_at": "2026-06-20T15:29:12+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ハイドパーク",
+      "horse_id": "2023104100",
+      "sex_age": "牡3",
+      "jockey": "国分恭",
+      "trainer": "栗東田中克",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 6.0,
+      "popularity": 5,
+      "q_win": 0.1334,
+      "p_win": 0.127,
+      "ev_win": 0.762,
+      "edge": -0.0064,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.6pt)",
+        "5番人気（オッズ 6.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "ポップアップ",
+      "horse_id": "2023105444",
+      "sex_age": "セ3",
+      "jockey": "佐々木",
+      "trainer": "栗東寺島",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 5.1,
+      "popularity": 3,
+      "q_win": 0.1569,
+      "p_win": 0.147,
+      "ev_win": 0.75,
+      "edge": -0.0099,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.0pt)",
+        "3番人気（オッズ 5.1倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 3,
+      "name": "ウインモンクール",
+      "horse_id": "2023105889",
+      "sex_age": "牡3",
+      "jockey": "丹内",
+      "trainer": "栗東新谷",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 5.7,
+      "popularity": 4,
+      "q_win": 0.1404,
+      "p_win": 0.133,
+      "ev_win": 0.758,
+      "edge": -0.0074,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.7pt)",
+        "4番人気（オッズ 5.7倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 4,
+      "name": "キヨタリート",
+      "horse_id": "2023102546",
+      "sex_age": "牡3",
+      "jockey": "△舟山",
+      "trainer": "栗東小崎",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 5.0,
+      "popularity": 2,
+      "q_win": 0.1601,
+      "p_win": 0.1497,
+      "ev_win": 0.748,
+      "edge": -0.0104,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.0pt)",
+        "2番人気（オッズ 5.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 5,
+      "name": "ラヴィニアパーク",
+      "horse_id": "2023106801",
+      "sex_age": "牡3",
+      "jockey": "岩田康",
+      "trainer": "美浦大竹",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 7.0,
+      "popularity": 6,
+      "q_win": 0.1143,
+      "p_win": 0.1108,
+      "ev_win": 0.776,
+      "edge": -0.0035,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.4pt)",
+        "6番人気（オッズ 7.0倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 6,
+      "name": "マーゴットデウス",
+      "horse_id": "2023103289",
+      "sex_age": "セ3",
+      "jockey": "小沢",
+      "trainer": "栗東今野",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 52.6,
+      "popularity": 10,
+      "q_win": 0.0152,
+      "p_win": 0.0266,
+      "ev_win": 1.399,
+      "edge": 0.0114,
+      "reasons": [
+        "期待値 1.399（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.1pt)",
+        "10番人気（オッズ 52.6倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 7,
+      "name": "テンカフブ",
+      "horse_id": "2023102704",
+      "sex_age": "牡3",
+      "jockey": "川又",
+      "trainer": "栗東吉村",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 46.5,
+      "popularity": 9,
+      "q_win": 0.0172,
+      "p_win": 0.0283,
+      "ev_win": 1.316,
+      "edge": 0.0111,
+      "reasons": [
+        "期待値 1.316（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.1pt)",
+        "9番人気（オッズ 46.5倍）"
+      ],
+      "mark": "▲"
+    },
+    {
+      "umaban": 8,
+      "name": "ロードステラート",
+      "horse_id": "2023105838",
+      "sex_age": "牡3",
+      "jockey": "横山武",
+      "trainer": "栗東武英",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 4.7,
+      "popularity": 1,
+      "q_win": 0.1703,
+      "p_win": 0.1584,
+      "ev_win": 0.744,
+      "edge": -0.0119,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.2pt)",
+        "1番人気（オッズ 4.7倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 9,
+      "name": "ジャストグレース",
+      "horse_id": "2023102517",
+      "sex_age": "牡3",
+      "jockey": "古川吉",
+      "trainer": "栗東大根田",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 16.4,
+      "popularity": 7,
+      "q_win": 0.0488,
+      "p_win": 0.0551,
+      "ev_win": 0.904,
+      "edge": 0.0063,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.6pt)",
+        "7番人気（オッズ 16.4倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 10,
+      "name": "トーセンアミューズ",
+      "horse_id": "2023105959",
+      "sex_age": "牡3",
+      "jockey": "☆長浜",
+      "trainer": "美浦加藤征",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 63.7,
+      "popularity": 11,
+      "q_win": 0.0126,
+      "p_win": 0.0243,
+      "ev_win": 1.548,
+      "edge": 0.0117,
+      "reasons": [
+        "期待値 1.548（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.2pt)",
+        "11番人気（オッズ 63.7倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 11,
+      "name": "フクチャンブラック",
+      "horse_id": "2023103196",
+      "sex_age": "牡3",
+      "jockey": "松本",
+      "trainer": "栗東高橋康",
+      "weight_carried": 57.0,
+      "horse_weight": null,
+      "odds_win": 26.1,
+      "popularity": 8,
+      "q_win": 0.0307,
+      "p_win": 0.0397,
+      "ev_win": 1.036,
+      "edge": 0.009,
+      "reasons": [
+        "期待値 1.036（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
+        "8番人気（オッズ 26.1倍）"
+      ],
+      "mark": "△"
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "6",
+      "ev": 1.399,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "7",
+      "ev": 1.316,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "10",
+      "ev": 1.548,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "11",
+      "ev": 1.036,
+      "stake_unit": 1
+    }
+  ]
+}

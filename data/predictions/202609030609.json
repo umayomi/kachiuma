@@ -1,0 +1,183 @@
+{
+  "race_id": "202609030609",
+  "date": "2026-06-21",
+  "track": "阪神",
+  "race_no": 9,
+  "race_name": "高砂特別",
+  "distance_m": 2000,
+  "surface": "芝",
+  "going": null,
+  "updated_at": "2026-06-20T15:29:12+09:00",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ステラクラウン",
+      "horse_id": "2021101454",
+      "sex_age": "牝5",
+      "jockey": "岩田望",
+      "trainer": "栗東上村",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 3.2,
+      "popularity": 2,
+      "q_win": 0.2491,
+      "p_win": 0.2332,
+      "ev_win": 0.746,
+      "edge": -0.0159,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-1.6pt)",
+        "2番人気（オッズ 3.2倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 2,
+      "name": "ロードガレリア",
+      "horse_id": "2022100619",
+      "sex_age": "牡4",
+      "jockey": "高杉",
+      "trainer": "栗東藤岡健",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 4.2,
+      "popularity": 3,
+      "q_win": 0.1898,
+      "p_win": 0.1828,
+      "ev_win": 0.768,
+      "edge": -0.007,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-0.7pt)",
+        "3番人気（オッズ 4.2倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 3,
+      "name": "ダノンカゼルタ",
+      "horse_id": "2022104719",
+      "sex_age": "セ4",
+      "jockey": "Ｍデムーロ",
+      "trainer": "栗東寺島",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 7.3,
+      "popularity": 4,
+      "q_win": 0.1092,
+      "p_win": 0.1142,
+      "ev_win": 0.834,
+      "edge": 0.005,
+      "reasons": [
+        "市場想定よりこちらの評価が高く、妙味あり(+0.5pt)",
+        "4番人気（オッズ 7.3倍）"
+      ],
+      "mark": "△"
+    },
+    {
+      "umaban": 4,
+      "name": "ミカエルパシャ",
+      "horse_id": "2021101751",
+      "sex_age": "牡5",
+      "jockey": "北村友",
+      "trainer": "栗東橋口",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 15.8,
+      "popularity": 6,
+      "q_win": 0.0505,
+      "p_win": 0.0644,
+      "ev_win": 1.018,
+      "edge": 0.0139,
+      "reasons": [
+        "期待値 1.018（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.4pt)",
+        "6番人気（オッズ 15.8倍）"
+      ],
+      "mark": "○"
+    },
+    {
+      "umaban": 5,
+      "name": "カリーニョ",
+      "horse_id": "2021105585",
+      "sex_age": "牡5",
+      "jockey": "坂井",
+      "trainer": "栗東杉山晴",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 2.3,
+      "popularity": 1,
+      "q_win": 0.3466,
+      "p_win": 0.316,
+      "ev_win": 0.727,
+      "edge": -0.0306,
+      "reasons": [
+        "人気先行で、評価ほどの妙味は薄い(-3.1pt)",
+        "1番人気（オッズ 2.3倍）"
+      ],
+      "mark": ""
+    },
+    {
+      "umaban": 6,
+      "name": "ラーテル",
+      "horse_id": "2020104285",
+      "sex_age": "セ6",
+      "jockey": "城戸",
+      "trainer": "美浦室井",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 233.3,
+      "popularity": 7,
+      "q_win": 0.0034,
+      "p_win": 0.0243,
+      "ev_win": 5.669,
+      "edge": 0.0209,
+      "reasons": [
+        "期待値 5.669（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+2.1pt)",
+        "7番人気（オッズ 233.3倍）"
+      ],
+      "mark": "◎"
+    },
+    {
+      "umaban": 7,
+      "name": "エコテーラー",
+      "horse_id": "2021101116",
+      "sex_age": "牝5",
+      "jockey": "藤懸",
+      "trainer": "栗東石橋",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 15.5,
+      "popularity": 5,
+      "q_win": 0.0514,
+      "p_win": 0.0651,
+      "ev_win": 1.009,
+      "edge": 0.0137,
+      "reasons": [
+        "期待値 1.009（理論上プラス圏）",
+        "市場想定よりこちらの評価が高く、妙味あり(+1.4pt)",
+        "5番人気（オッズ 15.5倍）"
+      ],
+      "mark": "▲"
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "4",
+      "ev": 1.018,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "6",
+      "ev": 5.669,
+      "stake_unit": 1
+    },
+    {
+      "type": "単勝",
+      "target": "7",
+      "ev": 1.009,
+      "stake_unit": 1
+    }
+  ]
+}
