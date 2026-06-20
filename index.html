@@ -50,6 +50,13 @@
   .swatch{width:13px;height:13px;border-radius:3px;flex:0 0 auto;margin-top:3px}
   .swatch.p{background:var(--turf)} .swatch.q{background:transparent;border:2px dashed var(--paper-2)}
 
+  /* ---- race nav (全レース切替) ---- */
+  .race-nav{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .race-nav::-webkit-scrollbar{display:none}
+  .chip-race{flex:0 0 auto;font-family:"Oswald";font-size:13px;letter-spacing:.02em;color:var(--paper-2);
+    background:var(--ground-2);border:1px solid var(--ground-edge);border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap}
+  .chip-race.on{background:var(--gold);color:#1a1a17;border-color:var(--gold);font-weight:600}
+
   /* ---- horse cards ---- */
   .horse{background:var(--paper);color:var(--ink);border-radius:var(--r);
     padding:14px 14px 12px;margin:11px 0;box-shadow:0 1px 0 rgba(0,0,0,.25)}
@@ -115,6 +122,7 @@
       <h1>KACHIUMA</h1><span class="ja">カチウマ</span>
     </div>
     <div class="thesis">価値馬を、期待値で。</div>
+    <div id="raceNav" class="race-nav"></div>
     <div class="meta-row" id="meta"></div>
     <div class="race-title" id="raceTitle"></div>
     <div class="race-sub" id="raceSub"></div>
@@ -139,32 +147,47 @@
 <script>
 const P = { idx:"/data/predictions/index.json", dir:"/data/predictions/",
             sIdx:"/data/sample/index.json", sDir:"/data/sample/" };
+let DIR = null, RACES = [], IS_SAMPLE = false;
 
 async function getJSON(url){ const r = await fetch(url,{cache:"no-store"}); if(!r.ok) throw 0; return r.json(); }
 
 async function load(){
   let dir = P.dir, idx;
   try { idx = await getJSON(P.idx); }
-  catch { dir = P.sDir; idx = await getJSON(P.sIdx); } // 本番データが無ければサンプル
-  const first = idx.races && idx.races[0];
-  if(!first){ document.getElementById("horses").innerHTML = "<div class='loading'>レースがありません</div>"; return; }
-  const race = await getJSON(dir + first.race_id + ".json");
-  render(race, idx, dir===P.sDir);
+  catch { dir = P.sDir; idx = await getJSON(P.sIdx); IS_SAMPLE = true; } // 本番が無ければサンプル
+  DIR = dir;
+  RACES = idx.races || [];
+  if(!RACES.length){ document.getElementById("horses").innerHTML = "<div class='loading'>レースがありません</div>"; return; }
+  renderNav();
+  selectRace(RACES[0].race_id);
 }
 
-function render(race, idx, isSample){
-  const meta = document.getElementById("meta");
-  meta.innerHTML =
+function renderNav(){
+  document.getElementById("raceNav").innerHTML = RACES.map(r =>
+    `<button class="chip-race" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${esc(r.track||"")}${r.race_no}R</button>`
+  ).join("");
+}
+
+async function selectRace(rid){
+  document.querySelectorAll(".chip-race").forEach(b => b.classList.toggle("on", b.dataset.id === rid));
+  const chip = document.querySelector(`.chip-race[data-id='${rid}']`);
+  if(chip) chip.scrollIntoView({inline:"center", block:"nearest"});
+  document.getElementById("horses").innerHTML = "<div class='loading'>読み込み中…</div>";
+  try { renderRace(await getJSON(DIR + rid + ".json")); }
+  catch { document.getElementById("horses").innerHTML = "<div class='loading'>このレースを読み込めませんでした</div>"; }
+}
+
+function renderRace(race){
+  document.getElementById("meta").innerHTML =
     `<span class="pill live">● 更新 ${fmtTime(race.updated_at)}</span>` +
     `<span class="pill">${race.track} ${race.race_no}R</span>` +
     `<span class="pill">${race.surface} ${race.distance_m}m</span>` +
     `<span class="pill">馬場 ${race.going}</span>` +
-    (isSample ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">SAMPLE</span>` : "");
+    (IS_SAMPLE ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">SAMPLE</span>` : "");
   document.getElementById("raceTitle").textContent = race.race_name;
   document.getElementById("raceSub").textContent =
     `${race.date} ・ ${race.horses.length}頭 ・ 妙味(EV>1) ${race.horses.filter(h=>h.ev_win>1).length}頭`;
-
-  const maxScale = Math.max(...race.horses.map(h=>Math.max(h.p_win,h.q_win)), 0.4); // バーの基準
+  const maxScale = Math.max(...race.horses.map(h=>Math.max(h.p_win,h.q_win)), 0.4);
   document.getElementById("horses").innerHTML = race.horses
     .slice().sort((a,b)=> (b.ev_win||0)-(a.ev_win||0))
     .map(h=>card(h, maxScale)).join("");
