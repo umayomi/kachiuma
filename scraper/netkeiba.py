@@ -194,21 +194,29 @@ def get_win_odds(race_id: str) -> dict[int, float]:
 # 結果
 # ----------------------------------------------------------------------
 def parse_result(html: str, race_id: str) -> dict:
-    """結果HTMLから 着順/馬番/馬名/タイム/上がり/オッズ/人気 を抽出。"""
+    """結果HTMLから 着順/馬番/馬名/確定オッズ/人気 を抽出。
+    出力 horses は backtest がそのまま使える形（odds_win + finish_pos）。
+    結果ページには確定オッズも載るため、これ1枚で検証データになる。
+    """
     soup = BeautifulSoup(html, "lxml")
     race = _race_header(soup, race_id)
-    rows = soup.select("tr.HorseList") or soup.select("table.RaceTable01 tr")
-    results = []
-    for tr in rows:
-        rank = _to_int(_text(tr.select_one(".Result_Num")) or _text(tr.select_one("td.Rank")))
-        umaban = _to_int(_text(tr.select_one("td.Umaban")))
-        name = _text(tr.select_one(".Horse_Name a")) or _text(tr.select_one("td.Horse_Name"))
-        time_s = _text(tr.select_one(".Time .RaceTime")) or _text(tr.select_one("td.Time"))
-        if umaban is None and rank is None:
+    horses = []
+    for tr in soup.select("tr.HorseList"):
+        finish = _to_int(_text(tr.select_one("td.Result_Num")))      # 着順(取消等はNone)
+        umaban = _to_int(_text(tr.select_one("td.Num.Txt_C")))       # 馬番(枠Numと区別)
+        a = tr.select_one("td.Horse_Info a[href*='/horse/']") or tr.select_one("td.Horse_Info a")
+        name = _text(a)
+        odds = _to_float(_text(tr.select_one("td.Odds.Txt_R")))      # 確定単勝オッズ
+        pop = _to_int(_text(tr.select_one("td.Odds.Txt_C")))         # 人気
+        if umaban is None:
             continue
-        results.append({"rank": rank, "umaban": umaban, "name": name, "time": time_s})
-    race["results"] = results
-    log.info("結果 %s: %d頭", race_id, len(results))
+        horses.append({
+            "umaban": umaban, "name": name, "finish_pos": finish,
+            "odds_win": odds, "popularity": pop,
+        })
+    race["horses"] = horses
+    log.info("結果 %s: %d頭 (1着=%s)", race_id, len(horses),
+             next((h["umaban"] for h in horses if h["finish_pos"] == 1), "?"))
     return race
 
 
