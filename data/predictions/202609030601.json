@@ -7,7 +7,9 @@
   "distance_m": 1400,
   "surface": "ダート",
   "going": null,
-  "updated_at": "2026-06-20T15:29:12+09:00",
+  "updated_at": "2026-06-21T08:47:56+09:00",
+  "market_overround": 1.264,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
   "horses": [
     {
       "umaban": 1,
@@ -18,17 +20,17 @@
       "trainer": "栗東牧浦",
       "weight_carried": 55.0,
       "horse_weight": null,
-      "odds_win": 2.3,
+      "odds_win": 2.8,
       "popularity": 1,
-      "q_win": 0.3498,
-      "p_win": 0.3067,
-      "ev_win": 0.705,
-      "edge": -0.0431,
+      "q_win": 0.2826,
+      "p_win": 0.3237,
+      "ev_win": 0.906,
+      "edge": 0.0411,
+      "mark": "◎",
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-4.3pt)",
-        "1番人気（オッズ 2.3倍）"
-      ],
-      "mark": ""
+        "予想勝率 32.4%・1番手評価",
+        "1番人気 / EV 0.906（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 2,
@@ -39,18 +41,17 @@
       "trainer": "栗東東田",
       "weight_carried": 54.0,
       "horse_weight": null,
-      "odds_win": 59.5,
-      "popularity": 11,
-      "q_win": 0.0135,
-      "p_win": 0.0209,
-      "ev_win": 1.244,
-      "edge": 0.0074,
+      "odds_win": 26.0,
+      "popularity": 8,
+      "q_win": 0.0304,
+      "p_win": 0.0249,
+      "ev_win": 0.647,
+      "edge": -0.0055,
+      "mark": "",
       "reasons": [
-        "期待値 1.244（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
-        "11番人気（オッズ 59.5倍）"
-      ],
-      "mark": ""
+        "予想勝率 2.5%・8番手評価",
+        "8番人気 / EV 0.647（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 3,
@@ -61,17 +62,17 @@
       "trainer": "栗東坂口",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 4.1,
+      "odds_win": 4.0,
       "popularity": 2,
-      "q_win": 0.1962,
-      "p_win": 0.1761,
-      "ev_win": 0.722,
-      "edge": -0.0201,
+      "q_win": 0.1978,
+      "p_win": 0.2148,
+      "ev_win": 0.859,
+      "edge": 0.017,
+      "mark": "○",
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-2.0pt)",
-        "2番人気（オッズ 4.1倍）"
-      ],
-      "mark": ""
+        "予想勝率 21.5%・2番手評価",
+        "2番人気 / EV 0.859（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 4,
@@ -82,18 +83,17 @@
       "trainer": "栗東鈴木孝",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 132.4,
-      "popularity": 15,
-      "q_win": 0.0061,
-      "p_win": 0.0146,
-      "ev_win": 1.933,
-      "edge": 0.0085,
+      "odds_win": 112.8,
+      "popularity": 16,
+      "q_win": 0.007,
+      "p_win": 0.0046,
+      "ev_win": 0.519,
+      "edge": -0.0024,
+      "mark": "",
       "reasons": [
-        "期待値 1.933（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
-        "15番人気（オッズ 132.4倍）"
-      ],
-      "mark": "○"
+        "予想勝率 0.5%・16番手評価",
+        "16番人気 / EV 0.519（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 5,
@@ -104,18 +104,17 @@
       "trainer": "栗東石橋",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 45.7,
-      "popularity": 10,
-      "q_win": 0.0176,
-      "p_win": 0.0243,
-      "ev_win": 1.111,
-      "edge": 0.0067,
+      "odds_win": 27.3,
+      "popularity": 9,
+      "q_win": 0.029,
+      "p_win": 0.0236,
+      "ev_win": 0.644,
+      "edge": -0.0054,
+      "mark": "",
       "reasons": [
-        "期待値 1.111（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
-        "10番人気（オッズ 45.7倍）"
-      ],
-      "mark": ""
+        "予想勝率 2.4%・9番手評価",
+        "9番人気 / EV 0.644（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 6,
@@ -126,18 +125,17 @@
       "trainer": "栗東森田",
       "weight_carried": 55.0,
       "horse_weight": null,
-      "odds_win": 41.7,
-      "popularity": 9,
-      "q_win": 0.0193,
-      "p_win": 0.0258,
-      "ev_win": 1.076,
-      "edge": 0.0065,
+      "odds_win": 63.2,
+      "popularity": 14,
+      "q_win": 0.0125,
+      "p_win": 0.009,
+      "ev_win": 0.569,
+      "edge": -0.0035,
+      "mark": "",
       "reasons": [
-        "期待値 1.076（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
-        "9番人気（オッズ 41.7倍）"
-      ],
-      "mark": ""
+        "予想勝率 0.9%・14番手評価",
+        "14番人気 / EV 0.569（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 7,
@@ -148,17 +146,17 @@
       "trainer": "栗東辻野",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 8.0,
-      "popularity": 3,
-      "q_win": 0.1006,
-      "p_win": 0.0949,
-      "ev_win": 0.759,
+      "odds_win": 21.9,
+      "popularity": 7,
+      "q_win": 0.0361,
+      "p_win": 0.0304,
+      "ev_win": 0.666,
       "edge": -0.0057,
+      "mark": "",
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-0.6pt)",
-        "3番人気（オッズ 8.0倍）"
-      ],
-      "mark": ""
+        "予想勝率 3.0%・7番手評価",
+        "7番人気 / EV 0.666（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 8,
@@ -169,18 +167,17 @@
       "trainer": "栗東小椋",
       "weight_carried": 53.0,
       "horse_weight": null,
-      "odds_win": 191.1,
-      "popularity": 16,
-      "q_win": 0.0042,
-      "p_win": 0.0129,
-      "ev_win": 2.465,
-      "edge": 0.0087,
+      "odds_win": 53.4,
+      "popularity": 12,
+      "q_win": 0.0148,
+      "p_win": 0.0109,
+      "ev_win": 0.582,
+      "edge": -0.0039,
+      "mark": "",
       "reasons": [
-        "期待値 2.465（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
-        "16番人気（オッズ 191.1倍）"
-      ],
-      "mark": "◎"
+        "予想勝率 1.1%・12番手評価",
+        "12番人気 / EV 0.582（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 9,
@@ -191,18 +188,17 @@
       "trainer": "栗東宮",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 82.3,
-      "popularity": 13,
-      "q_win": 0.0098,
-      "p_win": 0.0177,
-      "ev_win": 1.457,
-      "edge": 0.0079,
+      "odds_win": 63.7,
+      "popularity": 15,
+      "q_win": 0.0124,
+      "p_win": 0.0089,
+      "ev_win": 0.567,
+      "edge": -0.0035,
+      "mark": "",
       "reasons": [
-        "期待値 1.457（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
-        "13番人気（オッズ 82.3倍）"
-      ],
-      "mark": "△"
+        "予想勝率 0.9%・15番手評価",
+        "15番人気 / EV 0.567（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 10,
@@ -213,18 +209,17 @@
       "trainer": "栗東西村",
       "weight_carried": 55.0,
       "horse_weight": null,
-      "odds_win": 111.0,
-      "popularity": 14,
-      "q_win": 0.0072,
-      "p_win": 0.0155,
-      "ev_win": 1.72,
-      "edge": 0.0083,
+      "odds_win": 27.9,
+      "popularity": 10,
+      "q_win": 0.0284,
+      "p_win": 0.023,
+      "ev_win": 0.642,
+      "edge": -0.0054,
+      "mark": "",
       "reasons": [
-        "期待値 1.72（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
-        "14番人気（オッズ 111.0倍）"
-      ],
-      "mark": "▲"
+        "予想勝率 2.3%・10番手評価",
+        "10番人気 / EV 0.642（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 11,
@@ -235,16 +230,17 @@
       "trainer": "栗東小林",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 12.8,
-      "popularity": 5,
-      "q_win": 0.0629,
-      "p_win": 0.0628,
-      "ev_win": 0.804,
-      "edge": -0.0001,
+      "odds_win": 6.7,
+      "popularity": 3,
+      "q_win": 0.1181,
+      "p_win": 0.1187,
+      "ev_win": 0.795,
+      "edge": 0.0006,
+      "mark": "▲",
       "reasons": [
-        "5番人気（オッズ 12.8倍）"
-      ],
-      "mark": ""
+        "予想勝率 11.9%・3番手評価",
+        "3番人気 / EV 0.795（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 12,
@@ -255,17 +251,17 @@
       "trainer": "栗東小崎",
       "weight_carried": 55.0,
       "horse_weight": null,
-      "odds_win": 10.8,
+      "odds_win": 10.0,
       "popularity": 4,
-      "q_win": 0.0745,
-      "p_win": 0.0727,
-      "ev_win": 0.785,
-      "edge": -0.0018,
+      "q_win": 0.0791,
+      "p_win": 0.0749,
+      "ev_win": 0.749,
+      "edge": -0.0042,
+      "mark": "△",
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-0.2pt)",
-        "4番人気（オッズ 10.8倍）"
-      ],
-      "mark": ""
+        "予想勝率 7.5%・4番手評価",
+        "4番人気 / EV 0.749（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 13,
@@ -276,18 +272,17 @@
       "trainer": "栗東坂口",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 77.6,
-      "popularity": 12,
-      "q_win": 0.0104,
-      "p_win": 0.0182,
-      "ev_win": 1.412,
-      "edge": 0.0078,
+      "odds_win": 39.1,
+      "popularity": 11,
+      "q_win": 0.0202,
+      "p_win": 0.0156,
+      "ev_win": 0.61,
+      "edge": -0.0046,
+      "mark": "",
       "reasons": [
-        "期待値 1.412（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
-        "12番人気（オッズ 77.6倍）"
-      ],
-      "mark": ""
+        "予想勝率 1.6%・11番手評価",
+        "11番人気 / EV 0.61（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 14,
@@ -298,17 +293,17 @@
       "trainer": "栗東高橋亮",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 14.4,
-      "popularity": 6,
-      "q_win": 0.0559,
-      "p_win": 0.0569,
-      "ev_win": 0.819,
-      "edge": 0.001,
+      "odds_win": 11.5,
+      "popularity": 5,
+      "q_win": 0.0688,
+      "p_win": 0.0638,
+      "ev_win": 0.734,
+      "edge": -0.005,
+      "mark": "",
       "reasons": [
-        "市場想定よりこちらの評価が高く、妙味あり(+0.1pt)",
-        "6番人気（オッズ 14.4倍）"
-      ],
-      "mark": ""
+        "予想勝率 6.4%・5番手評価",
+        "5番人気 / EV 0.734（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 15,
@@ -319,18 +314,17 @@
       "trainer": "栗東奥村豊",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 38.2,
-      "popularity": 8,
-      "q_win": 0.0211,
-      "p_win": 0.0273,
-      "ev_win": 1.043,
-      "edge": 0.0062,
+      "odds_win": 61.4,
+      "popularity": 13,
+      "q_win": 0.0129,
+      "p_win": 0.0093,
+      "ev_win": 0.571,
+      "edge": -0.0036,
+      "mark": "",
       "reasons": [
-        "期待値 1.043（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.6pt)",
-        "8番人気（オッズ 38.2倍）"
-      ],
-      "mark": ""
+        "予想勝率 0.9%・13番手評価",
+        "13番人気 / EV 0.571（控除率の壁で理論上マイナス）"
+      ]
     },
     {
       "umaban": 16,
@@ -341,73 +335,18 @@
       "trainer": "栗東高柳大",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 15.8,
-      "popularity": 7,
-      "q_win": 0.0509,
-      "p_win": 0.0526,
-      "ev_win": 0.831,
-      "edge": 0.0017,
+      "odds_win": 15.9,
+      "popularity": 6,
+      "q_win": 0.0498,
+      "p_win": 0.044,
+      "ev_win": 0.7,
+      "edge": -0.0058,
+      "mark": "",
       "reasons": [
-        "市場想定よりこちらの評価が高く、妙味あり(+0.2pt)",
-        "7番人気（オッズ 15.8倍）"
-      ],
-      "mark": ""
+        "予想勝率 4.4%・6番手評価",
+        "6番人気 / EV 0.7（控除率の壁で理論上マイナス）"
+      ]
     }
   ],
-  "tickets": [
-    {
-      "type": "単勝",
-      "target": "2",
-      "ev": 1.244,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "4",
-      "ev": 1.933,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "5",
-      "ev": 1.111,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "6",
-      "ev": 1.076,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "8",
-      "ev": 2.465,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "9",
-      "ev": 1.457,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "10",
-      "ev": 1.72,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "13",
-      "ev": 1.412,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "15",
-      "ev": 1.043,
-      "stake_unit": 1
-    }
-  ]
+  "tickets": []
 }
