@@ -43,6 +43,13 @@ TRACK = {
     "06": "中山", "07": "中京", "08": "京都", "09": "阪神", "10": "小倉",
 }
 
+# 競馬場 -> 回り（コース適性の特徴量用）
+DIRECTION = {
+    "東京": "左", "中京": "左", "新潟": "左",
+    "札幌": "右", "函館": "右", "福島": "右", "中山": "右",
+    "京都": "右", "阪神": "右", "小倉": "右",
+}
+
 
 def get(url: str, retries: int = 3, timeout: int = 20) -> str:
     """負荷をかけないGET。リトライ・指数バックオフ・適切なエンコーディング。"""
@@ -97,6 +104,7 @@ def _race_header(soup: BeautifulSoup, race_id: str) -> dict:
         "distance_m": distance_m,
         "surface": surface,
         "going": going,
+        "direction": DIRECTION.get(track),
     }
 
 
@@ -194,9 +202,9 @@ def get_win_odds(race_id: str) -> dict[int, float]:
 # 結果
 # ----------------------------------------------------------------------
 def parse_result(html: str, race_id: str) -> dict:
-    """結果HTMLから 着順/馬番/馬名/確定オッズ/人気 を抽出。
-    出力 horses は backtest がそのまま使える形（odds_win + finish_pos）。
-    結果ページには確定オッズも載るため、これ1枚で検証データになる。
+    """結果HTMLから着順・馬番・馬名・確定オッズ・人気に加え、
+    履歴DB用に 馬ID・騎手・上がり3F・通過順・斤量・馬体重 も抽出する。
+    結果ページ1枚に全部載っているため、これが履歴の宝の山。
     """
     soup = BeautifulSoup(html, "lxml")
     race = _race_header(soup, race_id)
@@ -206,13 +214,30 @@ def parse_result(html: str, race_id: str) -> dict:
         umaban = _to_int(_text(tr.select_one("td.Num.Txt_C")))       # 馬番(枠Numと区別)
         a = tr.select_one("td.Horse_Info a[href*='/horse/']") or tr.select_one("td.Horse_Info a")
         name = _text(a)
+        horse_id = None
+        if a and a.has_attr("href"):
+            hm = re.search(r"/horse/(\d+)", a["href"])
+            horse_id = hm.group(1) if hm else None
         odds = _to_float(_text(tr.select_one("td.Odds.Txt_R")))      # 確定単勝オッズ
         pop = _to_int(_text(tr.select_one("td.Odds.Txt_C")))         # 人気
+        jockey = _text(tr.select_one("td.Jockey"))                   # 騎手
+        weight_carried = _to_float(_text(tr.select_one("td.Jockey_Info")))  # 斤量
+        passage = _text(tr.select_one("td.PassageRate"))             # 通過順 例 "3-4"
+        body_weight = _text(tr.select_one("td.Weight"))              # 馬体重 例 "414(+4)"
+        # 上がり3F: td.Time が複数(タイム/着差/上がり)あるので、"33.4"形だけ拾う
+        agari = None
+        for t in tr.select("td.Time"):
+            s = _text(t) or ""
+            if re.fullmatch(r"\d{2}\.\d", s):
+                agari = float(s)
+                break
         if umaban is None:
             continue
         horses.append({
-            "umaban": umaban, "name": name, "finish_pos": finish,
-            "odds_win": odds, "popularity": pop,
+            "umaban": umaban, "name": name, "horse_id": horse_id,
+            "finish_pos": finish, "odds_win": odds, "popularity": pop,
+            "jockey": jockey, "weight_carried": weight_carried,
+            "passage": passage, "agari": agari, "body_weight": body_weight,
         })
     race["horses"] = horses
     log.info("結果 %s: %d頭 (1着=%s)", race_id, len(horses),
