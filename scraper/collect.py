@@ -26,7 +26,9 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "analysis"))
 import netkeiba as nk  # noqa: E402
+import pastrun  # noqa: E402  （馬柱→特徴量）
 
 RAW_DIR = Path("data/raw")
 
@@ -46,6 +48,28 @@ def _save(date: str, kind: str, payload) -> Path:
     return out
 
 
+def _attach_features(race: dict, rid: str, date: str) -> None:
+    """馬柱(shutuba_past)から各馬の特徴量・form_scoreを付与。
+    失敗してもオッズのみで予想は出るよう、例外は握りつぶしてログのみ。"""
+    try:
+        today = datetime.strptime(date, "%Y%m%d").date()
+        ph = nk.get(f"{nk.BASE_RACE}/race/shutuba_past.html?race_id={rid}")
+        past = pastrun.parse_shutuba_past(ph)
+        by_uma = {}
+        for x in past:
+            feat = pastrun.features(x, race.get("distance_m"), race.get("surface"), today=today)
+            by_uma[x["umaban"]] = (feat, pastrun.form_score(feat))
+        attached = 0
+        for h in race.get("horses", []):
+            ent = by_uma.get(h["umaban"])
+            if ent:
+                h["features"], h["form_score"] = ent
+                attached += 1
+        log.info("馬柱 %s: 特徴量付与 %d/%d頭", rid, attached, len(race.get("horses", [])))
+    except Exception as e:  # noqa
+        log.warning("馬柱 失敗 %s: %s（オッズのみで継続）", rid, e)
+
+
 def collect_day(date: str, with_result: bool, with_past: bool) -> None:
     race_ids = nk.find_race_ids(date)
     if not race_ids:
@@ -60,6 +84,7 @@ def collect_day(date: str, with_result: bool, with_past: bool) -> None:
             html = nk.get(f"{nk.BASE_RACE}/race/shutuba.html?race_id={rid}")
             race = nk.parse_shutuba(html, rid, odds_map=odds)
             race["date"] = _fmt_date(date)
+            _attach_features(race, rid, date)
             races.append(race)
         except Exception as e:  # noqa
             log.error("出馬表 失敗 %s : %s", rid, e)
