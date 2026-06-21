@@ -22,6 +22,7 @@
 from __future__ import annotations
 import argparse
 import json
+import math
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -29,6 +30,7 @@ JST = timezone(timedelta(hours=9))
 
 # --- チューニング可能パラメータ -------------------------------------------
 TAU = 1.15           # 人気-穴バイアス補正の指数（>1で本命寄り。1.0で市場そのまま）
+LAMBDA = 0.6         # 実力評価(form_score)をどれだけ効かせるか（0=オッズのみ=Phase2）
 EV_THRESHOLD = 1.0   # これ以上を「妙味（理論上プラス）」とみなす
 # 印の定義（予想の強さ順）
 MARKS = [("◎", "本命"), ("○", "対抗"), ("▲", "単穴"), ("△", "連下")]
@@ -44,11 +46,27 @@ def market_devig(rated: list[dict]) -> float:
 
 
 def estimate_p(rated: list[dict], tau: float = TAU) -> None:
-    """推定勝率 p：市場確率 q を土台に人気-穴バイアスを補正（q^tau を正規化）。"""
-    pows = [h["q_win"] ** tau for h in rated]
-    s = sum(pows) or 1.0
-    for h, pw in zip(rated, pows):
-        h["p_win"] = round(pw / s, 4)
+    """推定勝率 p：市場確率 q を土台に
+       (1) 人気-穴バイアス補正（q^tau）
+       (2) 実力評価 form_score による相対的な傾け（market+実力の融合）
+       form_score が無ければ (1) だけ＝Phase2と同じ挙動。"""
+    base = [h["q_win"] ** tau for h in rated]
+
+    fs = [h.get("form_score") for h in rated]
+    have = [x for x in fs if x is not None]
+    if have:
+        mean_fs = sum(have) / len(have)
+        tilted = []
+        for b, h in zip(base, rated):
+            f = h.get("form_score")
+            t = math.exp(LAMBDA * (f - mean_fs)) if f is not None else 1.0
+            h["_form_tilt"] = round(t, 3)
+            tilted.append(b * t)
+        base = tilted
+
+    s = sum(base) or 1.0
+    for b, h in zip(base, rated):
+        h["p_win"] = round(b / s, 4)
 
 
 def compute_ev(rated: list[dict]) -> None:
@@ -71,19 +89,38 @@ def assign_marks(rated: list[dict]) -> None:
 
 
 def build_reasons(h: dict) -> list[str]:
-    """根拠（2行）。強さ→市場との比較とEV。穴を持ち上げない正直な文。"""
+    """根拠（2〜3行）。強さ→市場比較とEV→（あれば）近走の実力評価。"""
     p = h["p_win"] * 100
     ev = h["ev_win"]
     edge_pt = round(h["edge"] * 100, 1)
     pop = h.get("popularity", "?")
     line1 = f"予想勝率 {p:.1f}%・{h['_prank']}番手評価"
     if ev >= EV_THRESHOLD:
-        line2 = f"{pop}番人気 / EV {ev}（理論上プラス＝妙味 +{edge_pt}pt）"
+        line2 = f"{pop}番人気 / EV {ev}（理論上プラス＝妙味 {edge_pt:+.1f}pt）"
     elif edge_pt <= -1.0:
         line2 = f"{pop}番人気 / EV {ev}（やや過剰人気・妙味なし）"
     else:
         line2 = f"{pop}番人気 / EV {ev}（控除率の壁で理論上マイナス）"
-    return [line1, line2]
+    reasons = [line1, line2]
+
+    feat = h.get("features")
+    if feat and feat.get("n_runs"):
+        bits = []
+        if feat.get("best_agari"):
+            bits.append(f"上がり最速{feat['best_agari']}")
+        if feat.get("style"):
+            bits.append(feat["style"])
+        if feat.get("dist_surface_fit"):
+            bits.append(f"当条件近走{feat['dist_surface_fit']}走")
+        tilt = h.get("_form_tilt")
+        note = ""
+        if tilt and tilt >= 1.05:
+            note = "（実力で上積み評価）"
+        elif tilt and tilt <= 0.95:
+            note = "（実力面はやや割引）"
+        if bits:
+            reasons.append("近走: " + " / ".join(bits) + note)
+    return reasons
 
 
 def build_tickets(rated: list[dict]) -> list[dict]:
@@ -114,6 +151,7 @@ def build_race_prediction(race: dict) -> dict:
         tickets = build_tickets(rated)
         for h in rated:
             h.pop("_prank", None)
+            h.pop("_form_tilt", None)
 
     for h in unrated:
         h.update({"q_win": 0, "p_win": 0, "ev_win": 0, "edge": 0,
