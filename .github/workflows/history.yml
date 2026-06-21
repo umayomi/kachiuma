@@ -1,0 +1,64 @@
+name: history-backfill
+on:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "開始日 YYYYMMDD（例 20260101）"
+        required: true
+      end:
+        description: "終了日 YYYYMMDD（空なら開始日のみ）"
+        required: false
+        default: ""
+permissions:
+  contents: write
+jobs:
+  hist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - name: collect results -> history DB
+        run: |
+          python - << 'PY'
+          import sys, datetime
+          sys.path += ["scraper", "analysis"]
+          import netkeiba as nk, history
+          start = "${{ github.event.inputs.start }}"
+          end = "${{ github.event.inputs.end }}".strip() or start
+          d0 = datetime.datetime.strptime(start, "%Y%m%d").date()
+          d1 = datetime.datetime.strptime(end, "%Y%m%d").date()
+          db = history.load_db("data/history")
+          print("既存DB: races=%d horses=%d jockeys=%d"
+                % (db["meta"]["n_races"], len(db["horse"]), len(db["jockey"])))
+          added, day = 0, d0
+          while day <= d1:
+              ds = day.strftime("%Y%m%d")
+              ids = nk.find_race_ids(ds)
+              print(f"{ds}: {len(ids)} races")
+              for rid in ids:
+                  try:
+                      r = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
+                      if history.ingest_race(db, r):
+                          added += 1
+                  except Exception as e:
+                      print("skip", rid, e)
+              day += datetime.timedelta(days=1)
+          history.save_db(db, "data/history")
+          print(f"\n追加 {added} レース / 累計 races={db['meta']['n_races']} "
+                f"horses={len(db['horse'])} jockeys={len(db['jockey'])}")
+          PY
+      - name: commit history DB
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/history
+          if git diff --staged --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "history: 結果を集計DBに追記"
+            git push
+          fi
