@@ -40,6 +40,9 @@ WEIGHTS = {
 
 def horse_features(db: dict, race: dict, h: dict) -> dict:
     hid = h.get("horse_id")
+    today_cls = race.get("race_class")            # 今日の格(1〜8) or None
+    avg_top3_cls = H.horse_avg_top3_class(db, hid) if hid else None
+    avg_cls = H.horse_avg_class(db, hid) if hid else None
     return {
         "course": H.horse_course_rate(db, hid, race) if hid else None,
         "sd": H.horse_sd_rate(db, hid, race) if hid else None,
@@ -48,7 +51,23 @@ def horse_features(db: dict, race: dict, h: dict) -> dict:
         "jk_course": H.jockey_course_rate(db, h.get("jockey"), race),
         "agari_rank": H.horse_avg_agari_rank(db, hid) if hid else None,
         "n_data": H.horse_total_starts(db, hid) if hid else 0,
+        # クラス: 着内実績のクラスが今日と同等以上か（複勝率の“相手の強さ”を補正）
+        "class_edge": (avg_top3_cls - today_cls)
+        if (avg_top3_cls is not None and today_cls) else None,
+        # クラス: 普段より楽な格に降りてきたか（降級=プラス）
+        "class_drop": (avg_cls - today_cls)
+        if (avg_cls is not None and today_cls) else None,
+        # 着差: 勝ち馬からの平均馬身（小さいほど競っている）
+        "margin": H.horse_avg_margin(db, hid) if hid else None,
+        "today_class": today_cls,
     }
+
+
+# クラス・着差の暫定重み（必ずバックテストで採否判定）
+W_CLASS_EDGE = 0.15   # 今日と同等以上のクラスで着内実績 → 加点
+W_CLASS_DROP = 0.10   # 降級(普段より楽) → 加点
+W_MARGIN = 0.05       # 勝ち馬から近い競馬 → 加点
+MARGIN_BASE = 3.0     # この馬身を基準に、近ければ+/大敗なら-
 
 
 def ability_raw(feat: dict) -> float:
@@ -61,6 +80,15 @@ def ability_raw(feat: dict) -> float:
     ar = feat.get("agari_rank")
     if ar is not None:
         s += 0.04 * (6.0 - ar)   # 上がり順位が上位(小さい)ほど加点
+    ce = feat.get("class_edge")
+    if ce is not None:
+        s += W_CLASS_EDGE * math.tanh(ce)        # 上のクラスで好走=+, 下級でしか=−
+    cd = feat.get("class_drop")
+    if cd is not None:
+        s += W_CLASS_DROP * math.tanh(cd)        # 降級=+, 昇級=−
+    mg = feat.get("margin")
+    if mg is not None:
+        s += W_MARGIN * max(-1.0, min(1.0, (MARGIN_BASE - mg) / MARGIN_BASE))
     return s
 
 
