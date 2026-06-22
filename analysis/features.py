@@ -47,9 +47,7 @@ def horse_features(db: dict, race: dict, h: dict) -> dict:
         "going": H.horse_going_rate(db, hid, race) if hid else None,
         "jk_course": H.jockey_course_rate(db, h.get("jockey"), race),
         "agari_rank": H.horse_avg_agari_rank(db, hid) if hid else None,
-        "n_course": (lambda c: c["st"] if c else 0)(
-            H.horse_cell(db, hid, f"course={race.get('track')}|{race.get('surface')}"
-                         f"|{race.get('distance_m')}|{race.get('direction') or '?'}")) if hid else 0,
+        "n_data": H.horse_total_starts(db, hid) if hid else 0,
     }
 
 
