@@ -2,10 +2,10 @@ name: debug
 on:
   workflow_dispatch:
     inputs:
-      date:
-        description: "確認したい開催日 YYYYMMDD（結果が確定している過去日）"
+      horse_id:
+        description: "確認したい馬ID（例: 2021101414）"
         required: true
-        default: "20260621"
+        default: "2021101414"
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -14,51 +14,63 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip"
-      - run: pip install -r requirements.txt
-      - name: inspect class & margin structure
+      - name: install selenium (Chromeはランナーに同梱)
+        run: |
+          pip install selenium beautifulsoup4 lxml
+          google-chrome --version || true
+      - name: try db.netkeiba horse page via headless Chrome
         run: |
           python - << 'PY'
-          import sys
-          sys.path += ["scraper", "analysis"]
-          import netkeiba as nk
+          import sys, time
           from bs4 import BeautifulSoup
+          from selenium import webdriver
+          from selenium.webdriver.chrome.options import Options
 
-          date = "${{ github.event.inputs.date }}"
-          ids = nk.find_race_ids(date)
-          print(f"{date}: race数={len(ids)}")
-          if not ids:
-              print("レースが見つからない。日付を変えて再実行を。"); sys.exit(0)
-          rid = ids[0]
-          print(f"診断対象 race_id={rid}\n")
-          html = nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}")
+          horse_id = "${{ github.event.inputs.horse_id }}"
+          url = f"https://db.netkeiba.com/horse/{horse_id}/"
+          print("target:", url)
+
+          opt = Options()
+          opt.add_argument("--headless=new")
+          opt.add_argument("--no-sandbox")
+          opt.add_argument("--disable-dev-shm-usage")
+          opt.add_argument("--disable-gpu")
+          opt.add_argument("--window-size=1280,1800")
+          opt.add_argument("--lang=ja-JP")
+          opt.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                           "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+
+          try:
+              driver = webdriver.Chrome(options=opt)   # selenium-managerがdriver解決
+          except Exception as e:
+              print("Chrome起動に失敗:", e); sys.exit(1)
+
+          try:
+              driver.get(url)
+              time.sleep(6)
+              html = driver.page_source
+          finally:
+              driver.quit()
+
+          print("page bytes:", len(html))
           soup = BeautifulSoup(html, "lxml")
+          print("title:", (soup.title.text.strip() if soup.title else "なし"))
 
-          print("===== ① クラス: ヘッダ要素 =====")
-          rn = soup.select_one(".RaceName")
-          print("[RaceName outerHTML]")
-          print((str(rn)[:400] if rn else "なし"))
-          print("\n[RaceData01 text]")
-          d1 = soup.select_one(".RaceData01")
-          print(repr(nk._text(d1)) if d1 else "なし")
-          print("\n[RaceData02 text]")
-          d2 = soup.select_one(".RaceData02")
-          print(repr(nk._text(d2)) if d2 else "なし")
-          if d2:
-              print("[RaceData02 内 span を順に]")
-              for i, sp in enumerate(d2.select("span")):
-                  print(f"  span[{i}] = {nk._text(sp)!r}")
+          tbl = soup.select_one("table.db_h_race_results, table.nk_tb_common")
+          if not tbl:
+              print("\n>>> 成績表 見つからず（遮断/簡易ページの可能性）")
+              print("---- 本文先頭600字 ----")
+              print(soup.get_text(' ', strip=True)[:600])
+              sys.exit(0)
 
-          print("\n===== ② 着差: 結果1行目の全td(class, text) =====")
-          rows = soup.select("tr.HorseList")
-          print(f"HorseList行数={len(rows)}")
-          for ri, tr in enumerate(rows[:3]):
-              print(f"\n--- 行{ri+1}（着順={nk._text(tr.select_one('td.Result_Num'))}）---")
-              for td in tr.find_all("td"):
-                  cls = ".".join(td.get("class", [])) or "(class無)"
-                  txt = nk._text(td)
-                  print(f"  td.{cls} = {txt!r}")
-              print("  [td.Time だけ抜粋]")
-              for t in tr.select("td.Time"):
-                  print(f"    Time = {nk._text(t)!r}")
+          rows = tbl.select("tr")
+          print(f"\n>>> 成績表あり！ 行数(ヘッダ込み)={len(rows)}")
+          heads = [th.get_text(strip=True) for th in rows[0].find_all(["th", "td"])]
+          print("見出し:", heads)
+          if len(rows) > 1:
+              cells = [td.get_text(strip=True) for td in rows[1].find_all("td")]
+              print("\n--- 直近1走のセル ---")
+              for i, c in enumerate(cells):
+                  h = heads[i] if i < len(heads) else f"col{i}"
+                  print(f"  [{i}] {h} = {c!r}")
           PY
