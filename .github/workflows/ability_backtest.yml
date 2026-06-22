@@ -1,0 +1,122 @@
+name: ability-backtest
+on:
+  workflow_dispatch:
+    inputs:
+      train_start:
+        description: "学習開始 YYYYMMDD"
+        required: true
+      train_end:
+        description: "学習終了 YYYYMMDD"
+        required: true
+      test_start:
+        description: "検証開始 YYYYMMDD（学習より後）"
+        required: true
+      test_end:
+        description: "検証終了 YYYYMMDD"
+        required: true
+permissions:
+  contents: write
+jobs:
+  ab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - name: walk-forward ability backtest
+        run: |
+          python - << 'PY'
+          import sys, datetime, pathlib
+          sys.path += ["scraper", "analysis"]
+          import netkeiba as nk, history as H, features as F
+          tr_s = "${{ github.event.inputs.train_start }}"
+          tr_e = "${{ github.event.inputs.train_end }}"
+          te_s = "${{ github.event.inputs.test_start }}"
+          te_e = "${{ github.event.inputs.test_end }}"
+
+          def days(a, b):
+              d = datetime.datetime.strptime(a, "%Y%m%d").date()
+              e = datetime.datetime.strptime(b, "%Y%m%d").date()
+              while d <= e:
+                  yield d.strftime("%Y%m%d")
+                  d += datetime.timedelta(days=1)
+
+          def race(rid):
+              return nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
+
+          # 1) 学習期間でDB構築
+          db = H.blank_db(); n_tr = 0
+          for ds in days(tr_s, tr_e):
+              ids = nk.find_race_ids(ds); print(f"[train]{ds}:{len(ids)}")
+              for rid in ids:
+                  try:
+                      if H.ingest_race(db, race(rid)): n_tr += 1
+                  except Exception as e:
+                      print("trskip", rid, e)
+          print(f"学習 {n_tr}R / horses={len(db['horse'])} jockeys={len(db['jockey'])}")
+
+          # 2) テスト期間をウォークフォワード（各レースは“それ以前のDB”だけで評価）
+          UNIT, GAP = 100, 0.05
+          S = {k: {"b": 0, "h": 0, "pay": 0.0} for k in
+               ["実力1位単勝", "妙味単勝(実力-市場≥5%)", "信頼本命(実力1位=1番人気)", "1番人気単勝(基準)"]}
+
+          def bet(name, u, by):
+              s = S[name]; s["b"] += 1
+              if by[u]["finish_pos"] == 1:
+                  s["h"] += 1; s["pay"] += UNIT * by[u]["odds_win"]
+
+          n_te = 0
+          for ds in days(te_s, te_e):
+              ids = nk.find_race_ids(ds); print(f"[test]{ds}:{len(ids)}")
+              for rid in ids:
+                  try:
+                      r = race(rid)
+                  except Exception as e:
+                      print("teskip", rid, e); continue
+                  rated = [h for h in r["horses"]
+                           if h.get("odds_win") and h["odds_win"] > 1 and h.get("finish_pos")]
+                  if len(rated) >= 2:
+                      inv = {h["umaban"]: 1 / h["odds_win"] for h in rated}
+                      tot = sum(inv.values()) or 1
+                      q = {u: v / tot for u, v in inv.items()}
+                      probs, _, _ = F.ability_probs(db, {**r, "horses": rated})
+                      by = {h["umaban"]: h for h in rated}
+                      top = max(probs, key=lambda u: probs[u]); bet("実力1位単勝", top, by)
+                      fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
+                      bet("1番人気単勝(基準)", fav, by)
+                      if top == fav:
+                          bet("信頼本命(実力1位=1番人気)", top, by)
+                      for h in rated:
+                          u = h["umaban"]
+                          if probs.get(u, 0) - q.get(u, 0) >= GAP:
+                              bet("妙味単勝(実力-市場≥5%)", u, by)
+                      n_te += 1
+                  H.ingest_race(db, r)
+
+          L = [f"検証: 学習{n_tr}R → テスト{n_te}R / 1点{UNIT}円", "",
+               f"{'戦略':<26}{'賭':>5}{'的中':>5}{'的中率':>7}{'回収率':>8}{'収支':>9}"]
+          for k, s in S.items():
+              if s["b"] == 0:
+                  L.append(f"{k:<26}{'0':>5}  （該当なし）"); continue
+              hr = s["h"] / s["b"] * 100; roi = s["pay"] / (s["b"] * UNIT) * 100
+              L.append(f"{k:<26}{s['b']:>5}{s['h']:>5}{hr:>6.1f}%{roi:>7.1f}%{int(s['pay']-s['b']*UNIT):>+9}")
+          rep = "\n".join(L); print("\n" + rep)
+          pathlib.Path("data").mkdir(exist_ok=True)
+          pathlib.Path("data/ability_backtest.md").write_text(
+              f"# 実力モデル ウォークフォワード検証\n\n学習 {tr_s}〜{tr_e} → テスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
+              encoding="utf-8")
+          PY
+      - name: commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ability_backtest.md
+          if git diff --staged --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "ability backtest: ウォークフォワード結果"
+            git push
+          fi
