@@ -37,6 +37,9 @@ jobs:
           te_s = "${{ github.event.inputs.test_start }}"
           te_e = "${{ github.event.inputs.test_end }}"
 
+          MIN_DATA = 3      # 実力評価に必要なDB内出走数（足切り）
+          UNIT, GAP = 100, 0.05
+
           def days(a, b):
               d = datetime.datetime.strptime(a, "%Y%m%d").date()
               e = datetime.datetime.strptime(b, "%Y%m%d").date()
@@ -58,15 +61,17 @@ jobs:
                       print("trskip", rid, e)
           print(f"学習 {n_tr}R / horses={len(db['horse'])} jockeys={len(db['jockey'])}")
 
-          # 2) テスト期間をウォークフォワード（各レースは“それ以前のDB”だけで評価）
-          UNIT, GAP = 100, 0.05
-          S = {k: {"b": 0, "h": 0, "pay": 0.0} for k in
-               ["実力1位単勝", "妙味単勝(実力-市場≥5%)", "信頼本命(実力1位=1番人気)", "1番人気単勝(基準)"]}
+          # 2) テスト期間をウォークフォワード（各レースは“それ以前のDB”だけで評価＝リーク無し）
+          #    評価は馬券内(複勝=3着以内)中心。単勝率・単勝回収率も併記。
+          #    実力上位/妙味/信頼本命は MIN_DATA 以上の“データ十分馬”だけを対象（足切り）。
+          S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0} for k in
+               ["実力上位(複勝)", "妙味(実力-市場≥5%)", "信頼本命(実力上位=1番人気)", "1番人気(基準)"]}
+          n_abst = 0  # 実力上位が「データ十分馬なし」で見送ったレース数
 
           def bet(name, u, by):
-              s = S[name]; s["b"] += 1
-              if by[u]["finish_pos"] == 1:
-                  s["h"] += 1; s["pay"] += UNIT * by[u]["odds_win"]
+              s = S[name]; s["b"] += 1; fp = by[u]["finish_pos"]
+              if fp and fp <= 3: s["t3"] += 1
+              if fp == 1: s["w"] += 1; s["pay"] += UNIT * by[u]["odds_win"]
 
           n_te = 0
           for ds in days(te_s, te_e):
@@ -82,31 +87,43 @@ jobs:
                       inv = {h["umaban"]: 1 / h["odds_win"] for h in rated}
                       tot = sum(inv.values()) or 1
                       q = {u: v / tot for u, v in inv.items()}
-                      probs, _, _ = F.ability_probs(db, {**r, "horses": rated})
+                      probs, feats, _ = F.ability_probs(db, {**r, "horses": rated})
                       by = {h["umaban"]: h for h in rated}
-                      top = max(probs, key=lambda u: probs[u]); bet("実力1位単勝", top, by)
                       fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
-                      bet("1番人気単勝(基準)", fav, by)
-                      if top == fav:
-                          bet("信頼本命(実力1位=1番人気)", top, by)
-                      for h in rated:
-                          u = h["umaban"]
-                          if probs.get(u, 0) - q.get(u, 0) >= GAP:
-                              bet("妙味単勝(実力-市場≥5%)", u, by)
+                      bet("1番人気(基準)", fav, by)  # 基準は常に1番人気
+
+                      # 足切り: DB内出走数が MIN_DATA 以上の“データ十分馬”だけ実力評価する
+                      evaluable = [h["umaban"] for h in rated
+                                   if feats[h["umaban"]].get("n_data", 0) >= MIN_DATA]
+                      if evaluable:
+                          top = max(evaluable, key=lambda u: probs[u])
+                          bet("実力上位(複勝)", top, by)
+                          if top == fav:
+                              bet("信頼本命(実力上位=1番人気)", top, by)
+                          for u in evaluable:
+                              if probs[u] - q.get(u, 0) >= GAP:
+                                  bet("妙味(実力-市場≥5%)", u, by)
+                      else:
+                          n_abst += 1
                       n_te += 1
                   H.ingest_race(db, r)
 
-          L = [f"検証: 学習{n_tr}R → テスト{n_te}R / 1点{UNIT}円", "",
-               f"{'戦略':<26}{'賭':>5}{'的中':>5}{'的中率':>7}{'回収率':>8}{'収支':>9}"]
+          L = [f"検証: 学習{n_tr}R → テスト{n_te}R / 1点{UNIT}円  足切りMIN_DATA={MIN_DATA}",
+               f"（実力上位がデータ不足で見送ったレース: {n_abst}R）", "",
+               "評価は馬券内(複勝=3着以内)中心。単勝率・単勝回収率は参考。", "",
+               f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}"]
           for k, s in S.items():
               if s["b"] == 0:
-                  L.append(f"{k:<26}{'0':>5}  （該当なし）"); continue
-              hr = s["h"] / s["b"] * 100; roi = s["pay"] / (s["b"] * UNIT) * 100
-              L.append(f"{k:<26}{s['b']:>5}{s['h']:>5}{hr:>6.1f}%{roi:>7.1f}%{int(s['pay']-s['b']*UNIT):>+9}")
+                  L.append(f"{k:<28}{'0':>5}  （該当なし）"); continue
+              t3 = s["t3"] / s["b"] * 100
+              wr = s["w"] / s["b"] * 100
+              roi = s["pay"] / (s["b"] * UNIT) * 100
+              L.append(f"{k:<28}{s['b']:>5}{t3:>7.1f}%{wr:>7.1f}%{roi:>8.1f}%")
           rep = "\n".join(L); print("\n" + rep)
           pathlib.Path("data").mkdir(exist_ok=True)
           pathlib.Path("data/ability_backtest.md").write_text(
-              f"# 実力モデル ウォークフォワード検証\n\n学習 {tr_s}〜{tr_e} → テスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
+              f"# 実力モデル ウォークフォワード検証（複勝率中心・データ足切り）\n\n"
+              f"学習 {tr_s}〜{tr_e} → テスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
               encoding="utf-8")
           PY
       - name: commit
@@ -117,6 +134,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "変更なし"
           else
-            git commit -m "ability backtest: ウォークフォワード結果"
+            git commit -m "ability backtest: 複勝率中心・データ足切りで再検証"
             git push
           fi
