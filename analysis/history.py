@@ -76,18 +76,34 @@ def ingest_race(db: dict, race: dict) -> bool:
     ag_sorted = sorted([h for h in horses if h.get("agari")], key=lambda x: x["agari"])
     agari_rank = {id(h): i + 1 for i, h in enumerate(ag_sorted)}
 
+    today_cls = race.get("race_class")   # 数値の格(1〜8) or None
     for h in horses:
         fin = h["finish_pos"]
         hid = h.get("horse_id")
         if hid:
             hs = db["horse"].setdefault(
                 hid, {"name": h.get("name"), "dims": {}, "agari": {"n": 0, "rank_sum": 0}})
+            # 旧DBにも後付けできるよう、毎回アキュムレータの存在を保証
+            hs.setdefault("cls", {"n": 0, "lvl_sum": 0, "top3_n": 0, "top3_lvl_sum": 0})
+            hs.setdefault("mgn", {"n": 0, "len_sum": 0.0})
             for k in dimkeys:
                 _bump(hs["dims"].setdefault(k, _blank()), fin)
             r = agari_rank.get(id(h))
             if r:
                 hs["agari"]["n"] += 1
                 hs["agari"]["rank_sum"] += r
+            # クラス: 出走したクラスと、着内(3着以内)時のクラスを記録
+            if today_cls:
+                hs["cls"]["n"] += 1
+                hs["cls"]["lvl_sum"] += today_cls
+                if fin <= 3:
+                    hs["cls"]["top3_n"] += 1
+                    hs["cls"]["top3_lvl_sum"] += today_cls
+            # 着差: 勝ち馬からの馬身（小さいほど競った内容）
+            mg = h.get("margin")
+            if mg is not None:
+                hs["mgn"]["n"] += 1
+                hs["mgn"]["len_sum"] += mg
         jk = h.get("jockey")
         if jk:
             js = db["jockey"].setdefault(jk, {})
@@ -144,6 +160,27 @@ def horse_total_starts(db, horse_id) -> int:
     if not h:
         return 0
     return sum(c["st"] for k, c in h["dims"].items() if k.startswith("dir="))
+
+
+def horse_avg_class(db, horse_id):
+    """普段走っているクラスの平均レベル。"""
+    h = db["horse"].get(horse_id)
+    c = h.get("cls") if h else None
+    return round(c["lvl_sum"] / c["n"], 2) if c and c["n"] else None
+
+
+def horse_avg_top3_class(db, horse_id):
+    """着内(3着以内)に来たときのクラスの平均レベル。上のクラスで好走しているほど高い。"""
+    h = db["horse"].get(horse_id)
+    c = h.get("cls") if h else None
+    return round(c["top3_lvl_sum"] / c["top3_n"], 2) if c and c["top3_n"] else None
+
+
+def horse_avg_margin(db, horse_id):
+    """勝ち馬からの平均着差(馬身)。小さいほど競った内容。"""
+    h = db["horse"].get(horse_id)
+    m = h.get("mgn") if h else None
+    return round(m["len_sum"] / m["n"], 3) if m and m["n"] else None
 
 
 def jockey_course_rate(db, jockey, race, kind="s"):
