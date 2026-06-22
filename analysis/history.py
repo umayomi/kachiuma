@@ -138,6 +138,14 @@ def horse_avg_agari_rank(db, horse_id):
     return round(h["agari"]["rank_sum"] / h["agari"]["n"], 2)
 
 
+def horse_total_starts(db, horse_id) -> int:
+    """そのDB内での総出走数（dir=各セルのstの和＝1走で必ず1つ計上される）。"""
+    h = db["horse"].get(horse_id)
+    if not h:
+        return 0
+    return sum(c["st"] for k, c in h["dims"].items() if k.startswith("dir="))
+
+
 def jockey_course_rate(db, jockey, race, kind="s"):
     js = db["jockey"].get(jockey)
     if not js:
