@@ -2,10 +2,10 @@ name: debug
 on:
   workflow_dispatch:
     inputs:
-      horse_id:
-        description: "確認したい馬ID（例: 2021101414）"
+      horse_ids:
+        description: "馬IDをカンマ区切りで（数頭で検証）"
         required: true
-        default: "2021101414"
+        default: "2021101414,2022101683,2022103991"
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -14,63 +14,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: install selenium (Chromeはランナーに同梱)
-        run: |
-          pip install selenium beautifulsoup4 lxml
-          google-chrome --version || true
-      - name: try db.netkeiba horse page via headless Chrome
+      - run: pip install selenium beautifulsoup4 lxml
+      - name: parse real db.netkeiba horse pages
         run: |
           python - << 'PY'
           import sys, time
-          from bs4 import BeautifulSoup
-          from selenium import webdriver
-          from selenium.webdriver.chrome.options import Options
+          sys.path += ["scraper"]
+          import horsedb as hd
 
-          horse_id = "${{ github.event.inputs.horse_id }}"
-          url = f"https://db.netkeiba.com/horse/{horse_id}/"
-          print("target:", url)
-
-          opt = Options()
-          opt.add_argument("--headless=new")
-          opt.add_argument("--no-sandbox")
-          opt.add_argument("--disable-dev-shm-usage")
-          opt.add_argument("--disable-gpu")
-          opt.add_argument("--window-size=1280,1800")
-          opt.add_argument("--lang=ja-JP")
-          opt.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                           "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
-
+          ids = [s.strip() for s in "${{ github.event.inputs.horse_ids }}".split(",") if s.strip()]
+          driver = hd.make_driver()
           try:
-              driver = webdriver.Chrome(options=opt)   # selenium-managerがdriver解決
-          except Exception as e:
-              print("Chrome起動に失敗:", e); sys.exit(1)
-
-          try:
-              driver.get(url)
-              time.sleep(6)
-              html = driver.page_source
+              for hid in ids:
+                  career = hd.fetch_horse(driver, hid, wait=5.0)
+                  print(f"\n===== 馬 {hid}: 過去走 {len(career)} 件 =====")
+                  for r in career[:3]:
+                      print(f"  {r['date']} {r['race_name'][:18]:<18} "
+                            f"格={r['race_class']}({r['class_label']}) "
+                            f"{r['surface']}{r['distance_m']} {r['going']} "
+                            f"着={r['finish_pos']} 着差={r['margin']} "
+                            f"指数={r['speed_index']} 上り={r['agari']} 人気={r['popularity']}")
+                  # 値の充足ぐあい（欠損の多さを把握）
+                  n = len(career) or 1
+                  spd = sum(1 for r in career if r['speed_index'] is not None)
+                  cls = sum(1 for r in career if r['race_class'] is not None)
+                  mgn = sum(1 for r in career if r['margin'] is not None)
+                  print(f"  充足: クラス {cls}/{len(career)} / 着差 {mgn}/{len(career)} / タイム指数 {spd}/{len(career)}")
+                  time.sleep(3)
           finally:
               driver.quit()
-
-          print("page bytes:", len(html))
-          soup = BeautifulSoup(html, "lxml")
-          print("title:", (soup.title.text.strip() if soup.title else "なし"))
-
-          tbl = soup.select_one("table.db_h_race_results, table.nk_tb_common")
-          if not tbl:
-              print("\n>>> 成績表 見つからず（遮断/簡易ページの可能性）")
-              print("---- 本文先頭600字 ----")
-              print(soup.get_text(' ', strip=True)[:600])
-              sys.exit(0)
-
-          rows = tbl.select("tr")
-          print(f"\n>>> 成績表あり！ 行数(ヘッダ込み)={len(rows)}")
-          heads = [th.get_text(strip=True) for th in rows[0].find_all(["th", "td"])]
-          print("見出し:", heads)
-          if len(rows) > 1:
-              cells = [td.get_text(strip=True) for td in rows[1].find_all("td")]
-              print("\n--- 直近1走のセル ---")
-              for i, c in enumerate(cells):
-                  h = heads[i] if i < len(heads) else f"col{i}"
-                  print(f"  [{i}] {h} = {c!r}")
+          print("\n検証おわり")
           PY
