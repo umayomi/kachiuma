@@ -1,21 +1,64 @@
-name: debug-shutuba
-on: workflow_dispatch
+name: debug
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "確認したい開催日 YYYYMMDD（結果が確定している過去日）"
+        required: true
+        default: "20260621"
 jobs:
   dbg:
     runs-on: ubuntu-latest
     steps:
-      - run: pip install requests beautifulsoup4 lxml
-      - name: inspect
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - name: inspect class & margin structure
         run: |
           python - << 'PY'
-          import requests
+          import sys
+          sys.path += ["scraper", "analysis"]
+          import netkeiba as nk
           from bs4 import BeautifulSoup
-          ua = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"}
-          rid = "202602010211"
-          h = requests.get(f"https://race.netkeiba.com/race/shutuba_past.html?race_id={rid}", headers=ua, timeout=20).text
-          soup = BeautifulSoup(h, "lxml")
-          p = soup.select_one("tr.HorseList").select_one("td.Past")
-          print("Past class:", p.get("class"))
-          for el in p.find_all(True):
-              print(el.name, el.get("class"), "=", el.get_text(" ", strip=True)[:14])
+
+          date = "${{ github.event.inputs.date }}"
+          ids = nk.find_race_ids(date)
+          print(f"{date}: race数={len(ids)}")
+          if not ids:
+              print("レースが見つからない。日付を変えて再実行を。"); sys.exit(0)
+          rid = ids[0]
+          print(f"診断対象 race_id={rid}\n")
+          html = nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}")
+          soup = BeautifulSoup(html, "lxml")
+
+          print("===== ① クラス: ヘッダ要素 =====")
+          rn = soup.select_one(".RaceName")
+          print("[RaceName outerHTML]")
+          print((str(rn)[:400] if rn else "なし"))
+          print("\n[RaceData01 text]")
+          d1 = soup.select_one(".RaceData01")
+          print(repr(nk._text(d1)) if d1 else "なし")
+          print("\n[RaceData02 text]")
+          d2 = soup.select_one(".RaceData02")
+          print(repr(nk._text(d2)) if d2 else "なし")
+          if d2:
+              print("[RaceData02 内 span を順に]")
+              for i, sp in enumerate(d2.select("span")):
+                  print(f"  span[{i}] = {nk._text(sp)!r}")
+
+          print("\n===== ② 着差: 結果1行目の全td(class, text) =====")
+          rows = soup.select("tr.HorseList")
+          print(f"HorseList行数={len(rows)}")
+          for ri, tr in enumerate(rows[:3]):
+              print(f"\n--- 行{ri+1}（着順={nk._text(tr.select_one('td.Result_Num'))}）---")
+              for td in tr.find_all("td"):
+                  cls = ".".join(td.get("class", [])) or "(class無)"
+                  txt = nk._text(td)
+                  print(f"  td.{cls} = {txt!r}")
+              print("  [td.Time だけ抜粋]")
+              for t in tr.select("td.Time"):
+                  print(f"    Time = {nk._text(t)!r}")
           PY
