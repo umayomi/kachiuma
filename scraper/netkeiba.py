@@ -89,12 +89,71 @@ def find_race_ids(date: str) -> list[str]:
 # ----------------------------------------------------------------------
 # 出馬表
 # ----------------------------------------------------------------------
+# クラス(格)を数値化。新馬/未勝利=1 … オープン=5 … G3=6 G2=7 G1=8
+def _parse_class(soup: BeautifulSoup, race_name: str | None):
+    """RaceData02のspanからクラス条件を、レース名/アイコンからグレードを判定。
+    戻り: (level:int|None, label:str|None)"""
+    d2 = soup.select_one(".RaceData02")
+    spans = [_text(sp) or "" for sp in d2.select("span")] if d2 else []
+    blob = " ".join(spans)
+    level, label = None, None
+    # 条件クラス（新しい「N勝クラス」と旧「N00万下」両対応）
+    if "新馬" in blob:
+        level, label = 1, "新馬"
+    elif "未勝利" in blob:
+        level, label = 1, "未勝利"
+    elif re.search(r"1\s*勝", blob) or "500万" in blob:
+        level, label = 2, "1勝クラス"
+    elif re.search(r"2\s*勝", blob) or "1000万" in blob:
+        level, label = 3, "2勝クラス"
+    elif re.search(r"3\s*勝", blob) or "1600万" in blob:
+        level, label = 4, "3勝クラス"
+    elif "オープン" in blob or re.search(r"\bL\b", blob):
+        level, label = 5, "オープン"
+    # グレード（アイコン class か レース名の表記で上書き）
+    rn = soup.select_one(".RaceName")
+    icon = ""
+    if rn:
+        for el in rn.find_all(True):
+            icon += " ".join(el.get("class", [])) + " "
+    nm = race_name or ""
+    if "Icon_GradeType1" in icon or re.search(r"[\(（]?G[ⅠI1][\)）]?", nm):
+        level, label = 8, "G1"
+    elif "Icon_GradeType2" in icon or re.search(r"[\(（]?G[ⅡII2][\)）]?", nm):
+        level, label = 7, "G2"
+    elif "Icon_GradeType3" in icon or re.search(r"[\(（]?G[ⅢIII3][\)）]?", nm):
+        level, label = 6, "G3"
+    return level, label
+
+
+# 着差表記 → 馬身(おおよそ)。すぐ前の馬との差。Noneは勝ち馬/不明
+_MARGIN_WORDS = {"同着": 0.0, "ハナ": 0.1, "アタマ": 0.2, "クビ": 0.3, "大差": 10.0}
+
+def _margin_to_len(s: str | None):
+    if not s:
+        return None
+    s = s.strip()
+    for w, v in _MARGIN_WORDS.items():
+        if w in s:
+            return v
+    # 例 "1.3/4"=1+3/4, "3/4"=0.75, "1/2"=0.5, "2"=2.0
+    m = re.fullmatch(r"(?:(\d+)\.)?(\d+)/(\d+)", s)
+    if m:
+        whole = int(m.group(1)) if m.group(1) else 0
+        return round(whole + int(m.group(2)) / int(m.group(3)), 3)
+    m = re.fullmatch(r"\d+(?:\.\d+)?", s)
+    if m:
+        return float(s)
+    return None
+
+
 def _race_header(soup: BeautifulSoup, race_id: str) -> dict:
     track = TRACK.get(race_id[4:6], "")
     race_no = int(race_id[-2:])
     name = _text(soup.select_one(".RaceName")) or _text(soup.select_one(".RaceList_Item02 .RaceName"))
     data01 = _text(soup.select_one(".RaceData01"))
     distance_m, surface, going = _parse_data01(data01)
+    race_class, class_label = _parse_class(soup, name)
     return {
         "race_id": race_id,
         "date": f"{race_id[0:4]}-??-??",  # 正確な月日はrace_listから補完してもよい
@@ -105,6 +164,8 @@ def _race_header(soup: BeautifulSoup, race_id: str) -> dict:
         "surface": surface,
         "going": going,
         "direction": DIRECTION.get(track),
+        "race_class": race_class,      # 数値の格(1〜8)。不明はNone
+        "class_label": class_label,
     }
 
 
@@ -224,13 +285,13 @@ def parse_result(html: str, race_id: str) -> dict:
         weight_carried = _to_float(_text(tr.select_one("td.Jockey_Info")))  # 斤量
         passage = _text(tr.select_one("td.PassageRate"))             # 通過順 例 "3-4"
         body_weight = _text(tr.select_one("td.Weight"))              # 馬体重 例 "414(+4)"
-        # 上がり3F: td.Time が複数(タイム/着差/上がり)あるので、"33.4"形だけ拾う
+        # td.Time は3つで [走破タイム, 着差, 上がり3F] の順（診断で確定）
+        times = [_text(t) for t in tr.select("td.Time")]
+        run_time = times[0] if len(times) > 0 else None
+        margin_inc = _margin_to_len(times[1]) if len(times) > 1 else None  # すぐ前との差(馬身)
         agari = None
-        for t in tr.select("td.Time"):
-            s = _text(t) or ""
-            if re.fullmatch(r"\d{2}\.\d", s):
-                agari = float(s)
-                break
+        if len(times) > 2 and times[2] and re.fullmatch(r"\d{2}\.\d", times[2]):
+            agari = float(times[2])
         if umaban is None:
             continue
         horses.append({
@@ -238,7 +299,17 @@ def parse_result(html: str, race_id: str) -> dict:
             "finish_pos": finish, "odds_win": odds, "popularity": pop,
             "jockey": jockey, "weight_carried": weight_carried,
             "passage": passage, "agari": agari, "body_weight": body_weight,
+            "run_time": run_time, "_margin_inc": margin_inc,
         })
+
+    # 着差を「勝ち馬からの馬身」に積み上げ（着順順に加算）。勝ち馬=0.0
+    cum = 0.0
+    for h in sorted([x for x in horses if x["finish_pos"]], key=lambda x: x["finish_pos"]):
+        cum += h.pop("_margin_inc", None) or 0.0
+        h["margin"] = round(cum, 3)
+    for h in horses:
+        h.pop("_margin_inc", None)   # 着順不明馬の作業用キーを掃除
+        h.setdefault("margin", None)
     race["horses"] = horses
     log.info("結果 %s: %d頭 (1着=%s)", race_id, len(horses),
              next((h["umaban"] for h in horses if h["finish_pos"] == 1), "?"))
