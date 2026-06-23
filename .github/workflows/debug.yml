@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       date:
-        description: "レース開催日 YYYYMMDD（日本ダービーの日）"
+        description: "レース開催日 YYYYMMDD"
         required: true
         default: "20260531"
       keyword:
@@ -34,12 +34,11 @@ jobs:
           ds = "${{ github.event.inputs.date }}"
           kw = "${{ github.event.inputs.keyword }}"
           rid_in = "${{ github.event.inputs.race_id }}".strip()
-          KEYS = [kw, "東京優駿", "優駿", "ダービー"]
+          KEYS = [kw, "東京優駿", "優駿", "ダービー", "皐月賞"]
 
           def result(rid):
               return nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
 
-          # レース特定
           if rid_in:
               rid = rid_in; race = result(rid)
           else:
@@ -63,7 +62,6 @@ jobs:
           tot = sum(inv.values()) or 1
           q = {u: v/tot for u, v in inv.items()}
 
-          # 各馬の全キャリアを取得（その日より前で評価）
           driver = hd.make_driver()
           careers = {}
           try:
@@ -83,19 +81,17 @@ jobs:
           def fmt(v):
               return "  - " if v is None else f"{v:.2f}"
 
-          # 実力prob順（モデルの評価順）に表示
           order = sorted(rated, key=lambda h: probs[h["umaban"]], reverse=True)
           print("=== モデルの評価順（実力prob降順） ===")
-          n_sd = sum(1 for h in rated if feats[h["umaban"]]["sd"] is not None)
-          n_course = sum(1 for h in rated if feats[h["umaban"]]["course"] is not None)
+          n_band = sum(1 for h in rated if feats[h["umaban"]]["band"] is not None)
           for h in order:
               u = h["umaban"]; f = feats[u]
               mark = "★人気1" if u == fav else f"人気{h.get('popularity')}"
               print(f"[{mark} {h['odds_win']}倍 →{h['finish_pos']}着] {h.get('name','')[:10]}"
                     f"  prob={probs[u]*100:4.1f}% q={q[u]*100:4.1f}% raw={C.ability_raw(f):+.3f}")
-              print(f"    course={fmt(f['course'])} sd={fmt(f['sd'])} dir={fmt(f['dir'])} "
-                    f"going={fmt(f['going'])} clsEdge={fmt(f['class_edge'])} margin={fmt(f['margin'])} n={f['n_data']}")
-          print(f"\n距離(sd)実績がある馬: {n_sd}/{len(rated)} / コース実績がある馬: {n_course}/{len(rated)}")
+              print(f"    band={fmt(f['band'])}(n{f['band_n']}) dir={fmt(f['dir'])} going={fmt(f['going'])} "
+                    f"clsProven={fmt(f['class_proven'])} clsEdge={fmt(f['class_edge'])} margin={fmt(f['margin'])} n={f['n_data']}")
+          print(f"\n距離帯(band)実績がある馬: {n_band}/{len(rated)}")
           top = order[0]["umaban"]
           win = next((h["umaban"] for h in rated if h["finish_pos"] == 1), None)
           print(f"モデル本命=馬{top}(着順{next(h['finish_pos'] for h in rated if h['umaban']==top)}) "
