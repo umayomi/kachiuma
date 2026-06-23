@@ -146,17 +146,28 @@ def make_driver():
     from selenium import webdriver
     from selenium.webdriver.chrome.options import Options
     opt = Options()
+    opt.page_load_strategy = "eager"   # DOMが出来たら先へ（画像等は待たない）
     for a in ("--headless=new", "--no-sandbox", "--disable-dev-shm-usage",
-              "--disable-gpu", "--window-size=1280,2000", "--lang=ja-JP",
-              f"--user-agent={UA}"):
+              "--disable-gpu", "--window-size=1100,1600", "--lang=ja-JP",
+              "--disable-extensions", "--disable-application-cache",
+              "--blink-settings=imagesEnabled=false", f"--user-agent={UA}"):
         opt.add_argument(a)
     return webdriver.Chrome(options=opt)
 
 
-def fetch_horse(driver, horse_id: str, wait: float = 5.0) -> list[dict]:
+def fetch_horse(driver, horse_id: str, wait: float = 1.0) -> list[dict]:
     driver.get(HORSE_URL.format(hid=horse_id))
     time.sleep(wait)
     return parse_horse_career(driver.page_source)
+
+
+# キャッシュに残すのは分析で使う列だけ（netkeibaの生ページは持たない）
+_KEEP = ("date", "venue", "surface", "distance_m", "going",
+         "race_class", "finish_pos", "margin")
+
+
+def trim_career(career: list) -> list:
+    return [{k: r.get(k) for k in _KEEP} for r in career]
 
 
 # ---- キャッシュ（取った馬は二度取らない） ----
