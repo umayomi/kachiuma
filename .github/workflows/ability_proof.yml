@@ -7,7 +7,7 @@ on:
         required: true
         default: "20260620"
       test_end:
-        description: "検証終了 YYYYMMDD（まず週末2日など小さく）"
+        description: "検証終了 YYYYMMDD"
         required: true
         default: "20260621"
 permissions:
@@ -22,16 +22,17 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -r requirements.txt selenium
-      - name: full-career ability proof
+      - name: full-career ability proof (cached)
         run: |
           python - << 'PY'
-          import sys, time, datetime, pathlib
+          import sys, time, datetime, pathlib, json, os
           sys.path += ["scraper", "analysis"]
           import netkeiba as nk, horsedb as hd, career_score as C
 
           te_s = "${{ github.event.inputs.test_start }}"
           te_e = "${{ github.event.inputs.test_end }}"
           MIN_DATA, GAP, UNIT = 3, 0.05, 100
+          CACHE = "data/horsedb_cache.json"
 
           def days(a, b):
               d = datetime.datetime.strptime(a, "%Y%m%d").date()
@@ -39,7 +40,7 @@ jobs:
               while d <= e:
                   yield d.strftime("%Y%m%d"); d += datetime.timedelta(days=1)
 
-          # 1) テスト週のレース結果（軽い・requests）
+          # 1) テスト週のレース結果（軽い）
           races, hids = [], set()
           for ds in days(te_s, te_e):
               ids = nk.find_race_ids(ds); print(f"[races]{ds}:{len(ids)}")
@@ -54,31 +55,53 @@ jobs:
                           hids.add(h["horse_id"])
           print(f"テスト {len(races)}R / ユニーク馬 {len(hids)}頭")
 
-          # 2) 出走馬の全キャリアをdbから取得（重い・使い捨て・netkeibaに優しく）
-          careers, t0, BUDGET, miss = {}, time.time(), 75 * 60, 0
-          driver = hd.make_driver()
-          hid_list = sorted(hids)
-          try:
-              for i, hid in enumerate(hid_list):
-                  if time.time() - t0 > BUDGET:
-                      print(f"!! 時間予算({BUDGET//60}分)到達、{i}/{len(hid_list)}頭で打ち切り"); break
-                  try:
-                      careers[hid] = hd.fetch_horse(driver, hid, wait=3.5)
-                      miss = 0
-                  except Exception as e:
-                      careers[hid] = []; miss += 1
-                      print("fetch fail", hid, e)
-                      if miss >= 10:
-                          print("!! 連続失敗、遮断の可能性。取得を打ち切り"); break
-                  if i % 25 == 0:
-                      print(f"  ...{i}/{len(hid_list)}頭 ({int(time.time()-t0)}s)")
-                  time.sleep(2.0)
-          finally:
-              driver.quit()
-          got = sum(1 for v in careers.values() if v)
-          print(f"キャリア取得: {got}/{len(hid_list)}頭")
+          # 2) 全キャリア取得（キャッシュ優先・未取得だけ・クラッシュ復帰・時間予算）
+          cache = {}
+          if os.path.exists(CACHE):
+              cache = json.load(open(CACHE, encoding="utf-8"))
+          missing = [h for h in sorted(hids) if h not in cache]
+          print(f"キャッシュ済 {len(hids)-len(missing)}頭 / 今回取得対象 {len(missing)}頭")
 
-          # 3) 複勝率バックテスト（各レースはその日より前のキャリアだけ）
+          driver = hd.make_driver()
+          t0, BUDGET, since = time.time(), 70 * 60, 0
+
+          def restart():
+              global driver, since
+              try: driver.quit()
+              except Exception: pass
+              driver = hd.make_driver(); since = 0
+
+          for i, hid in enumerate(missing):
+              if time.time() - t0 > BUDGET:
+                  print(f"!! 時間予算到達 {i}/{len(missing)}頭で中断（続きは再実行で）"); break
+              if since >= 40:
+                  restart()
+              done = False
+              for attempt in range(2):
+                  try:
+                      cache[hid] = hd.trim_career(hd.fetch_horse(driver, hid, wait=1.0))
+                      done = True; break
+                  except Exception as e:
+                      msg = str(e).splitlines()[0][:50]
+                      if "crash" in msg.lower() or "session" in msg.lower() or "renderer" in msg.lower():
+                          restart()                      # クラッシュ→再起動して再試行
+                      else:
+                          print("fail", hid, msg); break
+              if not done:
+                  cache[hid] = []
+              since += 1
+              if i % 25 == 0:
+                  print(f"  ...{i}/{len(missing)} ({int(time.time()-t0)}s)")
+              time.sleep(1.5)
+          try: driver.quit()
+          except Exception: pass
+
+          os.makedirs("data", exist_ok=True)
+          json.dump(cache, open(CACHE, "w", encoding="utf-8"), ensure_ascii=False)
+          got = sum(1 for h in hids if cache.get(h))
+          print(f"カバレッジ: {got}/{len(hids)}頭 (キャッシュ全体 {len(cache)}頭)")
+
+          # 3) 複勝率バックテスト（その日より前のキャリアだけ＝リークなし）
           S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0} for k in
                ["実力上位(複勝)", "妙味(実力-市場≥5%)", "信頼本命(実力上位=1番人気)", "1番人気(基準)"]}
           n_abst = 0
@@ -97,7 +120,7 @@ jobs:
               inv = {h["umaban"]: 1 / h["odds_win"] for h in rated}
               tot = sum(inv.values()) or 1
               q = {u: v / tot for u, v in inv.items()}
-              cmap = {h["umaban"]: careers.get(h.get("horse_id"), []) for h in rated}
+              cmap = {h["umaban"]: cache.get(h.get("horse_id"), []) for h in rated}
               probs, feats = C.ability_probs(cmap, {**r, "horses": rated}, ds)
               by = {h["umaban"]: h for h in rated}
               fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
@@ -114,7 +137,7 @@ jobs:
               else:
                   n_abst += 1
 
-          L = [f"全キャリア実証: テスト{len(races)}R / 馬{got}頭取得 / 1点{UNIT}円 足切りMIN_DATA={MIN_DATA}",
+          L = [f"全キャリア実証: テスト{len(races)}R / カバレッジ{got}/{len(hids)}頭 / 1点{UNIT}円 MIN_DATA={MIN_DATA}",
                f"（実力上位がデータ不足で見送り: {n_abst}R）", "",
                "評価は馬券内(複勝=3着以内)中心。単勝率・単回収率は参考。", "",
                f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}"]
@@ -124,7 +147,6 @@ jobs:
               L.append(f"{k:<28}{s['b']:>5}{s['t3']/s['b']*100:>7.1f}%"
                        f"{s['w']/s['b']*100:>7.1f}%{s['pay']/(s['b']*UNIT)*100:>8.1f}%")
           rep = "\n".join(L); print("\n" + rep)
-          pathlib.Path("data").mkdir(exist_ok=True)
           pathlib.Path("data/ability_proof.md").write_text(
               f"# 全キャリア実力スコア 実証（複勝率中心）\n\nテスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
               encoding="utf-8")
@@ -133,5 +155,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ability_proof.md
-          git diff --staged --quiet || (git commit -m "full-career ability proof" && git push)
+          git add data/ability_proof.md data/horsedb_cache.json
+          git diff --staged --quiet || (git commit -m "full-career ability proof (cached)" && git push)
