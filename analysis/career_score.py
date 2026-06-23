@@ -9,15 +9,33 @@ from datetime import datetime
 TOP3_BASE = 0.25     # 基準複勝率
 K = 4                # 縮小の強さ
 BETA = 2.5           # softmaxの鋭さ
-WEIGHTS = {"course": 1.0, "sd": 0.8, "dir": 0.4, "going": 0.4}
-W_CLASS_EDGE = 0.15
-W_MARGIN = 0.05
-MARGIN_BASE = 3.0
+# 配点：実力の質(クラス・着差)を主役、距離帯/回り/馬場は脇役
+PIVOT_CLASS = 3.0    # 条件クラスの中位を基準（ここからの上振れを評価）
+W_CLASS = 0.55       # 着内実績のクラス（主役）
+W_MARGIN = 0.35      # 平均着差＝競った内容（主役）
+W_BAND = 0.40        # 距離帯の複勝率
+W_DIR = 0.20         # 回りの複勝率
+W_GOING = 0.20       # 馬場の複勝率
+CONF_C0 = 3.0        # 出走C0で信頼度0.5（少データは中立寄りに割引）
+MARGIN_BASE = 1.2    # この馬身を境に、近ければ＋・離されれば−
 
 TRACKS = ["札幌", "函館", "福島", "新潟", "東京", "中山", "中京", "京都", "阪神", "小倉"]
 DIRECTION = {"東京": "左", "中京": "左", "新潟": "左",
              "中山": "右", "京都": "右", "阪神": "右", "札幌": "右",
              "函館": "右", "福島": "右", "小倉": "右"}
+
+
+def _band(d):
+    """距離帯。ピンポイントでなく括りで見る（未経験距離の取りこぼしを減らす）。"""
+    if not d:
+        return None
+    if d <= 1300:
+        return "S"      # スプリント
+    if d <= 1700:
+        return "M"      # マイル
+    if d <= 2600:
+        return "C"      # 中長距離（2000の皐月賞も2400のダービーもここ）
+    return "L"          # 長距離
 
 
 def _track_of(venue: str):
@@ -52,45 +70,54 @@ def _rate(st: int, top3: int):
 
 def features_from_career(past: list, today: dict) -> dict:
     """today: surface/distance_m/track/direction/going/race_class を持つ今日のレース条件。"""
-    surf, dist = today.get("surface"), today.get("distance_m")
+    surf = today.get("surface")
+    tband = _band(today.get("distance_m"))
     tdir, going = today.get("direction"), today.get("going")
     tcls = today.get("race_class")
 
-    def rate_where(pred):
+    def rate_n(pred):
         st = top3 = 0
         for r in past:
             if pred(r):
                 st += 1
                 if r["finish_pos"] <= 3:
                     top3 += 1
-        return _rate(st, top3)
+        return _rate(st, top3), st
 
-    course = rate_where(lambda r: _track_of(r.get("venue")) == today.get("track")
-                        and r.get("surface") == surf and r.get("distance_m") == dist)
-    sd = rate_where(lambda r: r.get("surface") == surf and r.get("distance_m") == dist)
-    dr = rate_where(lambda r: DIRECTION.get(_track_of(r.get("venue"))) == tdir)
-    go = rate_where(lambda r: r.get("going") == going)
+    band, band_n = rate_n(lambda r: r.get("surface") == surf and _band(r.get("distance_m")) == tband)
+    dr, dr_n = rate_n(lambda r: DIRECTION.get(_track_of(r.get("venue"))) == tdir)
+    go, go_n = rate_n(lambda r: r.get("going") == going)
 
     top3_cls = [r["race_class"] for r in past
                 if r["finish_pos"] <= 3 and r.get("race_class")]
-    class_edge = (sum(top3_cls) / len(top3_cls) - tcls) if (top3_cls and tcls) else None
+    class_proven = (sum(top3_cls) / len(top3_cls)) if top3_cls else None
+    class_edge = (class_proven - tcls) if (class_proven is not None and tcls) else None
 
     behind = [max(0.0, r["margin"]) for r in past if r.get("margin") is not None]
     margin = (sum(behind) / len(behind)) if behind else None
 
-    return {"course": course, "sd": sd, "dir": dr, "going": go,
+    return {"band": band, "band_n": band_n, "dir": dr, "dir_n": dr_n,
+            "going": go, "going_n": go_n, "class_proven": class_proven,
             "class_edge": class_edge, "margin": margin, "n_data": len(past)}
+
+
+def _conf(n):
+    return n / (n + CONF_C0)
 
 
 def ability_raw(feat: dict) -> float:
     s = 0.0
-    for k, w in WEIGHTS.items():
-        v = feat.get(k)
-        if v is not None:
-            s += w * (v - TOP3_BASE)
-    ce = feat.get("class_edge")
-    if ce is not None:
-        s += W_CLASS_EDGE * math.tanh(ce)
+    # 距離帯/回り/馬場：基準からの上振れ × サンプル信頼度（少データは効かせない）
+    for rate, n, w in ((feat.get("band"), feat.get("band_n", 0), W_BAND),
+                       (feat.get("dir"), feat.get("dir_n", 0), W_DIR),
+                       (feat.get("going"), feat.get("going_n", 0), W_GOING)):
+        if rate is not None:
+            s += w * _conf(n) * (rate - TOP3_BASE)
+    # クラス：着内実績の“格”そのもの（線形。tanhで潰さない）
+    cp = feat.get("class_proven")
+    if cp is not None:
+        s += W_CLASS * (cp - PIVOT_CLASS)
+    # 着差：勝ち馬から近いほど＋
     mg = feat.get("margin")
     if mg is not None:
         s += W_MARGIN * max(-1.0, min(1.0, (MARGIN_BASE - mg) / MARGIN_BASE))
@@ -129,7 +156,7 @@ if __name__ == "__main__":
     probs, feats = ability_probs(careers, today, "20260601")
     for u in (1, 2):
         f = feats[u]
-        print(f"馬{u} prob={probs[u]*100:5.1f}% class_edge={f['class_edge']} "
-              f"course={f['course']} n={f['n_data']} margin={f['margin']}")
+        print(f"馬{u} prob={probs[u]*100:5.1f}% class_proven={f['class_proven']} "
+              f"band={f['band']}(n={f['band_n']}) margin={f['margin']} n={f['n_data']}")
     assert probs[1] > probs[2], "上のクラスで好走のH1が高くなるはず"
     print("\nOK: 全キャリア実力スコア 健全（上のクラス好走を高評価）")
