@@ -1,0 +1,137 @@
+name: ability-proof
+on:
+  workflow_dispatch:
+    inputs:
+      test_start:
+        description: "検証開始 YYYYMMDD"
+        required: true
+        default: "20260620"
+      test_end:
+        description: "検証終了 YYYYMMDD（まず週末2日など小さく）"
+        required: true
+        default: "20260621"
+permissions:
+  contents: write
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: pip install -r requirements.txt selenium
+      - name: full-career ability proof
+        run: |
+          python - << 'PY'
+          import sys, time, datetime, pathlib
+          sys.path += ["scraper", "analysis"]
+          import netkeiba as nk, horsedb as hd, career_score as C
+
+          te_s = "${{ github.event.inputs.test_start }}"
+          te_e = "${{ github.event.inputs.test_end }}"
+          MIN_DATA, GAP, UNIT = 3, 0.05, 100
+
+          def days(a, b):
+              d = datetime.datetime.strptime(a, "%Y%m%d").date()
+              e = datetime.datetime.strptime(b, "%Y%m%d").date()
+              while d <= e:
+                  yield d.strftime("%Y%m%d"); d += datetime.timedelta(days=1)
+
+          # 1) テスト週のレース結果（軽い・requests）
+          races, hids = [], set()
+          for ds in days(te_s, te_e):
+              ids = nk.find_race_ids(ds); print(f"[races]{ds}:{len(ids)}")
+              for rid in ids:
+                  try:
+                      r = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
+                  except Exception as e:
+                      print("skip", rid, e); continue
+                  r["_date"] = ds; races.append(r)
+                  for h in r["horses"]:
+                      if h.get("horse_id"):
+                          hids.add(h["horse_id"])
+          print(f"テスト {len(races)}R / ユニーク馬 {len(hids)}頭")
+
+          # 2) 出走馬の全キャリアをdbから取得（重い・使い捨て・netkeibaに優しく）
+          careers, t0, BUDGET, miss = {}, time.time(), 75 * 60, 0
+          driver = hd.make_driver()
+          hid_list = sorted(hids)
+          try:
+              for i, hid in enumerate(hid_list):
+                  if time.time() - t0 > BUDGET:
+                      print(f"!! 時間予算({BUDGET//60}分)到達、{i}/{len(hid_list)}頭で打ち切り"); break
+                  try:
+                      careers[hid] = hd.fetch_horse(driver, hid, wait=3.5)
+                      miss = 0
+                  except Exception as e:
+                      careers[hid] = []; miss += 1
+                      print("fetch fail", hid, e)
+                      if miss >= 10:
+                          print("!! 連続失敗、遮断の可能性。取得を打ち切り"); break
+                  if i % 25 == 0:
+                      print(f"  ...{i}/{len(hid_list)}頭 ({int(time.time()-t0)}s)")
+                  time.sleep(2.0)
+          finally:
+              driver.quit()
+          got = sum(1 for v in careers.values() if v)
+          print(f"キャリア取得: {got}/{len(hid_list)}頭")
+
+          # 3) 複勝率バックテスト（各レースはその日より前のキャリアだけ）
+          S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0} for k in
+               ["実力上位(複勝)", "妙味(実力-市場≥5%)", "信頼本命(実力上位=1番人気)", "1番人気(基準)"]}
+          n_abst = 0
+
+          def bet(name, u, by):
+              s = S[name]; s["b"] += 1; fp = by[u]["finish_pos"]
+              if fp and fp <= 3: s["t3"] += 1
+              if fp == 1: s["w"] += 1; s["pay"] += UNIT * by[u]["odds_win"]
+
+          for r in races:
+              ds = r["_date"]
+              rated = [h for h in r["horses"]
+                       if h.get("odds_win") and h["odds_win"] > 1 and h.get("finish_pos")]
+              if len(rated) < 2:
+                  continue
+              inv = {h["umaban"]: 1 / h["odds_win"] for h in rated}
+              tot = sum(inv.values()) or 1
+              q = {u: v / tot for u, v in inv.items()}
+              cmap = {h["umaban"]: careers.get(h.get("horse_id"), []) for h in rated}
+              probs, feats = C.ability_probs(cmap, {**r, "horses": rated}, ds)
+              by = {h["umaban"]: h for h in rated}
+              fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
+              bet("1番人気(基準)", fav, by)
+              evaluable = [h["umaban"] for h in rated if feats[h["umaban"]]["n_data"] >= MIN_DATA]
+              if evaluable:
+                  top = max(evaluable, key=lambda u: probs[u])
+                  bet("実力上位(複勝)", top, by)
+                  if top == fav:
+                      bet("信頼本命(実力上位=1番人気)", top, by)
+                  for u in evaluable:
+                      if probs[u] - q.get(u, 0) >= GAP:
+                          bet("妙味(実力-市場≥5%)", u, by)
+              else:
+                  n_abst += 1
+
+          L = [f"全キャリア実証: テスト{len(races)}R / 馬{got}頭取得 / 1点{UNIT}円 足切りMIN_DATA={MIN_DATA}",
+               f"（実力上位がデータ不足で見送り: {n_abst}R）", "",
+               "評価は馬券内(複勝=3着以内)中心。単勝率・単回収率は参考。", "",
+               f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}"]
+          for k, s in S.items():
+              if s["b"] == 0:
+                  L.append(f"{k:<28}{'0':>5}  （該当なし）"); continue
+              L.append(f"{k:<28}{s['b']:>5}{s['t3']/s['b']*100:>7.1f}%"
+                       f"{s['w']/s['b']*100:>7.1f}%{s['pay']/(s['b']*UNIT)*100:>8.1f}%")
+          rep = "\n".join(L); print("\n" + rep)
+          pathlib.Path("data").mkdir(exist_ok=True)
+          pathlib.Path("data/ability_proof.md").write_text(
+              f"# 全キャリア実力スコア 実証（複勝率中心）\n\nテスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
+              encoding="utf-8")
+          PY
+      - name: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ability_proof.md
+          git diff --staged --quiet || (git commit -m "full-career ability proof" && git push)
