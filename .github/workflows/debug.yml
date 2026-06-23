@@ -2,10 +2,18 @@ name: debug
 on:
   workflow_dispatch:
     inputs:
-      horse_ids:
-        description: "馬IDをカンマ区切りで（数頭で検証）"
+      date:
+        description: "レース開催日 YYYYMMDD（日本ダービーの日）"
         required: true
-        default: "2021101414,2022101683,2022103991"
+        default: "20260531"
+      keyword:
+        description: "レース名キーワード"
+        required: true
+        default: "ダービー"
+      race_id:
+        description: "（任意）race_idを直接指定すると検索を省略"
+        required: false
+        default: ""
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -14,34 +22,83 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install selenium beautifulsoup4 lxml
-      - name: parse real db.netkeiba horse pages
+          cache: "pip"
+      - run: pip install -r requirements.txt selenium
+      - name: inspect ability evaluation for one race
         run: |
           python - << 'PY'
           import sys, time
-          sys.path += ["scraper"]
-          import horsedb as hd
+          sys.path += ["scraper", "analysis"]
+          import netkeiba as nk, horsedb as hd, career_score as C
 
-          ids = [s.strip() for s in "${{ github.event.inputs.horse_ids }}".split(",") if s.strip()]
+          ds = "${{ github.event.inputs.date }}"
+          kw = "${{ github.event.inputs.keyword }}"
+          rid_in = "${{ github.event.inputs.race_id }}".strip()
+          KEYS = [kw, "東京優駿", "優駿", "ダービー"]
+
+          def result(rid):
+              return nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
+
+          # レース特定
+          if rid_in:
+              rid = rid_in; race = result(rid)
+          else:
+              rid, race = None, None
+              for cand in nk.find_race_ids(ds):
+                  try:
+                      r = result(cand)
+                  except Exception:
+                      continue
+                  if any(k and k in (r.get("race_name") or "") for k in KEYS):
+                      rid, race = cand, r; break
+              if not race:
+                  print(f"{ds} に「{kw}」を含むレースが見つからず。日付かキーワードを変えて再実行を。")
+                  sys.exit(0)
+          print(f"対象: {race.get('race_name')}  race_id={rid}")
+          print(f"条件: {race.get('track')} {race.get('surface')}{race.get('distance_m')} "
+                f"{race.get('direction')} {race.get('going')} 格={race.get('race_class')}\n")
+
+          rated = [h for h in race["horses"] if h.get("odds_win") and h.get("finish_pos")]
+          inv = {h["umaban"]: 1/h["odds_win"] for h in rated}
+          tot = sum(inv.values()) or 1
+          q = {u: v/tot for u, v in inv.items()}
+
+          # 各馬の全キャリアを取得（その日より前で評価）
           driver = hd.make_driver()
+          careers = {}
           try:
-              for hid in ids:
-                  career = hd.fetch_horse(driver, hid, wait=5.0)
-                  print(f"\n===== 馬 {hid}: 過去走 {len(career)} 件 =====")
-                  for r in career[:3]:
-                      print(f"  {r['date']} {r['race_name'][:18]:<18} "
-                            f"格={r['race_class']}({r['class_label']}) "
-                            f"{r['surface']}{r['distance_m']} {r['going']} "
-                            f"着={r['finish_pos']} 着差={r['margin']} "
-                            f"指数={r['speed_index']} 上り={r['agari']} 人気={r['popularity']}")
-                  # 値の充足ぐあい（欠損の多さを把握）
-                  n = len(career) or 1
-                  spd = sum(1 for r in career if r['speed_index'] is not None)
-                  cls = sum(1 for r in career if r['race_class'] is not None)
-                  mgn = sum(1 for r in career if r['margin'] is not None)
-                  print(f"  充足: クラス {cls}/{len(career)} / 着差 {mgn}/{len(career)} / タイム指数 {spd}/{len(career)}")
-                  time.sleep(3)
+              for h in rated:
+                  hid = h.get("horse_id")
+                  try:
+                      careers[h["umaban"]] = hd.trim_career(hd.fetch_horse(driver, hid, wait=1.5)) if hid else []
+                  except Exception as e:
+                      careers[h["umaban"]] = []; print("fetch fail", hid, str(e).splitlines()[0][:40])
+                  time.sleep(1.5)
           finally:
               driver.quit()
-          print("\n検証おわり")
+
+          probs, feats = C.ability_probs(careers, {**race, "horses": rated}, ds)
+          fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
+
+          def fmt(v):
+              return "  - " if v is None else f"{v:.2f}"
+
+          # 実力prob順（モデルの評価順）に表示
+          order = sorted(rated, key=lambda h: probs[h["umaban"]], reverse=True)
+          print("=== モデルの評価順（実力prob降順） ===")
+          n_sd = sum(1 for h in rated if feats[h["umaban"]]["sd"] is not None)
+          n_course = sum(1 for h in rated if feats[h["umaban"]]["course"] is not None)
+          for h in order:
+              u = h["umaban"]; f = feats[u]
+              mark = "★人気1" if u == fav else f"人気{h.get('popularity')}"
+              print(f"[{mark} {h['odds_win']}倍 →{h['finish_pos']}着] {h.get('name','')[:10]}"
+                    f"  prob={probs[u]*100:4.1f}% q={q[u]*100:4.1f}% raw={C.ability_raw(f):+.3f}")
+              print(f"    course={fmt(f['course'])} sd={fmt(f['sd'])} dir={fmt(f['dir'])} "
+                    f"going={fmt(f['going'])} clsEdge={fmt(f['class_edge'])} margin={fmt(f['margin'])} n={f['n_data']}")
+          print(f"\n距離(sd)実績がある馬: {n_sd}/{len(rated)} / コース実績がある馬: {n_course}/{len(rated)}")
+          top = order[0]["umaban"]
+          win = next((h["umaban"] for h in rated if h["finish_pos"] == 1), None)
+          print(f"モデル本命=馬{top}(着順{next(h['finish_pos'] for h in rated if h['umaban']==top)}) "
+                f"/ 市場本命=馬{fav}(着順{next(h['finish_pos'] for h in rated if h['umaban']==fav)}) "
+                f"/ 勝ち馬=馬{win}")
           PY
