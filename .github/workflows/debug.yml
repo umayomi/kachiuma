@@ -2,10 +2,22 @@ name: debug
 on:
   workflow_dispatch:
     inputs:
-      jockey:
-        description: "騎手名（結果テーブル確認用）"
+      surface:
+        description: "芝 or ダ"
         required: true
-        default: "ルメール"
+        default: "芝"
+      distance:
+        description: "距離(m)"
+        required: true
+        default: "2400"
+      race_date:
+        description: "基準日 YYYYMMDD（この前日まで3年で集計）"
+        required: true
+        default: "20260531"
+      jockeys:
+        description: "確認したい騎手(カンマ区切り)"
+        required: true
+        default: "ルメール,川田,岩田康誠,武豊"
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -16,57 +28,37 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install requests beautifulsoup4 lxml
-      - name: POST etcsrch4 and inspect result table
+      - name: real POST jockey stats (same-distance, 3y, all-venue)
         run: |
           python - << 'PY'
-          import requests
-          from bs4 import BeautifulSoup
+          import sys, requests
+          sys.path += ["analysis"]
+          import jockey_db as J
 
-          UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
-                "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
-          # 騎手=ルメール / 期間=2026全年 / 東京 / 芝 / 2000〜2600 で集計POST
-          data = {
-              "fld": "kisyu",
-              "yy1": "2026", "mm1": "1", "dd1": "1",
-              "yy2": "2026", "mm2": "12", "dd2": "31",
-              "place": "東京", "crs": "芝",
-              "i1": "2000", "i1_e": "2600",
-              "course2": "ALL", "rc": "ALL", "grade": "ALL",
-              "go": "集　計",
-              "rec": "", "hn": "", "birthyear": "", "seni": "1",
-              "val": "", "sort": "", "next": "",
-          }
-          r = requests.post("https://umarengod.com/etcsrch4.php",
-                            data=data, headers={"User-Agent": UA}, timeout=40)
-          r.encoding = r.apparent_encoding
-          print("HTTP", r.status_code, "/ bytes", len(r.text))
-          soup = BeautifulSoup(r.text, "lxml")
+          surf = "${{ github.event.inputs.surface }}"
+          dist = int("${{ github.event.inputs.distance }}")
+          ds = "${{ github.event.inputs.race_date }}"
+          names = [s.strip() for s in "${{ github.event.inputs.jockeys }}".split(",") if s.strip()]
 
-          # それらしい結果テーブル（騎手名と数字が並ぶ最大の表）を探す
-          best, score = None, -1
-          for t in soup.find_all("table"):
-              txt = t.get_text()
-              s = sum(k in txt for k in ["騎手", "勝率", "連対", "複勝", "回収"])
-              rows = t.find_all("tr")
-              if s >= 2 and len(rows) >= 2 and len(rows) > score:
-                  best, score = t, len(rows)
-          if not best:
-              print("結果テーブルが見つからず。本文先頭:")
-              print(soup.get_text(' ', strip=True)[:500]); raise SystemExit(0)
+          s, e = J.period_3y(ds)
+          print(f"集計期間: {s} 〜 {e} / {surf}{dist} / 全場")
+          sess = requests.Session()
+          tbl = J.fetch(sess, names[0], surf, dist, ds)
+          print(f"テーブル取得: {len(tbl)}騎手\n")
 
-          rows = best.find_all("tr")
-          print(f"\n結果テーブル: 行数={len(rows)}")
-          # ヘッダー数行
-          for ri in range(min(3, len(rows))):
-              cells = [c.get_text(strip=True) for c in rows[ri].find_all(["th", "td"])]
-              print(f"  行{ri}: {cells}")
-          # 指定騎手の行を探して全セル表示
-          target = "${{ github.event.inputs.jockey }}"
-          for tr in rows:
-              cells = [c.get_text(strip=True) for c in tr.find_all("td")]
-              if any(target in c for c in cells):
-                  print(f"\n--- 「{target}」の行（全セル） ---")
-                  for i, c in enumerate(cells):
-                      print(f"  [{i}] {c!r}")
-                  break
+          print(f"{'騎手':<10}{'出走':>5}{'複勝率':>8}{'縮小後':>8}")
+          for nm in names:
+              key = J._norm_name(nm)
+              cell = tbl.get(key)
+              if not cell:
+                  # 部分一致も試す（表記ゆれ確認）
+                  hit = [k for k in tbl if key in k or k in key]
+                  print(f"{nm:<10}  該当なし（近い表記: {hit[:3]}）")
+                  continue
+              r = J.rate(cell)
+              print(f"{nm:<10}{cell['starts']:>5}{cell['place_rate']*100:>7.1f}%{r*100:>7.1f}%")
+
+          print("\n--- テーブル先頭5騎手（名前の出方を確認） ---")
+          for i, (k, v) in enumerate(list(tbl.items())[:5]):
+              print(f"  {k!r}: 出走{v['starts']} 複勝{v['place_rate']}")
           PY
