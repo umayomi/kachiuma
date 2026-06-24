@@ -2,18 +2,10 @@ name: debug
 on:
   workflow_dispatch:
     inputs:
-      date:
-        description: "レース開催日 YYYYMMDD"
+      url:
+        description: "覗くページ"
         required: true
-        default: "20260531"
-      keyword:
-        description: "レース名キーワード"
-        required: true
-        default: "ダービー"
-      race_id:
-        description: "（任意）race_idを直接指定すると検索を省略"
-        required: false
-        default: ""
+        default: "https://umarengod.com/etcsrch4.php"
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -23,78 +15,56 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
-      - run: pip install -r requirements.txt selenium
-      - name: inspect ability evaluation for one race
+      - run: pip install requests beautifulsoup4 lxml
+      - name: inspect umarengod jockey-search form
         run: |
           python - << 'PY'
-          import sys, time
-          sys.path += ["scraper", "analysis"]
-          import netkeiba as nk, horsedb as hd, career_score as C
+          import requests, re
+          from bs4 import BeautifulSoup
 
-          ds = "${{ github.event.inputs.date }}"
-          kw = "${{ github.event.inputs.keyword }}"
-          rid_in = "${{ github.event.inputs.race_id }}".strip()
-          KEYS = [kw, "東京優駿", "優駿", "ダービー", "皐月賞"]
-
-          def result(rid):
-              return nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
-
-          if rid_in:
-              rid = rid_in; race = result(rid)
-          else:
-              rid, race = None, None
-              for cand in nk.find_race_ids(ds):
-                  try:
-                      r = result(cand)
-                  except Exception:
-                      continue
-                  if any(k and k in (r.get("race_name") or "") for k in KEYS):
-                      rid, race = cand, r; break
-              if not race:
-                  print(f"{ds} に「{kw}」を含むレースが見つからず。日付かキーワードを変えて再実行を。")
-                  sys.exit(0)
-          print(f"対象: {race.get('race_name')}  race_id={rid}")
-          print(f"条件: {race.get('track')} {race.get('surface')}{race.get('distance_m')} "
-                f"{race.get('direction')} {race.get('going')} 格={race.get('race_class')}\n")
-
-          rated = [h for h in race["horses"] if h.get("odds_win") and h.get("finish_pos")]
-          inv = {h["umaban"]: 1/h["odds_win"] for h in rated}
-          tot = sum(inv.values()) or 1
-          q = {u: v/tot for u, v in inv.items()}
-
-          driver = hd.make_driver()
-          careers = {}
+          url = "${{ github.event.inputs.url }}"
+          UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
           try:
-              for h in rated:
-                  hid = h.get("horse_id")
-                  try:
-                      careers[h["umaban"]] = hd.trim_career(hd.fetch_horse(driver, hid, wait=1.5)) if hid else []
-                  except Exception as e:
-                      careers[h["umaban"]] = []; print("fetch fail", hid, str(e).splitlines()[0][:40])
-                  time.sleep(1.5)
-          finally:
-              driver.quit()
+              r = requests.get(url, headers={"User-Agent": UA}, timeout=30)
+              r.encoding = r.apparent_encoding
+              html = r.text
+              print("HTTP", r.status_code, "/ bytes", len(html))
+          except Exception as e:
+              print("取得失敗:", e); raise SystemExit(0)
 
-          probs, feats = C.ability_probs(careers, {**race, "horses": rated}, ds)
-          fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
+          soup = BeautifulSoup(html, "lxml")
+          print("title:", (soup.title.text.strip() if soup.title else "なし"))
 
-          def fmt(v):
-              return "  - " if v is None else f"{v:.2f}"
+          print("\n===== form =====")
+          forms = soup.find_all("form")
+          print(f"form数: {len(forms)}")
+          for fi, f in enumerate(forms):
+              print(f"  form[{fi}] action={f.get('action')!r} method={f.get('method')!r} name={f.get('name')!r}")
 
-          order = sorted(rated, key=lambda h: probs[h["umaban"]], reverse=True)
-          print("=== モデルの評価順（実力prob降順） ===")
-          n_band = sum(1 for h in rated if feats[h["umaban"]]["band"] is not None)
-          for h in order:
-              u = h["umaban"]; f = feats[u]
-              mark = "★人気1" if u == fav else f"人気{h.get('popularity')}"
-              print(f"[{mark} {h['odds_win']}倍 →{h['finish_pos']}着] {h.get('name','')[:10]}"
-                    f"  prob={probs[u]*100:4.1f}% q={q[u]*100:4.1f}% raw={C.ability_raw(f):+.3f}")
-              print(f"    band={fmt(f['band'])}(n{f['band_n']}) dir={fmt(f['dir'])} going={fmt(f['going'])} "
-                    f"clsProven={fmt(f['class_proven'])} clsEdge={fmt(f['class_edge'])} margin={fmt(f['margin'])} n={f['n_data']}")
-          print(f"\n距離帯(band)実績がある馬: {n_band}/{len(rated)}")
-          top = order[0]["umaban"]
-          win = next((h["umaban"] for h in rated if h["finish_pos"] == 1), None)
-          print(f"モデル本命=馬{top}(着順{next(h['finish_pos'] for h in rated if h['umaban']==top)}) "
-                f"/ 市場本命=馬{fav}(着順{next(h['finish_pos'] for h in rated if h['umaban']==fav)}) "
-                f"/ 勝ち馬=馬{win}")
+          print("\n===== input（POSTパラメータ候補） =====")
+          for inp in soup.find_all("input"):
+              print(f"  input name={inp.get('name')!r} type={inp.get('type')!r} value={inp.get('value')!r}")
+
+          print("\n===== select（プルダウン＝条件。期間/コース/距離があるか） =====")
+          for sel in soup.find_all("select"):
+              opts = [(o.get('value'), o.get_text(strip=True)) for o in sel.find_all("option")]
+              print(f"  select name={sel.get('name')!r} 選択肢{len(opts)}個: {opts[:12]}")
+
+          print("\n===== 期間/日付に関係する語の周辺 =====")
+          txt = soup.get_text(' ', strip=True)
+          for kw in ["期間", "年", "月", "日", "から", "まで", "集計", "コース", "距離", "芝", "ダート", "騎手"]:
+              i = txt.find(kw)
+              if i >= 0:
+                  print(f"  「{kw}」: ...{txt[max(0,i-20):i+30]}...")
+
+          print("\n===== 検索を起こすJS関数名（onclick/href内） =====")
+          funcs = set()
+          for el in soup.find_all(True):
+              for attr in ("onclick", "href"):
+                  v = el.get(attr) or ""
+                  for m in re.findall(r"([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", v):
+                      funcs.add(m)
+          print(" ", sorted(funcs)[:30])
+          print("\n（フォームが空＝JSで後から生成、ならSelenium版に切替えます）")
           PY
