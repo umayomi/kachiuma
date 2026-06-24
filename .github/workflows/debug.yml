@@ -2,22 +2,14 @@ name: debug
 on:
   workflow_dispatch:
     inputs:
-      surface:
-        description: "芝 or ダ"
-        required: true
-        default: "芝"
-      distance:
-        description: "距離(m)"
-        required: true
-        default: "2400"
-      race_date:
-        description: "基準日 YYYYMMDD（この前日まで3年で集計）"
+      date:
+        description: "レース開催日 YYYYMMDD"
         required: true
         default: "20260531"
-      jockeys:
-        description: "確認したい騎手(カンマ区切り)"
+      race_id:
+        description: "race_id（直接指定）"
         required: true
-        default: "ルメール,川田,岩田康誠,武豊"
+        default: "202605021211"
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -27,38 +19,41 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
-      - run: pip install requests beautifulsoup4 lxml
-      - name: real POST jockey stats (same-distance, 3y, all-venue)
+      - run: pip install -r requirements.txt
+      - name: verify jockey name-match & thinness for a race
         run: |
           python - << 'PY'
           import sys, requests
-          sys.path += ["analysis"]
-          import jockey_db as J
+          sys.path += ["scraper", "analysis"]
+          import netkeiba as nk, jockey_db as J
 
-          surf = "${{ github.event.inputs.surface }}"
-          dist = int("${{ github.event.inputs.distance }}")
-          ds = "${{ github.event.inputs.race_date }}"
-          names = [s.strip() for s in "${{ github.event.inputs.jockeys }}".split(",") if s.strip()]
-
+          ds = "${{ github.event.inputs.date }}"
+          rid = "${{ github.event.inputs.race_id }}"
+          race = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
+          place = race.get("track"); surf = race.get("surface"); dist = race.get("distance_m")
+          print(f"対象: {race.get('race_name')} / {place} {surf}{dist}")
           s, e = J.period_3y(ds)
-          print(f"集計期間: {s} 〜 {e} / {surf}{dist} / 全場")
-          sess = requests.Session()
-          tbl = J.fetch(sess, names[0], surf, dist, ds)
-          print(f"テーブル取得: {len(tbl)}騎手\n")
+          print(f"集計期間: {s} 〜 {e}\n")
 
-          print(f"{'騎手':<10}{'出走':>5}{'複勝率':>8}{'縮小後':>8}")
-          for nm in names:
-              key = J._norm_name(nm)
-              cell = tbl.get(key)
+          sess = requests.Session()
+          place_tbl = J.fetch(sess, surf, dist, ds, place=place)   # 場×距離
+          all_tbl = J.fetch(sess, surf, dist, ds, place="ALL")     # 全場×距離
+          print(f"テーブル: 場×距離={len(place_tbl)}騎手 / 全場×距離={len(all_tbl)}騎手\n")
+
+          print(f"{'騎手(結果)':<12}{'状態':<12}{'戦':>4}{'複勝率':>8}{'縮小':>7}")
+          miss = 0
+          for h in race["horses"]:
+              jk = h.get("jockey")
+              if not jk:
+                  continue
+              cell, src = J.resolve(place_tbl, all_tbl, jk)
               if not cell:
-                  # 部分一致も試す（表記ゆれ確認）
-                  hit = [k for k in tbl if key in k or k in key]
-                  print(f"{nm:<10}  該当なし（近い表記: {hit[:3]}）")
+                  miss += 1
+                  hits = [k for k in all_tbl if J._norm_name(jk)[:2] in k][:3]
+                  print(f"{jk:<12}{'該当なし':<12}  近い表記候補: {hits}")
                   continue
               r = J.rate(cell)
-              print(f"{nm:<10}{cell['starts']:>5}{cell['place_rate']*100:>7.1f}%{r*100:>7.1f}%")
-
-          print("\n--- テーブル先頭5騎手（名前の出方を確認） ---")
-          for i, (k, v) in enumerate(list(tbl.items())[:5]):
-              print(f"  {k!r}: 出走{v['starts']} 複勝{v['place_rate']}")
+              print(f"{jk:<12}{src:<12}{cell['starts']:>4}{cell['place_rate']*100:>7.1f}%{r*100:>6.1f}%")
+          print(f"\n名前該当なし: {miss}頭 / {sum(1 for h in race['horses'] if h.get('jockey'))}頭")
+          print("（該当なしが多い＝名前マッチング要調整。0〜1頭なら配線OK）")
           PY
