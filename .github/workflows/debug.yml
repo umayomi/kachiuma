@@ -2,10 +2,10 @@ name: debug
 on:
   workflow_dispatch:
     inputs:
-      url:
-        description: "覗くページ"
+      jockey:
+        description: "騎手名（結果テーブル確認用）"
         required: true
-        default: "https://umarengod.com/etcsrch4.php"
+        default: "ルメール"
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -16,55 +16,57 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install requests beautifulsoup4 lxml
-      - name: inspect umarengod jockey-search form
+      - name: POST etcsrch4 and inspect result table
         run: |
           python - << 'PY'
-          import requests, re
+          import requests
           from bs4 import BeautifulSoup
 
-          url = "${{ github.event.inputs.url }}"
           UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
                 "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
-          try:
-              r = requests.get(url, headers={"User-Agent": UA}, timeout=30)
-              r.encoding = r.apparent_encoding
-              html = r.text
-              print("HTTP", r.status_code, "/ bytes", len(html))
-          except Exception as e:
-              print("取得失敗:", e); raise SystemExit(0)
+          # 騎手=ルメール / 期間=2026全年 / 東京 / 芝 / 2000〜2600 で集計POST
+          data = {
+              "fld": "kisyu",
+              "yy1": "2026", "mm1": "1", "dd1": "1",
+              "yy2": "2026", "mm2": "12", "dd2": "31",
+              "place": "東京", "crs": "芝",
+              "i1": "2000", "i1_e": "2600",
+              "course2": "ALL", "rc": "ALL", "grade": "ALL",
+              "go": "集　計",
+              "rec": "", "hn": "", "birthyear": "", "seni": "1",
+              "val": "", "sort": "", "next": "",
+          }
+          r = requests.post("https://umarengod.com/etcsrch4.php",
+                            data=data, headers={"User-Agent": UA}, timeout=40)
+          r.encoding = r.apparent_encoding
+          print("HTTP", r.status_code, "/ bytes", len(r.text))
+          soup = BeautifulSoup(r.text, "lxml")
 
-          soup = BeautifulSoup(html, "lxml")
-          print("title:", (soup.title.text.strip() if soup.title else "なし"))
+          # それらしい結果テーブル（騎手名と数字が並ぶ最大の表）を探す
+          best, score = None, -1
+          for t in soup.find_all("table"):
+              txt = t.get_text()
+              s = sum(k in txt for k in ["騎手", "勝率", "連対", "複勝", "回収"])
+              rows = t.find_all("tr")
+              if s >= 2 and len(rows) >= 2 and len(rows) > score:
+                  best, score = t, len(rows)
+          if not best:
+              print("結果テーブルが見つからず。本文先頭:")
+              print(soup.get_text(' ', strip=True)[:500]); raise SystemExit(0)
 
-          print("\n===== form =====")
-          forms = soup.find_all("form")
-          print(f"form数: {len(forms)}")
-          for fi, f in enumerate(forms):
-              print(f"  form[{fi}] action={f.get('action')!r} method={f.get('method')!r} name={f.get('name')!r}")
-
-          print("\n===== input（POSTパラメータ候補） =====")
-          for inp in soup.find_all("input"):
-              print(f"  input name={inp.get('name')!r} type={inp.get('type')!r} value={inp.get('value')!r}")
-
-          print("\n===== select（プルダウン＝条件。期間/コース/距離があるか） =====")
-          for sel in soup.find_all("select"):
-              opts = [(o.get('value'), o.get_text(strip=True)) for o in sel.find_all("option")]
-              print(f"  select name={sel.get('name')!r} 選択肢{len(opts)}個: {opts[:12]}")
-
-          print("\n===== 期間/日付に関係する語の周辺 =====")
-          txt = soup.get_text(' ', strip=True)
-          for kw in ["期間", "年", "月", "日", "から", "まで", "集計", "コース", "距離", "芝", "ダート", "騎手"]:
-              i = txt.find(kw)
-              if i >= 0:
-                  print(f"  「{kw}」: ...{txt[max(0,i-20):i+30]}...")
-
-          print("\n===== 検索を起こすJS関数名（onclick/href内） =====")
-          funcs = set()
-          for el in soup.find_all(True):
-              for attr in ("onclick", "href"):
-                  v = el.get(attr) or ""
-                  for m in re.findall(r"([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", v):
-                      funcs.add(m)
-          print(" ", sorted(funcs)[:30])
-          print("\n（フォームが空＝JSで後から生成、ならSelenium版に切替えます）")
+          rows = best.find_all("tr")
+          print(f"\n結果テーブル: 行数={len(rows)}")
+          # ヘッダー数行
+          for ri in range(min(3, len(rows))):
+              cells = [c.get_text(strip=True) for c in rows[ri].find_all(["th", "td"])]
+              print(f"  行{ri}: {cells}")
+          # 指定騎手の行を探して全セル表示
+          target = "${{ github.event.inputs.jockey }}"
+          for tr in rows:
+              cells = [c.get_text(strip=True) for c in tr.find_all("td")]
+              if any(target in c for c in cells):
+                  print(f"\n--- 「{target}」の行（全セル） ---")
+                  for i, c in enumerate(cells):
+                      print(f"  [{i}] {c!r}")
+                  break
           PY
