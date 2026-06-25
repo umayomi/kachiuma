@@ -16,7 +16,9 @@ W_MARGIN = 0.35      # 平均着差＝競った内容（主役）
 W_BAND = 0.40        # 距離帯の複勝率
 W_DIR = 0.20         # 回りの複勝率
 W_GOING = 0.20       # 馬場の複勝率
+W_JK = 0.65          # 騎手力（馬の格0.55と同格以上＝しっかり効かせる）
 CONF_C0 = 3.0        # 出走C0で信頼度0.5（少データは中立寄りに割引）
+JK_C0 = 5.0          # 騎手は5戦で信頼度0.5（場×距離の薄さを踏まえやや強め）
 MARGIN_BASE = 1.2    # この馬身を境に、近ければ＋・離されれば−
 
 TRACKS = ["札幌", "函館", "福島", "新潟", "東京", "中山", "中京", "京都", "阪神", "小倉"]
@@ -121,18 +123,28 @@ def ability_raw(feat: dict) -> float:
     mg = feat.get("margin")
     if mg is not None:
         s += W_MARGIN * max(-1.0, min(1.0, (MARGIN_BASE - mg) / MARGIN_BASE))
+    # 騎手力：今日の騎手の(場×距離 or 全場×距離)複勝率 × 出走数の信頼度
+    jr = feat.get("jk_rate")
+    if jr is not None:
+        js = feat.get("jk_starts", 0)
+        s += W_JK * (js / (js + JK_C0)) * (jr - TOP3_BASE)
     return s
 
 
-def ability_probs(careers: dict, race: dict, race_date: str):
+def ability_probs(careers: dict, race: dict, race_date: str, jk_by_umaban: dict = None):
     """careers: {umaban: 全キャリアlist}, race: 今日の条件+horses。
+    jk_by_umaban: {umaban: {"rate": 縮小済み複勝率, "starts": 出走数}}（騎手力・任意）
     戻り: (probs{umaban:p}, feats{umaban:feat})"""
     feats, raws = {}, {}
     for h in race["horses"]:
         u = h["umaban"]
         past = career_before(careers.get(u, []), race_date)
-        feats[u] = features_from_career(past, race)
-        raws[u] = ability_raw(feats[u])
+        feat = features_from_career(past, race)
+        if jk_by_umaban and u in jk_by_umaban:
+            feat["jk_rate"] = jk_by_umaban[u].get("rate")
+            feat["jk_starts"] = jk_by_umaban[u].get("starts", 0)
+        feats[u] = feat
+        raws[u] = ability_raw(feat)
     mx = max(raws.values()) if raws else 0.0
     exps = {u: math.exp(BETA * (r - mx)) for u, r in raws.items()}
     tot = sum(exps.values()) or 1.0
