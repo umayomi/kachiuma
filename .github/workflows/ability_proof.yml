@@ -22,12 +22,12 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -r requirements.txt selenium
-      - name: full-career ability proof (cached)
+      - name: full-career ability proof (cached, jockey on/off)
         run: |
           python - << 'PY'
-          import sys, time, datetime, pathlib, json, os
+          import sys, time, datetime, pathlib, json, os, requests
           sys.path += ["scraper", "analysis"]
-          import netkeiba as nk, horsedb as hd, career_score as C
+          import netkeiba as nk, horsedb as hd, career_score as C, jockey_db as J
 
           te_s = "${{ github.event.inputs.test_start }}"
           te_e = "${{ github.event.inputs.test_end }}"
@@ -101,10 +101,43 @@ jobs:
           got = sum(1 for h in hids if cache.get(h))
           print(f"カバレッジ: {got}/{len(hids)}頭 (キャッシュ全体 {len(cache)}頭)")
 
+          # 2.5) 騎手テーブル（umarengod, 場×距離 / 全場×距離）。リーク防止は period_3y（前日まで3年）。
+          #      debug.yml で Actions 実績のある J.fetch/J.resolve/J.rate をそのまま流用。
+          #      (surface,distance) 単位でメモ化し umarengod へのアクセスを最小化。
+          sess = requests.Session()
+          _jk_place, _jk_all = {}, {}   # 場別: (surf,dist,place)->tbl / 全場: (surf,dist)->tbl
+
+          def _tbl(memo, key, surface, dist, ds, place):
+              if key not in memo:
+                  try:
+                      memo[key] = J.fetch(sess, surface, dist, ds, place=place)
+                  except Exception as e:
+                      print("jk-fetch-fail", place, dist, str(e).splitlines()[0][:40]); memo[key] = {}
+                  time.sleep(0.8)
+              return memo[key]
+
+          def build_jk_by(r, ds):
+              place, surf, dist = r.get("track"), r.get("surface"), r.get("distance_m")
+              if not (surf and dist):
+                  return {}
+              sp = J._surface_param(surf)
+              ptbl = _tbl(_jk_place, (sp, dist, place or "ALL"), surf, dist, ds, place or "ALL")
+              atbl = _tbl(_jk_all,   (sp, dist),                 surf, dist, ds, "ALL")
+              out = {}
+              for h in r["horses"]:
+                  cell, _ = J.resolve(ptbl, atbl, h.get("jockey") or "")
+                  if cell:
+                      out[h["umaban"]] = {"rate": J.rate(cell), "starts": cell["starts"]}
+              return out
+
           # 3) 複勝率バックテスト（その日より前のキャリアだけ＝リークなし）
-          S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0} for k in
-               ["実力上位(複勝)", "妙味(実力-市場≥5%)", "信頼本命(実力上位=1番人気)", "1番人気(基準)"]}
+          #    騎手なし（現行・回帰ガード）と 騎手込み を同一レースで並走評価。
+          KEYS = ["実力上位(複勝)", "妙味(実力-市場≥5%)", "信頼本命(実力上位=1番人気)",
+                  "実力上位+騎手(複勝)", "妙味+騎手(実力-市場≥5%)", "信頼本命+騎手",
+                  "1番人気(基準)"]
+          S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0} for k in KEYS}
           n_abst = 0
+          jk_races = 0   # 騎手データが1頭でも解決したレース数（umarengod 疎通の確認）
 
           def bet(name, u, by):
               s = S[name]; s["b"] += 1; fp = by[u]["finish_pos"]
@@ -121,34 +154,54 @@ jobs:
               tot = sum(inv.values()) or 1
               q = {u: v / tot for u, v in inv.items()}
               cmap = {h["umaban"]: cache.get(h.get("horse_id"), []) for h in rated}
-              probs, feats = C.ability_probs(cmap, {**r, "horses": rated}, ds)
+
+              probs_nj, feats = C.ability_probs(cmap, {**r, "horses": rated}, ds)
+              jk_by = build_jk_by(r, ds)
+              if jk_by:
+                  jk_races += 1
+              probs_j, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
+
               by = {h["umaban"]: h for h in rated}
               fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
               bet("1番人気(基準)", fav, by)
+
               evaluable = [h["umaban"] for h in rated if feats[h["umaban"]]["n_data"] >= MIN_DATA]
-              if evaluable:
-                  top = max(evaluable, key=lambda u: probs[u])
-                  bet("実力上位(複勝)", top, by)
-                  if top == fav:
-                      bet("信頼本命(実力上位=1番人気)", top, by)
-                  for u in evaluable:
-                      if probs[u] - q.get(u, 0) >= GAP:
-                          bet("妙味(実力-市場≥5%)", u, by)
-              else:
+              if not evaluable:
                   n_abst += 1
+                  continue
+
+              # --- 騎手なし（現行ロジックそのまま＝回帰ガード） ---
+              top = max(evaluable, key=lambda u: probs_nj[u])
+              bet("実力上位(複勝)", top, by)
+              if top == fav:
+                  bet("信頼本命(実力上位=1番人気)", top, by)
+              for u in evaluable:
+                  if probs_nj[u] - q.get(u, 0) >= GAP:
+                      bet("妙味(実力-市場≥5%)", u, by)
+
+              # --- 騎手込み ---
+              topj = max(evaluable, key=lambda u: probs_j[u])
+              bet("実力上位+騎手(複勝)", topj, by)
+              if topj == fav:
+                  bet("信頼本命+騎手", topj, by)
+              for u in evaluable:
+                  if probs_j[u] - q.get(u, 0) >= GAP:
+                      bet("妙味+騎手(実力-市場≥5%)", u, by)
 
           L = [f"全キャリア実証: テスト{len(races)}R / カバレッジ{got}/{len(hids)}頭 / 1点{UNIT}円 MIN_DATA={MIN_DATA}",
-               f"（実力上位がデータ不足で見送り: {n_abst}R）", "",
-               "評価は馬券内(複勝=3着以内)中心。単勝率・単回収率は参考。", "",
+               f"（実力上位がデータ不足で見送り: {n_abst}R / 騎手データ解決: {jk_races}R）", "",
+               "評価は馬券内(複勝=3着以内)中心。単勝率・単回収率は参考。",
+               "『+騎手』行が『騎手なし』行より複勝率を上げているかが、騎手導入の審判。", "",
                f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}"]
-          for k, s in S.items():
+          for k in KEYS:
+              s = S[k]
               if s["b"] == 0:
                   L.append(f"{k:<28}{'0':>5}  （該当なし）"); continue
               L.append(f"{k:<28}{s['b']:>5}{s['t3']/s['b']*100:>7.1f}%"
                        f"{s['w']/s['b']*100:>7.1f}%{s['pay']/(s['b']*UNIT)*100:>8.1f}%")
           rep = "\n".join(L); print("\n" + rep)
           pathlib.Path("data/ability_proof.md").write_text(
-              f"# 全キャリア実力スコア 実証（複勝率中心）\n\nテスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
+              f"# 全キャリア実力スコア 実証（複勝率中心・騎手on/off）\n\nテスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
               encoding="utf-8")
           PY
       - name: commit
@@ -156,4 +209,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/ability_proof.md data/horsedb_cache.json
-          git diff --staged --quiet || (git commit -m "full-career ability proof (cached)" && git push)
+          git diff --staged --quiet || (git commit -m "full-career ability proof (cached, jockey on/off)" && git push)
