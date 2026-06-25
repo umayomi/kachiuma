@@ -108,27 +108,29 @@ def _conf(n):
 
 
 def ability_raw(feat: dict) -> float:
-    s = 0.0
-    # 距離帯/回り/馬場：基準からの上振れ × サンプル信頼度（少データは効かせない）
-    for rate, n, w in ((feat.get("band"), feat.get("band_n", 0), W_BAND),
-                       (feat.get("dir"), feat.get("dir_n", 0), W_DIR),
-                       (feat.get("going"), feat.get("going_n", 0), W_GOING)):
-        if rate is not None:
-            s += w * _conf(n) * (rate - TOP3_BASE)
-    # クラス：着内実績の“格”そのもの（線形。tanhで潰さない）
+    return sum(ability_breakdown(feat).values())
+
+
+def ability_breakdown(feat: dict) -> dict:
+    """rawの各項の寄与点を返す（合計=ability_raw）。なぜこのスコアか、の分解用。"""
+    parts = {"クラス": 0.0, "着差": 0.0, "距離帯": 0.0, "回り": 0.0, "馬場": 0.0, "騎手": 0.0}
     cp = feat.get("class_proven")
     if cp is not None:
-        s += W_CLASS * (cp - PIVOT_CLASS)
-    # 着差：勝ち馬から近いほど＋
+        parts["クラス"] = W_CLASS * (cp - PIVOT_CLASS)
     mg = feat.get("margin")
     if mg is not None:
-        s += W_MARGIN * max(-1.0, min(1.0, (MARGIN_BASE - mg) / MARGIN_BASE))
-    # 騎手力：今日の騎手の(場×距離 or 全場×距離)複勝率 × 出走数の信頼度
+        parts["着差"] = W_MARGIN * max(-1.0, min(1.0, (MARGIN_BASE - mg) / MARGIN_BASE))
+    for key, rate, n, w in (("距離帯", feat.get("band"), feat.get("band_n", 0), W_BAND),
+                            ("回り", feat.get("dir"), feat.get("dir_n", 0), W_DIR),
+                            ("馬場", feat.get("going"), feat.get("going_n", 0), W_GOING)):
+        if rate is not None:
+            parts[key] = w * _conf(n) * (rate - TOP3_BASE)
     jr = feat.get("jk_rate")
     if jr is not None:
         js = feat.get("jk_starts", 0)
-        s += W_JK * (js / (js + JK_C0)) * (jr - TOP3_BASE)
-    return s
+        parts["騎手"] = W_JK * (js / (js + JK_C0)) * (jr - TOP3_BASE)
+    return parts
+
 
 
 def ability_probs(careers: dict, race: dict, race_date: str, jk_by_umaban: dict = None):
