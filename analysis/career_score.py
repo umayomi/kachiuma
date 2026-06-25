@@ -10,16 +10,17 @@ TOP3_BASE = 0.25     # 基準複勝率
 K = 4                # 縮小の強さ
 BETA = 2.5           # softmaxの鋭さ
 # 配点：実力の質(クラス・着差)を主役、距離帯/回り/馬場は脇役
-PIVOT_CLASS = 3.0    # 条件クラスの中位を基準（ここからの上振れを評価）
-W_CLASS = 0.55       # 着内実績のクラス（主役）
+PIVOT_CLASS = 2.6    # 質割引後クラスの中央値付近（※レース内で一定＝順位には不影響、表示用）
+W_CLASS = 0.38       # 着内実績のクラス（主役を降ろし、騎手と拮抗させる）
 W_MARGIN = 0.35      # 平均着差＝競った内容（主役）
 W_BAND = 0.40        # 距離帯の複勝率
 W_DIR = 0.20         # 回りの複勝率
 W_GOING = 0.20       # 馬場の複勝率
-W_JK = 0.65          # 騎手力（馬の格0.55と同格以上＝しっかり効かせる）
+W_JK = 1.30          # 騎手力（クラス圧縮と合わせ、相対的にしっかり効かせる）
 CONF_C0 = 3.0        # 出走C0で信頼度0.5（少データは中立寄りに割引）
-JK_C0 = 5.0          # 騎手は5戦で信頼度0.5（場×距離の薄さを踏まえやや強め）
+JK_C0 = 3.0          # 騎手は5戦で信頼度0.5（場×距離の薄さを踏まえやや強め）
 MARGIN_BASE = 1.2    # この馬身を境に、近ければ＋・離されれば−
+_QUAL = {1: 1.0, 2: 0.8, 3: 0.6}  # 着内の質（着順）。クラス実績の質割引に使う。
 
 TRACKS = ["札幌", "函館", "福島", "新潟", "東京", "中山", "中京", "京都", "阪神", "小倉"]
 DIRECTION = {"東京": "左", "中京": "左", "新潟": "左",
@@ -90,9 +91,11 @@ def features_from_career(past: list, today: dict) -> dict:
     dr, dr_n = rate_n(lambda r: DIRECTION.get(_track_of(r.get("venue"))) == tdir)
     go, go_n = rate_n(lambda r: r.get("going") == going)
 
-    top3_cls = [r["race_class"] for r in past
-                if r["finish_pos"] <= 3 and r.get("race_class")]
-    class_proven = (sum(top3_cls) / len(top3_cls)) if top3_cls else None
+    # 着内(3着内)走の「質割引クラス」: 勝ち=満点, 2着=0.8, 3着=0.6。
+    # 「高い格で勝った」は残し、「高い格で3着」は割り引く（人気薄好走の過大評価を抑制）。
+    top3_credit = [r["race_class"] * _QUAL[r["finish_pos"]] for r in past
+                   if r.get("finish_pos") in _QUAL and r.get("race_class")]
+    class_proven = (sum(top3_credit) / len(top3_credit)) if top3_credit else None
     class_edge = (class_proven - tcls) if (class_proven is not None and tcls) else None
 
     behind = [max(0.0, r["margin"]) for r in past if r.get("margin") is not None]
