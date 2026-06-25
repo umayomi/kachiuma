@@ -7,7 +7,7 @@ on:
         required: true
         default: "20260531"
       race_id:
-        description: "race_id（直接指定）"
+        description: "race_id（ダービー=202605021211 / 皐月賞=202606030811 など）"
         required: true
         default: "202605021211"
 jobs:
@@ -19,41 +19,65 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
-      - run: pip install -r requirements.txt
-      - name: verify jockey name-match & thinness for a race
+      - run: pip install -r requirements.txt selenium
+      - name: inspect ability + jockey for one race
         run: |
           python - << 'PY'
-          import sys, requests
+          import sys, time, requests
           sys.path += ["scraper", "analysis"]
-          import netkeiba as nk, jockey_db as J
+          import netkeiba as nk, horsedb as hd, jockey_db as J, career_score as C
 
           ds = "${{ github.event.inputs.date }}"
           rid = "${{ github.event.inputs.race_id }}"
           race = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
-          place = race.get("track"); surf = race.get("surface"); dist = race.get("distance_m")
-          print(f"対象: {race.get('race_name')} / {place} {surf}{dist}")
-          s, e = J.period_3y(ds)
-          print(f"集計期間: {s} 〜 {e}\n")
+          place, surf, dist = race.get("track"), race.get("surface"), race.get("distance_m")
+          print(f"対象: {race.get('race_name')} / {place} {surf}{dist} 格={race.get('race_class')}\n")
 
+          rated = [h for h in race["horses"] if h.get("odds_win") and h.get("finish_pos")]
+          inv = {h["umaban"]: 1/h["odds_win"] for h in rated}
+          tot = sum(inv.values()) or 1
+          q = {u: v/tot for u, v in inv.items()}
+
+          # 馬の全キャリア（db）
+          driver = hd.make_driver(); careers = {}
+          try:
+              for h in rated:
+                  hid = h.get("horse_id")
+                  try:
+                      careers[h["umaban"]] = hd.trim_career(hd.fetch_horse(driver, hid, wait=1.5)) if hid else []
+                  except Exception as e:
+                      careers[h["umaban"]] = []; print("horse fail", hid, str(e).splitlines()[0][:30])
+                  time.sleep(1.2)
+          finally:
+              driver.quit()
+
+          # 騎手力（場×距離 + 全場フォールバック）→ jk_by_umaban
           sess = requests.Session()
-          place_tbl = J.fetch(sess, surf, dist, ds, place=place)   # 場×距離
-          all_tbl = J.fetch(sess, surf, dist, ds, place="ALL")     # 全場×距離
-          print(f"テーブル: 場×距離={len(place_tbl)}騎手 / 全場×距離={len(all_tbl)}騎手\n")
+          place_tbl = J.fetch(sess, surf, dist, ds, place=place)
+          all_tbl = J.fetch(sess, surf, dist, ds, place="ALL")
+          jk_by = {}; jk_src = {}
+          for h in rated:
+              cell, src = J.resolve(place_tbl, all_tbl, h.get("jockey") or "")
+              jk_src[h["umaban"]] = (src, cell["starts"] if cell else 0)
+              if cell:
+                  jk_by[h["umaban"]] = {"rate": J.rate(cell), "starts": cell["starts"]}
 
-          print(f"{'騎手(結果)':<12}{'状態':<12}{'戦':>4}{'複勝率':>8}{'縮小':>7}")
-          miss = 0
-          for h in race["horses"]:
-              jk = h.get("jockey")
-              if not jk:
-                  continue
-              cell, src = J.resolve(place_tbl, all_tbl, jk)
-              if not cell:
-                  miss += 1
-                  hits = [k for k in all_tbl if J._norm_name(jk)[:2] in k][:3]
-                  print(f"{jk:<12}{'該当なし':<12}  近い表記候補: {hits}")
-                  continue
-              r = J.rate(cell)
-              print(f"{jk:<12}{src:<12}{cell['starts']:>4}{cell['place_rate']*100:>7.1f}%{r*100:>6.1f}%")
-          print(f"\n名前該当なし: {miss}頭 / {sum(1 for h in race['horses'] if h.get('jockey'))}頭")
-          print("（該当なしが多い＝名前マッチング要調整。0〜1頭なら配線OK）")
+          probs, feats = C.ability_probs(careers, {**race, "horses": rated}, ds, jk_by_umaban=jk_by)
+          fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
+
+          def fmt(v): return "  - " if v is None else f"{v:.2f}"
+          order = sorted(rated, key=lambda h: probs[h["umaban"]], reverse=True)
+          print("=== モデル評価順（騎手力こみ） ===")
+          for h in order:
+              u = h["umaban"]; f = feats[u]; src, st = jk_src[u]
+              jr = f.get("jk_rate")
+              mark = "★人気1" if u == fav else f"人気{h.get('popularity')}"
+              print(f"[{mark} {h['odds_win']}倍 →{h['finish_pos']}着] {h.get('name','')[:9]} {h.get('jockey','')[:5]}"
+                    f"  prob={probs[u]*100:4.1f}% q={q[u]*100:4.1f}%")
+              print(f"    clsProven={fmt(f['class_proven'])} margin={fmt(f['margin'])} band={fmt(f['band'])} "
+                    f"| 騎手{jr*100:.0f}% ({src}{st}戦)" if jr is not None
+                    else f"    clsProven={fmt(f['class_proven'])} margin={fmt(f['margin'])} band={fmt(f['band'])} | 騎手データ無し")
+          top = order[0]["umaban"]; win = next((h["umaban"] for h in rated if h["finish_pos"]==1), None)
+          print(f"\nモデル本命=馬{top}({next(h['finish_pos'] for h in rated if h['umaban']==top)}着) "
+                f"/ 市場本命=馬{fav}({next(h['finish_pos'] for h in rated if h['umaban']==fav)}着) / 勝ち馬=馬{win}")
           PY
