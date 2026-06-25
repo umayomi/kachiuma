@@ -9,7 +9,7 @@ on:
       race_id:
         description: "race_id（ダービー=202605021211 / 皐月賞=202606030811）"
         required: true
-        default: "202605021211"
+        default: "202606030811"
 jobs:
   dbg:
     runs-on: ubuntu-latest
@@ -62,11 +62,30 @@ jobs:
           probs, feats = C.ability_probs(careers, {**race, "horses": rated}, ds, jk_by_umaban=jk_by)
           order = sorted(rated, key=lambda h: probs[h["umaban"]], reverse=True)
 
-          print(f"{'馬名':<9}{'人':>3}{'着':>3}{'prob':>6}{'q':>5}  | クラス 着差 距離 回り 馬場 騎手 = raw")
+          # 割引前(生)クラス実績＝着内走のrace_class単純平均／着内中の勝率（質割引の効きを可視化）
+          def raw_cls_and_winshare(u):
+              past = C.career_before(careers.get(u, []), ds)
+              t3 = [(r.get("race_class"), r.get("finish_pos")) for r in past
+                    if r.get("finish_pos") and r["finish_pos"] <= 3 and r.get("race_class")]
+              if not t3:
+                  return None, None
+              raw = sum(c for c, _ in t3) / len(t3)
+              ws = sum(1 for _, f in t3 if f == 1) / len(t3)
+              return raw, ws
+
+          print(f"{'馬名':<9}{'人':>3}{'着':>3}{'prob':>6}{'q':>5} "
+                f"{'clsP':>6}{'生cls':>6}{'勝率':>5}  | クラス 着差 距離 回り 馬場 騎手 = raw")
           for h in order:
               u = h["umaban"]; bd = C.ability_breakdown(feats[u])
+              cp = feats[u].get("class_proven")
+              raw, ws = raw_cls_and_winshare(u)
+              cps = f"{cp:5.2f}" if cp is not None else "   - "
+              rws = f"{raw:5.2f}" if raw is not None else "   - "
+              wss = f"{ws*100:3.0f}%" if ws is not None else "  - "
               print(f"{(h.get('name','') or '')[:9]:<9}{(h.get('popularity') or 0):>3}{h['finish_pos']:>3}"
-                    f"{probs[u]*100:>5.1f}%{q[u]*100:>4.0f}% | "
+                    f"{probs[u]*100:>5.1f}%{q[u]*100:>4.0f}% {cps}{rws}{wss}  | "
                     f"{bd['クラス']:+.2f} {bd['着差']:+.2f} {bd['距離帯']:+.2f} "
                     f"{bd['回り']:+.2f} {bd['馬場']:+.2f} {bd['騎手']:+.2f} = {sum(bd.values()):+.2f}")
+          print("\\n読み方: clsP=質割引後の実績クラス / 生cls=割引前(着内の単純平均) / 勝率=着内走中の1着割合。")
+          print("        『生clsは高いが勝率が低い』馬ほど clsP が大きく下がる＝人気薄好走の過大評価を抑制。")
           PY
