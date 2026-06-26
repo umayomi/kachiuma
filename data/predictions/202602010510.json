@@ -1,0 +1,376 @@
+{
+  "race_id": "202602010510",
+  "date": "2026-06-27",
+  "track": "函館",
+  "race_no": 10,
+  "race_name": "洞爺湖特別",
+  "distance_m": 2000,
+  "surface": "芝",
+  "going": "重",
+  "updated_at": "2026-06-27T08:47:07+09:00",
+  "market_overround": 1.259,
+  "value_note": "妙味のある馬 1頭（EV≧1.0）。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ハートメテオ",
+      "horse_id": "2022105549",
+      "sex_age": "牝4",
+      "jockey": "岩田望",
+      "trainer": "栗東笹田",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 5.7,
+      "popularity": 3,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 33.9,
+        "avg_agari": 34.35,
+        "dist_surface_fit": 4,
+        "days_since_last": 14,
+        "style_ratio": 0.624,
+        "style": "差し"
+      },
+      "form_score": 0.67,
+      "q_win": 0.1393,
+      "p_win": 0.1518,
+      "ev_win": 0.865,
+      "edge": 0.0125,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 15.2%・3番手評価",
+        "3番人気 / EV 0.865（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速33.9 / 差し / 当条件近走4走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "ラブリーリディア",
+      "horse_id": "2022100625",
+      "sex_age": "牝4",
+      "jockey": "小沢",
+      "trainer": "栗東中内田",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 10.5,
+      "popularity": 6,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 33.8,
+        "avg_agari": 34.46,
+        "dist_surface_fit": 5,
+        "days_since_last": 14,
+        "style_ratio": 0.872,
+        "style": "追込"
+      },
+      "form_score": 0.69,
+      "q_win": 0.0756,
+      "p_win": 0.0761,
+      "ev_win": 0.799,
+      "edge": 0.0005,
+      "mark": "",
+      "reasons": [
+        "予想勝率 7.6%・6番手評価",
+        "6番人気 / EV 0.799（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速33.8 / 追込 / 当条件近走5走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ヨヒーン",
+      "horse_id": "2022105166",
+      "sex_age": "牝4",
+      "jockey": "鮫島駿",
+      "trainer": "栗東杉山晴",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 5.3,
+      "popularity": 2,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 34.5,
+        "avg_agari": 34.9,
+        "dist_surface_fit": 4,
+        "days_since_last": 90,
+        "style_ratio": 0.872,
+        "style": "追込"
+      },
+      "form_score": 0.55,
+      "q_win": 0.1499,
+      "p_win": 0.1537,
+      "ev_win": 0.815,
+      "edge": 0.0038,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 15.4%・2番手評価",
+        "2番人気 / EV 0.815（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速34.5 / 追込 / 当条件近走4走"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "ウィルサヴァイブ",
+      "horse_id": "2022104748",
+      "sex_age": "牝4",
+      "jockey": "横山武",
+      "trainer": "栗東須貝",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 4.0,
+      "popularity": 1,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 33.1,
+        "avg_agari": 35.55,
+        "dist_surface_fit": 4,
+        "days_since_last": 42,
+        "style_ratio": 0.341,
+        "style": "差し"
+      },
+      "form_score": 0.83,
+      "q_win": 0.1986,
+      "p_win": 0.2512,
+      "ev_win": 1.005,
+      "edge": 0.0526,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 25.1%・1番手評価",
+        "1番人気 / EV 1.005（理論上プラス＝妙味 +5.3pt）",
+        "近走: 上がり最速33.1 / 差し / 当条件近走4走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "リッチブラック",
+      "horse_id": "2019103816",
+      "sex_age": "牡7",
+      "jockey": "斎藤",
+      "trainer": "栗東西村",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 24.9,
+      "popularity": 11,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 35.0,
+        "avg_agari": 36.64,
+        "dist_surface_fit": 3,
+        "days_since_last": 13,
+        "style_ratio": 0.399,
+        "style": "差し"
+      },
+      "form_score": 0.45,
+      "q_win": 0.0319,
+      "p_win": 0.0244,
+      "ev_win": 0.608,
+      "edge": -0.0075,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.4%・10番手評価",
+        "11番人気 / EV 0.608（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速35.0 / 差し / 当条件近走3走"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "ロードマンハイム",
+      "horse_id": "2020100177",
+      "sex_age": "セ6",
+      "jockey": "岩田康",
+      "trainer": "栗東友道",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 12.5,
+      "popularity": 7,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 34.0,
+        "avg_agari": 34.98,
+        "dist_surface_fit": 5,
+        "days_since_last": 14,
+        "style_ratio": 0.786,
+        "style": "追込"
+      },
+      "form_score": 0.65,
+      "q_win": 0.0635,
+      "p_win": 0.0608,
+      "ev_win": 0.76,
+      "edge": -0.0027,
+      "mark": "",
+      "reasons": [
+        "予想勝率 6.1%・7番手評価",
+        "7番人気 / EV 0.76（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速34.0 / 追込 / 当条件近走5走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "レイヤードレッド",
+      "horse_id": "2022103310",
+      "sex_age": "牡4",
+      "jockey": "長浜",
+      "trainer": "美浦手塚久",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 17.2,
+      "popularity": 9,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 34.2,
+        "avg_agari": 34.64,
+        "dist_surface_fit": 5,
+        "days_since_last": 14,
+        "style_ratio": 0.469,
+        "style": "差し"
+      },
+      "form_score": 0.61,
+      "q_win": 0.0462,
+      "p_win": 0.0411,
+      "ev_win": 0.707,
+      "edge": -0.0051,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.1%・8番手評価",
+        "9番人気 / EV 0.707（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速34.2 / 差し / 当条件近走5走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "バルティカ",
+      "horse_id": "2022105018",
+      "sex_age": "牡4",
+      "jockey": "北村友",
+      "trainer": "栗東高橋亮",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 7.7,
+      "popularity": 5,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 34.8,
+        "avg_agari": 36.45,
+        "dist_surface_fit": 4,
+        "days_since_last": 119,
+        "style_ratio": 0.341,
+        "style": "差し"
+      },
+      "form_score": 0.49,
+      "q_win": 0.1031,
+      "p_win": 0.0964,
+      "ev_win": 0.742,
+      "edge": -0.0067,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 9.6%・4番手評価",
+        "5番人気 / EV 0.742（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速34.8 / 差し / 当条件近走4走"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "ウインアクトゥール",
+      "horse_id": "2021107085",
+      "sex_age": "牡5",
+      "jockey": "丹内",
+      "trainer": "美浦栗田",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 7.6,
+      "popularity": 4,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 35.4,
+        "avg_agari": 37.77,
+        "dist_surface_fit": 3,
+        "days_since_last": 111,
+        "style_ratio": 0.543,
+        "style": "差し"
+      },
+      "form_score": 0.37,
+      "q_win": 0.1045,
+      "p_win": 0.0911,
+      "ev_win": 0.692,
+      "edge": -0.0134,
+      "mark": "",
+      "reasons": [
+        "予想勝率 9.1%・5番手評価",
+        "4番人気 / EV 0.692（やや過剰人気・妙味なし）",
+        "近走: 上がり最速35.4 / 差し / 当条件近走3走（実力面はやや割引）"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "アメジストブラック",
+      "horse_id": "2019105051",
+      "sex_age": "牡7",
+      "jockey": "舟山",
+      "trainer": "栗東小椋",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 15.5,
+      "popularity": 8,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 35.3,
+        "avg_agari": 35.73,
+        "dist_surface_fit": 0,
+        "days_since_last": 230,
+        "style_ratio": 0.659,
+        "style": "差し"
+      },
+      "form_score": 0.09,
+      "q_win": 0.0512,
+      "p_win": 0.0339,
+      "ev_win": 0.525,
+      "edge": -0.0173,
+      "mark": "",
+      "reasons": [
+        "予想勝率 3.4%・9番手評価",
+        "8番人気 / EV 0.525（やや過剰人気・妙味なし）",
+        "近走: 上がり最速35.3 / 差し（実力面はやや割引）"
+      ]
+    },
+    {
+      "umaban": 11,
+      "name": "ドッビアーコ",
+      "horse_id": "2021110130",
+      "sex_age": "セ5",
+      "jockey": "古川吉",
+      "trainer": "栗東奥村豊",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 22.0,
+      "popularity": 10,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 38.3,
+        "avg_agari": 39.45,
+        "dist_surface_fit": 0,
+        "days_since_last": 104,
+        "style_ratio": 0.47,
+        "style": "差し"
+      },
+      "form_score": -0.15,
+      "q_win": 0.0361,
+      "p_win": 0.0196,
+      "ev_win": 0.431,
+      "edge": -0.0165,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.0%・11番手評価",
+        "10番人気 / EV 0.431（やや過剰人気・妙味なし）",
+        "近走: 上がり最速38.3 / 差し（実力面はやや割引）"
+      ]
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "4",
+      "ev": 1.005,
+      "stake_unit": 1,
+      "note": "1番手評価・妙味 +5.3pt"
+    }
+  ]
+}

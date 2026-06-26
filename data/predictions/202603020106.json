@@ -1,0 +1,326 @@
+{
+  "race_id": "202603020106",
+  "date": "2026-06-27",
+  "track": "福島",
+  "race_no": 6,
+  "race_name": "2歳新馬",
+  "distance_m": 1150,
+  "surface": "ダート",
+  "going": null,
+  "updated_at": "2026-06-27T08:47:07+09:00",
+  "market_overround": 1.274,
+  "value_note": "EV>1の馬なし。控除率 約27%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "レオライジング",
+      "horse_id": "2024101902",
+      "sex_age": "牝2",
+      "jockey": "原",
+      "trainer": "美浦杉浦",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 21.5,
+      "popularity": 8,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0365,
+      "p_win": 0.0294,
+      "ev_win": 0.632,
+      "edge": -0.0071,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.9%・8番手評価",
+        "8番人気 / EV 0.632（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "エランヴィータ",
+      "horse_id": "2024104312",
+      "sex_age": "牡2",
+      "jockey": "三浦",
+      "trainer": "美浦柄崎",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 5.3,
+      "popularity": 2,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.1481,
+      "p_win": 0.1473,
+      "ev_win": 0.781,
+      "edge": -0.0008,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 14.7%・2番手評価",
+        "2番人気 / EV 0.781（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ラヴァブルロマン",
+      "horse_id": "2024100285",
+      "sex_age": "牝2",
+      "jockey": "菊沢",
+      "trainer": "美浦伊藤圭",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 16.1,
+      "popularity": 5,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0488,
+      "p_win": 0.0411,
+      "ev_win": 0.662,
+      "edge": -0.0077,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.1%・5番手評価",
+        "5番人気 / EV 0.662（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "パレスラン",
+      "horse_id": "2024108276",
+      "sex_age": "牡2",
+      "jockey": "石川",
+      "trainer": "美浦手塚久",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 19.5,
+      "popularity": 7,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0403,
+      "p_win": 0.033,
+      "ev_win": 0.644,
+      "edge": -0.0073,
+      "mark": "",
+      "reasons": [
+        "予想勝率 3.3%・7番手評価",
+        "7番人気 / EV 0.644（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "エコロメジャー",
+      "horse_id": "2024106083",
+      "sex_age": "牡2",
+      "jockey": "戸崎圭",
+      "trainer": "栗東牧浦",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 5.3,
+      "popularity": 3,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.1481,
+      "p_win": 0.1473,
+      "ev_win": 0.781,
+      "edge": -0.0008,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 14.7%・3番手評価",
+        "3番人気 / EV 0.781（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "オルッス",
+      "horse_id": "2024102851",
+      "sex_age": "牡2",
+      "jockey": "嶋田",
+      "trainer": "美浦伊坂",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 39.6,
+      "popularity": 10,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0198,
+      "p_win": 0.0146,
+      "ev_win": 0.578,
+      "edge": -0.0052,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.5%・10番手評価",
+        "10番人気 / EV 0.578（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "セイウンガジュマル",
+      "horse_id": "2024105391",
+      "sex_age": "牡2",
+      "jockey": "木幡巧",
+      "trainer": "美浦牧",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 6.6,
+      "popularity": 4,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.119,
+      "p_win": 0.1145,
+      "ev_win": 0.756,
+      "edge": -0.0045,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 11.5%・4番手評価",
+        "4番人気 / EV 0.756（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "ソラティオ",
+      "horse_id": "2024102461",
+      "sex_age": "牝2",
+      "jockey": "柴田大",
+      "trainer": "美浦粕谷",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 23.1,
+      "popularity": 9,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.034,
+      "p_win": 0.0271,
+      "ev_win": 0.626,
+      "edge": -0.0069,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.7%・9番手評価",
+        "9番人気 / EV 0.626（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "ムーンベリル",
+      "horse_id": "2024106276",
+      "sex_age": "牝2",
+      "jockey": "坂井",
+      "trainer": "栗東西村",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 2.2,
+      "popularity": 1,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.3569,
+      "p_win": 0.405,
+      "ev_win": 0.891,
+      "edge": 0.0481,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 40.5%・1番手評価",
+        "1番人気 / EV 0.891（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "マリノエスプレッソ",
+      "horse_id": "2024100292",
+      "sex_age": "牝2",
+      "jockey": "横山典",
+      "trainer": "美浦村田",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 16.2,
+      "popularity": 6,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0485,
+      "p_win": 0.0408,
+      "ev_win": 0.661,
+      "edge": -0.0077,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.1%・6番手評価",
+        "6番人気 / EV 0.661（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

@@ -1,0 +1,376 @@
+{
+  "race_id": "202603020110",
+  "date": "2026-06-27",
+  "track": "福島",
+  "race_no": 10,
+  "race_name": "いわき特別",
+  "distance_m": 1700,
+  "surface": "ダート",
+  "going": null,
+  "updated_at": "2026-06-27T08:47:07+09:00",
+  "market_overround": 1.265,
+  "value_note": "妙味のある馬 1頭（EV≧1.0）。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ハイクオリティ",
+      "horse_id": "2022106924",
+      "sex_age": "牡4",
+      "jockey": "ゴンサルベ",
+      "trainer": "栗東今野",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 3.7,
+      "popularity": 1,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 38.4,
+        "avg_agari": 38.96,
+        "dist_surface_fit": 5,
+        "days_since_last": 49,
+        "style_ratio": 0.119,
+        "style": "逃げ・先行"
+      },
+      "form_score": 0.15,
+      "q_win": 0.2137,
+      "p_win": 0.2094,
+      "ev_win": 0.775,
+      "edge": -0.0043,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 20.9%・2番手評価",
+        "1番人気 / EV 0.775（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速38.4 / 逃げ・先行 / 当条件近走5走"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "ラストレガシー",
+      "horse_id": "2022105556",
+      "sex_age": "牡4",
+      "jockey": "田辺",
+      "trainer": "美浦手塚久",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 4.5,
+      "popularity": 3,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 14.0,
+        "avg_agari": 33.78,
+        "dist_surface_fit": 4,
+        "days_since_last": 55,
+        "style_ratio": 0.47,
+        "style": "差し"
+      },
+      "form_score": 0.85,
+      "q_win": 0.1757,
+      "p_win": 0.2545,
+      "ev_win": 1.145,
+      "edge": 0.0788,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 25.4%・1番手評価",
+        "3番人気 / EV 1.145（理論上プラス＝妙味 +7.9pt）",
+        "近走: 上がり最速14.0 / 差し / 当条件近走4走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "リフレックス",
+      "horse_id": "2023105748",
+      "sex_age": "牡3",
+      "jockey": "三浦",
+      "trainer": "美浦金成",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 7.0,
+      "popularity": 5,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 36.4,
+        "avg_agari": 37.58,
+        "dist_surface_fit": 0,
+        "days_since_last": 55,
+        "style_ratio": 0.278,
+        "style": "逃げ・先行"
+      },
+      "form_score": -0.13,
+      "q_win": 0.113,
+      "p_win": 0.0851,
+      "ev_win": 0.596,
+      "edge": -0.0279,
+      "mark": "",
+      "reasons": [
+        "予想勝率 8.5%・5番手評価",
+        "5番人気 / EV 0.596（やや過剰人気・妙味なし）",
+        "近走: 上がり最速36.4 / 逃げ・先行（実力面はやや割引）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "ホウオウフロイト",
+      "horse_id": "2021103549",
+      "sex_age": "牡5",
+      "jockey": "杉原",
+      "trainer": "美浦加藤和",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 30.3,
+      "popularity": 7,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 35.8,
+        "avg_agari": 36.3,
+        "dist_surface_fit": 0,
+        "days_since_last": 35,
+        "style_ratio": 0.856,
+        "style": "追込"
+      },
+      "form_score": -0.01,
+      "q_win": 0.0261,
+      "p_win": 0.017,
+      "ev_win": 0.515,
+      "edge": -0.0091,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.7%・8番手評価",
+        "7番人気 / EV 0.515（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速35.8 / 追込（実力面はやや割引）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "ショウナンヤッホー",
+      "horse_id": "2022104605",
+      "sex_age": "牡4",
+      "jockey": "津村",
+      "trainer": "美浦栗田",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 35.2,
+      "popularity": 10,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 36.4,
+        "avg_agari": 37.7,
+        "dist_surface_fit": 3,
+        "days_since_last": 41,
+        "style_ratio": 0.584,
+        "style": "差し"
+      },
+      "form_score": 0.17,
+      "q_win": 0.0225,
+      "p_win": 0.0159,
+      "ev_win": 0.56,
+      "edge": -0.0066,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.6%・10番手評価",
+        "10番人気 / EV 0.56（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速36.4 / 差し / 当条件近走3走"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "コックピットサイト",
+      "horse_id": "2023103717",
+      "sex_age": "牡3",
+      "jockey": "荻野極",
+      "trainer": "美浦鹿戸",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 5.9,
+      "popularity": 4,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 34.7,
+        "avg_agari": 36.7,
+        "dist_surface_fit": 1,
+        "days_since_last": 28,
+        "style_ratio": 0.292,
+        "style": "逃げ・先行"
+      },
+      "form_score": 0.33,
+      "q_win": 0.134,
+      "p_win": 0.1364,
+      "ev_win": 0.805,
+      "edge": 0.0024,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 13.6%・4番手評価",
+        "4番人気 / EV 0.805（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速34.7 / 逃げ・先行 / 当条件近走1走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "コスモマルーン",
+      "horse_id": "2020105350",
+      "sex_age": "牝6",
+      "jockey": "菊沢",
+      "trainer": "美浦秋本",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 25.0,
+      "popularity": 6,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 37.4,
+        "avg_agari": 38.22,
+        "dist_surface_fit": 5,
+        "days_since_last": 62,
+        "style_ratio": 0.758,
+        "style": "追込"
+      },
+      "form_score": 0.15,
+      "q_win": 0.0316,
+      "p_win": 0.0233,
+      "ev_win": 0.583,
+      "edge": -0.0083,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.3%・6番手評価",
+        "6番人気 / EV 0.583（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速37.4 / 追込 / 当条件近走5走"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "ゲンパチルーナ",
+      "horse_id": "2022100887",
+      "sex_age": "牝4",
+      "jockey": "武藤",
+      "trainer": "美浦西田",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 33.5,
+      "popularity": 9,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 37.7,
+        "avg_agari": 39.18,
+        "dist_surface_fit": 4,
+        "days_since_last": 91,
+        "style_ratio": 0.479,
+        "style": "差し"
+      },
+      "form_score": 0.15,
+      "q_win": 0.0236,
+      "p_win": 0.0166,
+      "ev_win": 0.556,
+      "edge": -0.007,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.7%・9番手評価",
+        "9番人気 / EV 0.556（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速37.7 / 差し / 当条件近走4走"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "ドゥマーヴェリック",
+      "horse_id": "2022103232",
+      "sex_age": "牡4",
+      "jockey": "戸崎圭",
+      "trainer": "美浦大竹",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 3.7,
+      "popularity": 2,
+      "features": {
+        "n_runs": 5,
+        "best_agari": 37.6,
+        "avg_agari": 38.58,
+        "dist_surface_fit": 5,
+        "days_since_last": 69,
+        "style_ratio": 0.22,
+        "style": "逃げ・先行"
+      },
+      "form_score": 0.15,
+      "q_win": 0.2137,
+      "p_win": 0.2094,
+      "ev_win": 0.775,
+      "edge": -0.0043,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 20.9%・3番手評価",
+        "2番人気 / EV 0.775（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速37.6 / 逃げ・先行 / 当条件近走5走"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "ルクスメンデス",
+      "horse_id": "2022102037",
+      "sex_age": "牡4",
+      "jockey": "小崎",
+      "trainer": "栗東小崎",
+      "weight_carried": 58.0,
+      "horse_weight": null,
+      "odds_win": 36.6,
+      "popularity": 11,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 38.1,
+        "avg_agari": 38.7,
+        "dist_surface_fit": 3,
+        "days_since_last": 11,
+        "style_ratio": 0.658,
+        "style": "差し"
+      },
+      "form_score": 0.15,
+      "q_win": 0.0216,
+      "p_win": 0.015,
+      "ev_win": 0.549,
+      "edge": -0.0066,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.5%・11番手評価",
+        "11番人気 / EV 0.549（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速38.1 / 差し / 当条件近走3走"
+      ]
+    },
+    {
+      "umaban": 11,
+      "name": "オーケーマヒナ",
+      "horse_id": "2022100432",
+      "sex_age": "牝4",
+      "jockey": "石川",
+      "trainer": "美浦相沢",
+      "weight_carried": 56.0,
+      "horse_weight": null,
+      "odds_win": 32.3,
+      "popularity": 8,
+      "features": {
+        "n_runs": 4,
+        "best_agari": 38.0,
+        "avg_agari": 40.27,
+        "dist_surface_fit": 4,
+        "days_since_last": 160,
+        "style_ratio": 0.547,
+        "style": "差し"
+      },
+      "form_score": 0.15,
+      "q_win": 0.0245,
+      "p_win": 0.0174,
+      "ev_win": 0.562,
+      "edge": -0.0071,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.7%・7番手評価",
+        "8番人気 / EV 0.562（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速38.0 / 差し / 当条件近走4走"
+      ]
+    }
+  ],
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "2",
+      "ev": 1.145,
+      "stake_unit": 1,
+      "note": "1番手評価・妙味 +7.9pt"
+    }
+  ]
+}

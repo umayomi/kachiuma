@@ -1,0 +1,208 @@
+{
+  "race_id": "202610020101",
+  "date": "2026-06-27",
+  "track": "小倉",
+  "race_no": 1,
+  "race_name": "2歳未勝利",
+  "distance_m": 1200,
+  "surface": "芝",
+  "going": "重",
+  "updated_at": "2026-06-27T08:47:07+09:00",
+  "market_overround": 1.26,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "シスキンブルーム",
+      "horse_id": "2024106603",
+      "sex_age": "牝2",
+      "jockey": "団野",
+      "trainer": "栗東斉藤崇",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 1.2,
+      "popularity": 1,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 35.0,
+        "avg_agari": 35.0,
+        "dist_surface_fit": 1,
+        "days_since_last": 20,
+        "style_ratio": 0.273,
+        "style": "逃げ・先行"
+      },
+      "form_score": 0.12,
+      "q_win": 0.6613,
+      "p_win": 0.7522,
+      "ev_win": 0.903,
+      "edge": 0.0909,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 75.2%・1番手評価",
+        "1番人気 / EV 0.903（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速35.0 / 逃げ・先行 / 当条件近走1走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "スマートメモリー",
+      "horse_id": "2024104520",
+      "sex_age": "牝2",
+      "jockey": "吉村",
+      "trainer": "栗東石坂",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 14.6,
+      "popularity": 5,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 34.3,
+        "avg_agari": 34.3,
+        "dist_surface_fit": 1,
+        "days_since_last": 14,
+        "style_ratio": 0.545,
+        "style": "差し"
+      },
+      "form_score": 0.26,
+      "q_win": 0.0544,
+      "p_win": 0.0463,
+      "ev_win": 0.676,
+      "edge": -0.0081,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.6%・5番手評価",
+        "5番人気 / EV 0.676（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速34.3 / 差し / 当条件近走1走（実力で上積み評価）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ペプチドニンバス",
+      "horse_id": "2024101729",
+      "sex_age": "牡2",
+      "jockey": "富田",
+      "trainer": "栗東武英",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 19.2,
+      "popularity": 6,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 40.0,
+        "avg_agari": 40.0,
+        "dist_surface_fit": 0,
+        "days_since_last": 14,
+        "style_ratio": 0.462,
+        "style": "差し"
+      },
+      "form_score": -0.3,
+      "q_win": 0.0413,
+      "p_win": 0.0241,
+      "ev_win": 0.463,
+      "edge": -0.0172,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.4%・6番手評価",
+        "6番人気 / EV 0.463（やや過剰人気・妙味なし）",
+        "近走: 上がり最速40.0 / 差し（実力面はやや割引）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "イザベル",
+      "horse_id": "2024104426",
+      "sex_age": "牝2",
+      "jockey": "松若",
+      "trainer": "栗東藤野",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 11.1,
+      "popularity": 3,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 36.5,
+        "avg_agari": 36.5,
+        "dist_surface_fit": 1,
+        "days_since_last": 20,
+        "style_ratio": 0.364,
+        "style": "差し"
+      },
+      "form_score": -0.18,
+      "q_win": 0.0715,
+      "p_win": 0.0487,
+      "ev_win": 0.541,
+      "edge": -0.0228,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 4.9%・4番手評価",
+        "3番人気 / EV 0.541（やや過剰人気・妙味なし）",
+        "近走: 上がり最速36.5 / 差し / 当条件近走1走（実力面はやや割引）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "クリコキアナ",
+      "horse_id": "2024100009",
+      "sex_age": "牝2",
+      "jockey": "国分恭",
+      "trainer": "栗東谷",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 7.7,
+      "popularity": 2,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 36.7,
+        "avg_agari": 36.7,
+        "dist_surface_fit": 1,
+        "days_since_last": 20,
+        "style_ratio": 0.091,
+        "style": "逃げ・先行"
+      },
+      "form_score": -0.18,
+      "q_win": 0.1031,
+      "p_win": 0.0741,
+      "ev_win": 0.571,
+      "edge": -0.029,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 7.4%・2番手評価",
+        "2番人気 / EV 0.571（やや過剰人気・妙味なし）",
+        "近走: 上がり最速36.7 / 逃げ・先行 / 当条件近走1走（実力面はやや割引）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "ニドヅケキンシ",
+      "horse_id": "2024100498",
+      "sex_age": "牡2",
+      "jockey": "◇今村",
+      "trainer": "栗東佐藤悠",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 11.6,
+      "popularity": 4,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 35.1,
+        "avg_agari": 35.1,
+        "dist_surface_fit": 1,
+        "days_since_last": 14,
+        "style_ratio": 0.818,
+        "style": "追込"
+      },
+      "form_score": 0.1,
+      "q_win": 0.0684,
+      "p_win": 0.0547,
+      "ev_win": 0.635,
+      "edge": -0.0137,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 5.5%・3番手評価",
+        "4番人気 / EV 0.635（やや過剰人気・妙味なし）",
+        "近走: 上がり最速35.1 / 追込 / 当条件近走1走（実力で上積み評価）"
+      ]
+    }
+  ],
+  "tickets": []
+}
