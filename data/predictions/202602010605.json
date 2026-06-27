@@ -1,0 +1,202 @@
+{
+  "race_id": "202602010605",
+  "date": "2026-06-28",
+  "track": "函館",
+  "race_no": 5,
+  "race_name": "2歳新馬",
+  "distance_m": 1200,
+  "surface": "芝",
+  "going": "良",
+  "updated_at": "2026-06-28T08:38:16+09:00",
+  "market_overround": 1.294,
+  "value_note": "EV>1の馬なし。控除率 約29%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ショパンコンクール",
+      "horse_id": "2024100176",
+      "sex_age": "牡2",
+      "jockey": "丹内",
+      "trainer": "美浦岩戸",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 6.5,
+      "popularity": 2,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.1189,
+      "p_win": 0.1021,
+      "ev_win": 0.664,
+      "edge": -0.0168,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 10.2%・2番手評価",
+        "2番人気 / EV 0.664（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "シグレ",
+      "horse_id": "2024108226",
+      "sex_age": "牝2",
+      "jockey": "武豊",
+      "trainer": "栗東武英",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 1.2,
+      "popularity": 1,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.644,
+      "p_win": 0.7125,
+      "ev_win": 0.855,
+      "edge": 0.0685,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 71.2%・1番手評価",
+        "1番人気 / EV 0.855（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ウメヒナタ",
+      "horse_id": "2024104575",
+      "sex_age": "牝2",
+      "jockey": "佐々木",
+      "trainer": "栗東橋田",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 14.9,
+      "popularity": 5,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0519,
+      "p_win": 0.0394,
+      "ev_win": 0.587,
+      "edge": -0.0125,
+      "mark": "",
+      "reasons": [
+        "予想勝率 3.9%・5番手評価",
+        "5番人気 / EV 0.587（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "ソウカイファミリア",
+      "horse_id": "2024101600",
+      "sex_age": "牡2",
+      "jockey": "横山和",
+      "trainer": "美浦鈴木慎",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 8.8,
+      "popularity": 3,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0878,
+      "p_win": 0.072,
+      "ev_win": 0.634,
+      "edge": -0.0158,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 7.2%・3番手評価",
+        "3番人気 / EV 0.634（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "アズライトティアラ",
+      "horse_id": "2024106919",
+      "sex_age": "牝2",
+      "jockey": "小沢",
+      "trainer": "栗東浜田",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 25.1,
+      "popularity": 6,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0308,
+      "p_win": 0.0216,
+      "ev_win": 0.542,
+      "edge": -0.0092,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.2%・6番手評価",
+        "6番人気 / EV 0.542（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "ルミナスジェム",
+      "horse_id": "2024106897",
+      "sex_age": "牝2",
+      "jockey": "▲小林美",
+      "trainer": "栗東中村",
+      "weight_carried": 52.0,
+      "horse_weight": null,
+      "odds_win": 11.6,
+      "popularity": 4,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0666,
+      "p_win": 0.0524,
+      "ev_win": 0.608,
+      "edge": -0.0142,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 5.2%・4番手評価",
+        "4番人気 / EV 0.608（やや過剰人気・妙味なし）"
+      ]
+    }
+  ],
+  "tickets": []
+}

@@ -1,0 +1,357 @@
+{
+  "race_id": "202610020206",
+  "date": "2026-06-28",
+  "track": "小倉",
+  "race_no": 6,
+  "race_name": "2歳新馬",
+  "distance_m": 1200,
+  "surface": "芝",
+  "going": "良",
+  "updated_at": "2026-06-28T08:38:16+09:00",
+  "market_overround": 1.262,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "トシミチ",
+      "horse_id": "2024108115",
+      "sex_age": "牡2",
+      "jockey": "幸",
+      "trainer": "栗東谷",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 3.8,
+      "popularity": 2,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.2085,
+      "p_win": 0.2238,
+      "ev_win": 0.85,
+      "edge": 0.0153,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 22.4%・2番手評価",
+        "2番人気 / EV 0.85（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "グレートキリシマ",
+      "horse_id": "2024108085",
+      "sex_age": "牡2",
+      "jockey": "松若",
+      "trainer": "栗東牧田",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 12.9,
+      "popularity": 6,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0614,
+      "p_win": 0.0549,
+      "ev_win": 0.708,
+      "edge": -0.0065,
+      "mark": "",
+      "reasons": [
+        "予想勝率 5.5%・6番手評価",
+        "6番人気 / EV 0.708（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "スイトーヨ",
+      "horse_id": "2024108118",
+      "sex_age": "牝2",
+      "jockey": "川田",
+      "trainer": "栗東角田",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 3.2,
+      "popularity": 1,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.2476,
+      "p_win": 0.2727,
+      "ev_win": 0.873,
+      "edge": 0.0251,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 27.3%・1番手評価",
+        "1番人気 / EV 0.873（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "ユイノジカンカセギ",
+      "horse_id": "2024108117",
+      "sex_age": "牡2",
+      "jockey": "長岡",
+      "trainer": "美浦竹内",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 9.4,
+      "popularity": 4,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0843,
+      "p_win": 0.079,
+      "ev_win": 0.743,
+      "edge": -0.0053,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 7.9%・4番手評価",
+        "4番人気 / EV 0.743（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "ラブマイティー",
+      "horse_id": "2024108061",
+      "sex_age": "牝2",
+      "jockey": "杉原",
+      "trainer": "美浦加藤和",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 21.1,
+      "popularity": 9,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0375,
+      "p_win": 0.0311,
+      "ev_win": 0.656,
+      "edge": -0.0064,
+      "mark": "",
+      "reasons": [
+        "予想勝率 3.1%・9番手評価",
+        "9番人気 / EV 0.656（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "カシノヴィタ",
+      "horse_id": "2024108106",
+      "sex_age": "牝2",
+      "jockey": "▲森田",
+      "trainer": "美浦和田雄",
+      "weight_carried": 52.0,
+      "horse_weight": null,
+      "odds_win": 54.9,
+      "popularity": 10,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0144,
+      "p_win": 0.0104,
+      "ev_win": 0.571,
+      "edge": -0.004,
+      "mark": "",
+      "reasons": [
+        "予想勝率 1.0%・10番手評価",
+        "10番人気 / EV 0.571（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "カゴシマ",
+      "horse_id": "2024108110",
+      "sex_age": "セ2",
+      "jockey": "酒井",
+      "trainer": "美浦松山",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 14.3,
+      "popularity": 7,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0554,
+      "p_win": 0.0487,
+      "ev_win": 0.696,
+      "edge": -0.0067,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.9%・7番手評価",
+        "7番人気 / EV 0.696（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 8,
+      "name": "ユイパルティ",
+      "horse_id": "2024108111",
+      "sex_age": "牝2",
+      "jockey": "◇永島",
+      "trainer": "栗東平田",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 11.8,
+      "popularity": 5,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0671,
+      "p_win": 0.0608,
+      "ev_win": 0.717,
+      "edge": -0.0063,
+      "mark": "",
+      "reasons": [
+        "予想勝率 6.1%・5番手評価",
+        "5番人気 / EV 0.717（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 9,
+      "name": "プッシュザリミット",
+      "horse_id": "2024108113",
+      "sex_age": "牡2",
+      "jockey": "吉村",
+      "trainer": "栗東柴田",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 16.0,
+      "popularity": 8,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0495,
+      "p_win": 0.0428,
+      "ev_win": 0.685,
+      "edge": -0.0067,
+      "mark": "",
+      "reasons": [
+        "予想勝率 4.3%・8番手評価",
+        "8番人気 / EV 0.685（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 10,
+      "name": "ニシノマティーニ",
+      "horse_id": "2024108087",
+      "sex_age": "牡2",
+      "jockey": "◇今村",
+      "trainer": "美浦小手川",
+      "weight_carried": 53.0,
+      "horse_weight": null,
+      "odds_win": 4.9,
+      "popularity": 3,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.1617,
+      "p_win": 0.1671,
+      "ev_win": 0.819,
+      "edge": 0.0054,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 16.7%・3番手評価",
+        "3番人気 / EV 0.819（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 11,
+      "name": "カシノカゲマル",
+      "horse_id": "2024108091",
+      "sex_age": "セ2",
+      "jockey": "秋山稔",
+      "trainer": "美浦蛯名利",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 63.3,
+      "popularity": 11,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0125,
+      "p_win": 0.0088,
+      "ev_win": 0.557,
+      "edge": -0.0037,
+      "mark": "",
+      "reasons": [
+        "予想勝率 0.9%・11番手評価",
+        "11番人気 / EV 0.557（控除率の壁で理論上マイナス）"
+      ]
+    }
+  ],
+  "tickets": []
+}

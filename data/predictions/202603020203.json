@@ -1,0 +1,175 @@
+{
+  "race_id": "202603020203",
+  "date": "2026-06-28",
+  "track": "福島",
+  "race_no": 3,
+  "race_name": "2歳未勝利",
+  "distance_m": 1200,
+  "surface": "芝",
+  "going": "良",
+  "updated_at": "2026-06-28T08:38:16+09:00",
+  "market_overround": 1.2,
+  "value_note": "EV>1の馬なし。控除率 約20%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ドルチェテソーロ",
+      "horse_id": "2024101281",
+      "sex_age": "牝2",
+      "jockey": "木幡巧",
+      "trainer": "美浦牧",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 12.6,
+      "popularity": 3,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 35.7,
+        "avg_agari": 35.7,
+        "dist_surface_fit": 1,
+        "days_since_last": 22,
+        "style_ratio": 0.429,
+        "style": "差し"
+      },
+      "form_score": -0.02,
+      "q_win": 0.0662,
+      "p_win": 0.0454,
+      "ev_win": 0.572,
+      "edge": -0.0208,
+      "mark": "▲",
+      "reasons": [
+        "予想勝率 4.5%・3番手評価",
+        "3番人気 / EV 0.572（やや過剰人気・妙味なし）",
+        "近走: 上がり最速35.7 / 差し / 当条件近走1走"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "アイファーラピッド",
+      "horse_id": "2024108275",
+      "sex_age": "牝2",
+      "jockey": "団野",
+      "trainer": "栗東森秀",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 10.2,
+      "popularity": 2,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 35.8,
+        "avg_agari": 35.8,
+        "dist_surface_fit": 1,
+        "days_since_last": 15,
+        "style_ratio": 0.273,
+        "style": "逃げ・先行"
+      },
+      "form_score": -0.04,
+      "q_win": 0.0817,
+      "p_win": 0.0572,
+      "ev_win": 0.583,
+      "edge": -0.0245,
+      "mark": "○",
+      "reasons": [
+        "予想勝率 5.7%・2番手評価",
+        "2番人気 / EV 0.583（やや過剰人気・妙味なし）",
+        "近走: 上がり最速35.8 / 逃げ・先行 / 当条件近走1走"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "ベアアミーチ",
+      "horse_id": "2024101604",
+      "sex_age": "牝2",
+      "jockey": "▲上里",
+      "trainer": "美浦杉浦",
+      "weight_carried": 52.0,
+      "horse_weight": null,
+      "odds_win": 16.2,
+      "popularity": 4,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 35.7,
+        "avg_agari": 35.7,
+        "dist_surface_fit": 1,
+        "days_since_last": 22,
+        "style_ratio": 0.286,
+        "style": "逃げ・先行"
+      },
+      "form_score": -0.02,
+      "q_win": 0.0515,
+      "p_win": 0.034,
+      "ev_win": 0.551,
+      "edge": -0.0175,
+      "mark": "△",
+      "reasons": [
+        "予想勝率 3.4%・4番手評価",
+        "4番人気 / EV 0.551（やや過剰人気・妙味なし）",
+        "近走: 上がり最速35.7 / 逃げ・先行 / 当条件近走1走"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "ユイノヘラクレス",
+      "horse_id": "2024105474",
+      "sex_age": "牡2",
+      "jockey": "木幡初",
+      "trainer": "美浦深山",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 19.5,
+      "popularity": 5,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": 0.0,
+      "q_win": 0.0428,
+      "p_win": 0.0279,
+      "ev_win": 0.544,
+      "edge": -0.0149,
+      "mark": "",
+      "reasons": [
+        "予想勝率 2.8%・5番手評価",
+        "5番人気 / EV 0.544（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "オオセイケイ",
+      "horse_id": "2024100482",
+      "sex_age": "牝2",
+      "jockey": "横山武",
+      "trainer": "美浦竹内",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 1.1,
+      "popularity": 1,
+      "features": {
+        "n_runs": 1,
+        "best_agari": 34.8,
+        "avg_agari": 34.8,
+        "dist_surface_fit": 1,
+        "days_since_last": 22,
+        "style_ratio": 0.143,
+        "style": "逃げ・先行"
+      },
+      "form_score": 0.16,
+      "q_win": 0.7579,
+      "p_win": 0.8355,
+      "ev_win": 0.919,
+      "edge": 0.0776,
+      "mark": "◎",
+      "reasons": [
+        "予想勝率 83.5%・1番手評価",
+        "1番人気 / EV 0.919（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速34.8 / 逃げ・先行 / 当条件近走1走（実力で上積み評価）"
+      ]
+    }
+  ],
+  "tickets": []
+}
