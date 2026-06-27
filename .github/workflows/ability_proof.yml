@@ -25,7 +25,7 @@ jobs:
       - name: full-career ability proof (cached, jockey on/off)
         run: |
           python - << 'PY'
-          import sys, time, datetime, pathlib, json, os, requests
+          import sys, time, datetime, pathlib, json, os, requests, math
           sys.path += ["scraper", "analysis"]
           import netkeiba as nk, horsedb as hd, career_score as C, jockey_db as J
 
@@ -135,6 +135,13 @@ jobs:
           KEYS = ["実力上位(複勝)", "妙味(実力-市場≥5%)", "信頼本命(実力上位=1番人気)",
                   "実力上位+騎手(複勝)", "妙味+騎手(実力-市場≥5%)", "信頼本命+騎手",
                   "1番人気(基準)"]
+          # 本番predictと同じ融合 q^TAU × exp(LAMBDA*(f-mean_f)), f=log(実力prob・騎手込み)。
+          # ◎=融合p最大。LAMBDA別に複勝率を出し、どれが市場ベースを上回るか決める。
+          TAU = 1.15
+          LAMBDAS = [0.0, 0.3, 0.6, 1.0]
+          FUSE_KEYS = [f"◎融合λ={lam:.1f}" for lam in LAMBDAS]
+          KEYS += FUSE_KEYS
+          dev = {lam: 0 for lam in LAMBDAS}   # 融合◎が1番人気と違ったレース数
           S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0} for k in KEYS}
           n_abst = 0
           jk_races = 0   # 騎手データが1頭でも解決したレース数（umarengod 疎通の確認）
@@ -164,6 +171,18 @@ jobs:
               by = {h["umaban"]: h for h in rated}
               fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
               bet("1番人気(基準)", fav, by)
+
+              # --- 本番predict と同じ融合で LAMBDA を総当たり（◎=融合p最大） ---
+              fvals = {u: math.log(probs_j[u]) for u in probs_j if probs_j[u] > 0}
+              if fvals:
+                  mean_f = sum(fvals.values()) / len(fvals)
+                  for lam in LAMBDAS:
+                      base = {u: (q[u] ** TAU) * math.exp(lam * (fvals[u] - mean_f))
+                              for u in fvals}
+                      topf = max(base, key=lambda u: base[u])
+                      bet(f"◎融合λ={lam:.1f}", topf, by)
+                      if topf != fav:
+                          dev[lam] += 1
 
               evaluable = [h["umaban"] for h in rated if feats[h["umaban"]]["n_data"] >= MIN_DATA]
               if not evaluable:
@@ -199,6 +218,12 @@ jobs:
                   L.append(f"{k:<28}{'0':>5}  （該当なし）"); continue
               L.append(f"{k:<28}{s['b']:>5}{s['t3']/s['b']*100:>7.1f}%"
                        f"{s['w']/s['b']*100:>7.1f}%{s['pay']/(s['b']*UNIT)*100:>8.1f}%")
+          L += ["",
+                "◎融合 = 本番predictと同じ q^TAU×実力^LAMBDA の◎。λ別の複勝率を比較。",
+                "λ=0.0 は市場のみ(≒1番人気)。λを上げるほど実力寄り。市場(λ=0)を複勝率で",
+                "上回る最大のλが採用値。上回らなければ実力融合は複勝率に効いていない。",
+                f"市場と違う◎を選んだR数: " +
+                " / ".join(f"λ={lam:.1f}:{dev[lam]}R" for lam in LAMBDAS)]
           rep = "\n".join(L); print("\n" + rep)
           pathlib.Path("data/ability_proof.md").write_text(
               f"# 全キャリア実力スコア 実証（複勝率中心・騎手on/off）\n\nテスト {te_s}〜{te_e}\n\n```\n{rep}\n```\n",
