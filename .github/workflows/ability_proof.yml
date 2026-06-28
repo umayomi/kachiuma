@@ -146,6 +146,12 @@ jobs:
           n_abst = 0
           jk_races = 0   # 騎手データが1頭でも解決したレース数（umarengod 疎通の確認）
 
+          # === 本サイトの目的指標: 市場が見落とす『人気4+の3着内(隠れ複勝馬)』を実力+騎手で拾えるか ===
+          mkt4 = [0, 0]                      # 人気4+ 全体 [複勝, 頭数] = ベースライン
+          VPA = {"OFF": [0, 0], "ON": [0, 0]}  # 指標A: 実力top3∩人気4+ の [複勝, 拾った頭数]
+          VPB = {"OFF": [0, 0], "ON": [0, 0]}  # 指標B: 隠れ複勝馬の [捕捉, 総数] recall
+          vp_jk = [0, 0]                     # ON側の実力推し(人気4+)で騎手が[解決, 総数]
+
           def bet(name, u, by):
               s = S[name]; s["b"] += 1; fp = by[u]["finish_pos"]
               if fp and fp <= 3: s["t3"] += 1
@@ -189,6 +195,28 @@ jobs:
                   n_abst += 1
                   continue
 
+              # === 目的指標A/B: 隠れ複勝馬(人気4+で3着内)の発掘 ===
+              pop = {h["umaban"]: i + 1 for i, h in enumerate(sorted(rated, key=lambda h: h["odds_win"]))}
+              for u in by:                                  # ベースライン: 人気4+ の素の複勝率
+                  if pop[u] >= 4:
+                      mkt4[1] += 1
+                      if by[u]["finish_pos"] <= 3:
+                          mkt4[0] += 1
+              hidden = {u for u in by if pop[u] >= 4 and by[u]["finish_pos"] <= 3}  # 隠れ複勝馬
+              for tag, probs in (("OFF", probs_nj), ("ON", probs_j)):
+                  top3 = set(sorted(evaluable, key=lambda u: -probs[u])[:3])
+                  picks = [u for u in top3 if pop[u] >= 4]   # 市場非上位だがモデルが推す実力馬
+                  for u in picks:
+                      VPA[tag][1] += 1
+                      if by[u]["finish_pos"] <= 3:
+                          VPA[tag][0] += 1
+                      if tag == "ON":                        # 騎手が解決できていたか
+                          vp_jk[1] += 1
+                          if u in jk_by:
+                              vp_jk[0] += 1
+                  VPB[tag][0] += len(hidden & top3)
+                  VPB[tag][1] += len(hidden)
+
               # --- 騎手なし（現行ロジックそのまま＝回帰ガード） ---
               top = max(evaluable, key=lambda u: probs_nj[u])
               bet("実力上位(複勝)", top, by)
@@ -207,10 +235,20 @@ jobs:
                   if probs_j[u] - q.get(u, 0) >= GAP:
                       bet("妙味+騎手(実力-市場≥5%)", u, by)
 
-          L = [f"全キャリア実証: テスト{len(races)}R / カバレッジ{got}/{len(hids)}頭 / 1点{UNIT}円 MIN_DATA={MIN_DATA}",
+          def pct(a, b):
+              return f"{a/b*100:5.1f}%" if b else "  -  "
+          base4 = mkt4[0] / mkt4[1] * 100 if mkt4[1] else 0.0
+          L = [f"全キャリア実証: テスト{len(races)}R / カバレッジ{got}/{len(hids)}頭 / MIN_DATA={MIN_DATA}",
                f"（実力上位がデータ不足で見送り: {n_abst}R / 騎手データ解決: {jk_races}R）", "",
-               "評価は馬券内(複勝=3着以内)中心。単勝率・単回収率は参考。",
-               "『+騎手』行が『騎手なし』行より複勝率を上げているかが、騎手導入の審判。", "",
+               "■ 目的指標: 市場が見落とす『人気4+の3着内(隠れ複勝馬)』を実力+騎手で拾えるか",
+               f"  ベースライン 人気4+ の複勝率: {base4:.1f}%  ({mkt4[0]}/{mkt4[1]})",
+               "  指標A: 実力top3に入った人気4+馬の複勝率（市場非推しの実力推し）",
+               f"    騎手OFF: {pct(*VPA['OFF'])} ({VPA['OFF'][0]}/{VPA['OFF'][1]})  ベース比 {VPA['OFF'][0]/VPA['OFF'][1]*100-base4:+.1f}pt" if VPA['OFF'][1] else "    騎手OFF: 該当なし",
+               f"    騎手ON : {pct(*VPA['ON'])} ({VPA['ON'][0]}/{VPA['ON'][1]})  ベース比 {VPA['ON'][0]/VPA['ON'][1]*100-base4:+.1f}pt" if VPA['ON'][1] else "    騎手ON : 該当なし",
+               "  指標B: 隠れ複勝馬をモデルtop3で捕捉できた割合(recall)",
+               f"    騎手OFF: {pct(*VPB['OFF'])} ({VPB['OFF'][0]}/{VPB['OFF'][1]})    騎手ON: {pct(*VPB['ON'])} ({VPB['ON'][0]}/{VPB['ON'][1]})",
+               f"  実力推し(人気4+)で騎手が解決できた割合: {pct(*vp_jk)} ({vp_jk[0]}/{vp_jk[1]})  ←低いほどロブチェン型0点の取りこぼし", "",
+               "■ 参考: ◎1点・妙味など（◎は市場が強く、実力での上書きは複勝率を上げない）",
                f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}"]
           for k in KEYS:
               s = S[k]
