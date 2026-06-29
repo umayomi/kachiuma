@@ -151,6 +151,15 @@ jobs:
           VPA = {"OFF": [0, 0], "ON": [0, 0]}  # 指標A: 実力top3∩人気4+ の [複勝, 拾った頭数]
           VPB = {"OFF": [0, 0], "ON": [0, 0]}  # 指標B: 隠れ複勝馬の [捕捉, 総数] recall
           vp_jk = [0, 0]                     # ON側の実力推し(人気4+)で騎手が[解決, 総数]
+          # 人気4+の馬を、実umarengodの騎手複勝率(jr)で層別→3着内率。リーク無しで判別力を確認。
+          JRB = {"jr不明": [0, 0], "jr<0.25": [0, 0], "0.25-0.30": [0, 0],
+                 "0.30-0.35": [0, 0], "jr>=0.35": [0, 0]}
+          def _jrbucket(jr):
+              if jr is None: return "jr不明"
+              if jr < 0.25: return "jr<0.25"
+              if jr < 0.30: return "0.25-0.30"
+              if jr < 0.35: return "0.30-0.35"
+              return "jr>=0.35"
 
           def bet(name, u, by):
               s = S[name]; s["b"] += 1; fp = by[u]["finish_pos"]
@@ -203,6 +212,13 @@ jobs:
                       if by[u]["finish_pos"] <= 3:
                           mkt4[0] += 1
               hidden = {u for u in by if pop[u] >= 4 and by[u]["finish_pos"] <= 3}  # 隠れ複勝馬
+              for u in by:                                   # 人気4+ を実jrで層別→3着内率
+                  if pop[u] >= 4:
+                      jr = jk_by[u]["rate"] if u in jk_by else None
+                      b = JRB[_jrbucket(jr)]
+                      b[1] += 1
+                      if by[u]["finish_pos"] <= 3:
+                          b[0] += 1
               for tag, probs in (("OFF", probs_nj), ("ON", probs_j)):
                   top3 = set(sorted(evaluable, key=lambda u: -probs[u])[:3])
                   picks = [u for u in top3 if pop[u] >= 4]   # 市場非上位だがモデルが推す実力馬
@@ -248,6 +264,10 @@ jobs:
                "  指標B: 隠れ複勝馬をモデルtop3で捕捉できた割合(recall)",
                f"    騎手OFF: {pct(*VPB['OFF'])} ({VPB['OFF'][0]}/{VPB['OFF'][1]})    騎手ON: {pct(*VPB['ON'])} ({VPB['ON'][0]}/{VPB['ON'][1]})",
                f"  実力推し(人気4+)で騎手が解決できた割合: {pct(*vp_jk)} ({vp_jk[0]}/{vp_jk[1]})  ←低いほどロブチェン型0点の取りこぼし", "",
+               "  ◆ 人気4+ を実umarengodの騎手複勝率(jr)で層別した3着内率（リーク無し・騎手の判別力の審判）:",
+               *[f"    {b:<10}: {pct(*JRB[b])} ({JRB[b][0]}/{JRB[b][1]})"
+                 for b in ["jr不明", "jr<0.25", "0.25-0.30", "0.30-0.35", "jr>=0.35"]],
+               "    → 高jr層ほど3着内率が高ければ騎手信号は本物。騎手項の強化に進む。平坦ならproxyのリーク。", "",
                "■ 参考: ◎1点・妙味など（◎は市場が強く、実力での上書きは複勝率を上げない）",
                f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}"]
           for k in KEYS:
