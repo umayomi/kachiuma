@@ -16,7 +16,9 @@ W_MARGIN = 0.35      # 平均着差＝競った内容（主役）
 W_BAND = 0.40        # 距離帯の複勝率
 W_DIR = 0.20         # 回りの複勝率
 W_GOING = 0.20       # 馬場の複勝率
-W_JK = 0.80          # 騎手力（補助項。上位拮抗時のタイブレークに留め、本命の上書きを抑える）
+W_JK = 0.80          # 騎手力（線形・基準0.25中心）
+W_JK_HI = 0.0        # 高jr騎手の非線形加点(knee超過分)。proofで採否。0なら現行線形と同一
+JK_KNEE = 0.30       # この複勝率を超えた騎手から強く加点（データの階段0.30に対応）
 CONF_C0 = 3.0        # 出走C0で信頼度0.5（少データは中立寄りに割引）
 JK_C0 = 3.0          # 騎手は5戦で信頼度0.5（場×距離の薄さを踏まえやや強め）
 MARGIN_BASE = 1.2    # この馬身を境に、近ければ＋・離されれば−
@@ -131,7 +133,9 @@ def ability_breakdown(feat: dict) -> dict:
     jr = feat.get("jk_rate")
     if jr is not None:
         js = feat.get("jk_starts", 0)
-        parts["騎手"] = W_JK * (js / (js + JK_C0)) * (jr - TOP3_BASE)
+        conf = js / (js + JK_C0)
+        kick = max(0.0, jr - JK_KNEE)   # knee(0.30)超過分だけ非線形に加点
+        parts["騎手"] = conf * (W_JK * (jr - TOP3_BASE) + W_JK_HI * kick)
     return parts
 
 
