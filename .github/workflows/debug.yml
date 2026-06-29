@@ -1,17 +1,19 @@
-name: debug
+name: dbg
 on:
   workflow_dispatch:
     inputs:
-      date:
-        description: "レース開催日 YYYYMMDD"
+      test_start:
+        description: "開始 YYYYMMDD"
         required: true
-        default: "20260531"
-      race_id:
-        description: "race_id（ダービー=202605021211 / 皐月賞=202606030811）"
+        default: "20260620"
+      test_end:
+        description: "終了 YYYYMMDD"
         required: true
-        default: "202606030811"
+        default: "20260621"
+permissions:
+  contents: read
 jobs:
-  dbg:
+  diag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,73 +21,103 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
-      - run: pip install -r requirements.txt selenium
-      - name: raw breakdown per horse
+      - run: pip install -r requirements.txt
+      - name: jockey resolve 失敗の真因診断
         run: |
           python - << 'PY'
-          import sys, time, requests
+          import sys, time, datetime, requests
           sys.path += ["scraper", "analysis"]
-          import netkeiba as nk, horsedb as hd, jockey_db as J, career_score as C
+          import netkeiba as nk, jockey_db as J
 
-          ds = "${{ github.event.inputs.date }}"
-          rid = "${{ github.event.inputs.race_id }}"
-          race = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
-          place, surf, dist = race.get("track"), race.get("surface"), race.get("distance_m")
-          print(f"対象: {race.get('race_name')} / {place} {surf}{dist} 格={race.get('race_class')}\n")
+          ts = "${{ github.event.inputs.test_start }}"
+          te = "${{ github.event.inputs.test_end }}"
 
-          rated = [h for h in race["horses"] if h.get("odds_win") and h.get("finish_pos")]
-          inv = {h["umaban"]: 1/h["odds_win"] for h in rated}
-          tot = sum(inv.values()) or 1
-          q = {u: v/tot for u, v in inv.items()}
+          def days(a, b):
+              d = datetime.datetime.strptime(a, "%Y%m%d").date()
+              e = datetime.datetime.strptime(b, "%Y%m%d").date()
+              while d <= e:
+                  yield d.strftime("%Y%m%d"); d += datetime.timedelta(days=1)
 
-          driver = hd.make_driver(); careers = {}
-          try:
-              for h in rated:
-                  hid = h.get("horse_id")
+          # レース取得（軽い・結果ページ）
+          races = []
+          for ds in days(ts, te):
+              for rid in nk.find_race_ids(ds):
                   try:
-                      careers[h["umaban"]] = hd.trim_career(hd.fetch_horse(driver, hid, wait=1.5)) if hid else []
+                      r = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
+                      r["_date"] = ds; races.append(r)
                   except Exception as e:
-                      careers[h["umaban"]] = []
-                  time.sleep(1.2)
-          finally:
-              driver.quit()
+                      print("skip", rid, str(e)[:40])
+          print(f"レース {len(races)}R")
 
           sess = requests.Session()
-          place_tbl = J.fetch(sess, surf, dist, ds, place=place)
-          all_tbl = J.fetch(sess, surf, dist, ds, place="ALL")
-          jk_by = {}
-          for h in rated:
-              cell, _ = J.resolve(place_tbl, all_tbl, h.get("jockey") or "")
-              if cell:
-                  jk_by[h["umaban"]] = {"rate": J.rate(cell), "starts": cell["starts"]}
+          place_memo, all_memo = {}, {}
 
-          probs, feats = C.ability_probs(careers, {**race, "horses": rated}, ds, jk_by_umaban=jk_by)
-          order = sorted(rated, key=lambda h: probs[h["umaban"]], reverse=True)
+          def tables(surf, dist, ds, place):
+              sp = J._surface_param(surf)
+              if (sp, dist, place) not in place_memo:
+                  try:
+                      place_memo[(sp, dist, place)] = J.fetch(sess, surf, dist, ds, place=place)
+                  except Exception as e:
+                      print("fetch-fail place", place, dist, str(e)[:40]); place_memo[(sp, dist, place)] = {}
+                  time.sleep(0.7)
+              if (sp, dist) not in all_memo:
+                  try:
+                      all_memo[(sp, dist)] = J.fetch(sess, surf, dist, ds, place="ALL")
+                  except Exception as e:
+                      print("fetch-fail all", dist, str(e)[:40]); all_memo[(sp, dist)] = {}
+                  time.sleep(0.7)
+              return place_memo[(sp, dist, place)], all_memo[(sp, dist)]
 
-          # 割引前(生)クラス実績＝着内走のrace_class単純平均／着内中の勝率（質割引の効きを可視化）
-          def raw_cls_and_winshare(u):
-              past = C.career_before(careers.get(u, []), ds)
-              t3 = [(r.get("race_class"), r.get("finish_pos")) for r in past
-                    if r.get("finish_pos") and r["finish_pos"] <= 3 and r.get("race_class")]
-              if not t3:
-                  return None, None
-              raw = sum(c for c, _ in t3) / len(t3)
-              ws = sum(1 for _, f in t3 if f == 1) / len(t3)
-              return raw, ws
+          ASCII_MARK = "▲△☆◇★◎○"   # 見習い斤量マーク等（名前に紛れる候補）
+          tot = 0
+          src = {"場×距離": 0, "全場×距離(F)": 0, "なし": 0}
+          # 失敗の内訳カウンタ
+          c_all_empty = 0     # (b) 全場テーブルが空
+          c_name_in_all = 0   # 参考: place で引けず all には居た（解決済のはず）
+          c_genuine = 0       # (c) all は中身あるのに名前が無い（珍距離 or 真の不在）
+          c_mark = 0          # (a) 生名に見習いマーク等が付いている
+          samples = []
 
-          print(f"{'馬名':<9}{'人':>3}{'着':>3}{'prob':>6}{'q':>5} "
-                f"{'clsP':>6}{'生cls':>6}{'勝率':>5}  | クラス 着差 距離 回り 馬場 騎手 = raw")
-          for h in order:
-              u = h["umaban"]; bd = C.ability_breakdown(feats[u])
-              cp = feats[u].get("class_proven")
-              raw, ws = raw_cls_and_winshare(u)
-              cps = f"{cp:5.2f}" if cp is not None else "   - "
-              rws = f"{raw:5.2f}" if raw is not None else "   - "
-              wss = f"{ws*100:3.0f}%" if ws is not None else "  - "
-              print(f"{(h.get('name','') or '')[:9]:<9}{(h.get('popularity') or 0):>3}{h['finish_pos']:>3}"
-                    f"{probs[u]*100:>5.1f}%{q[u]*100:>4.0f}% {cps}{rws}{wss}  | "
-                    f"{bd['クラス']:+.2f} {bd['着差']:+.2f} {bd['距離帯']:+.2f} "
-                    f"{bd['回り']:+.2f} {bd['馬場']:+.2f} {bd['騎手']:+.2f} = {sum(bd.values()):+.2f}")
-          print("\\n読み方: clsP=質割引後の実績クラス / 生cls=割引前(着内の単純平均) / 勝率=着内走中の1着割合。")
-          print("        『生clsは高いが勝率が低い』馬ほど clsP が大きく下がる＝人気薄好走の過大評価を抑制。")
+          for r in races:
+              ds = r["_date"]
+              place, surf, dist = r.get("track"), r.get("surface"), r.get("distance_m")
+              if not (surf and dist):
+                  continue
+              ptbl, atbl = tables(surf, dist, ds, place or "ALL")
+              for h in r.get("horses", []):
+                  jk = h.get("jockey")
+                  if not jk:
+                      continue
+                  tot += 1
+                  cell, s = J.resolve(ptbl, atbl, jk)
+                  src[s] = src.get(s, 0) + 1
+                  if cell is not None:
+                      continue
+                  # ---- 失敗ケースを解剖 ----
+                  norm = J._norm_name(jk)
+                  has_mark = any(ch in ASCII_MARK for ch in (jk or ""))
+                  in_all = J.lookup(atbl, jk) is not None
+                  if not atbl:
+                      c_all_empty += 1
+                  elif in_all:
+                      c_name_in_all += 1
+                  else:
+                      c_genuine += 1
+                  if has_mark:
+                      c_mark += 1
+                  if len(samples) < 30:
+                      samples.append(
+                          f"  {place}{surf}{dist} 生='{jk}' 正規化='{norm}' "
+                          f"markあり={has_mark} 全場表in={in_all} "
+                          f"場表数={len(ptbl)} 全場表数={len(atbl)}")
+
+          print(f"\n騎手のべ {tot} / 解決元: {src}")
+          miss = src.get('なし', 0)
+          print(f"未解決(0点) {miss}件  = {miss/tot*100:.1f}%")
+          print("\n=== 0点の内訳（真因の切り分け）===")
+          print(f"(a) 生名に見習いマーク等あり : {c_mark}件  ← _norm_name でマーク未除去なら名前バグ")
+          print(f"(b) 全場×距離テーブルが空     : {c_all_empty}件  ← 取得/parseの脆さ")
+          print(f"(c) 全場表に中身あるが名前無し: {c_genuine}件  ← 珍距離 or 真の不在（フォールバックが効く）")
+          print("\n=== 未解決サンプル（生名・正規化・テーブル在否・サイズ）===")
+          print("\n".join(samples))
           PY
