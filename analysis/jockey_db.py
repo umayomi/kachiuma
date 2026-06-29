@@ -90,6 +90,7 @@ def _norm_name(name: str) -> str:
     """「C.ルメール」「Ｃ．ルメール」等の表記ゆれを吸収して姓を残す。"""
     n = re.sub(r"\s+", "", name or "")
     n = n.replace("．", ".").replace("　", "")
+    n = n.lstrip("▲△☆★◇◎○")   # 見習い斤量マーク等を除去（▲小林美→小林美）
     # 「X.ルメール」→「ルメール」 / 「武豊」→「武豊」
     m = re.match(r"^[A-Za-zＡ-Ｚ]+\.(.+)$", n)
     return m.group(1) if m else n
