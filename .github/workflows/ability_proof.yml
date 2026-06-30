@@ -155,6 +155,7 @@ jobs:
           JRB = {"jr不明": [0, 0], "jr<0.25": [0, 0], "0.25-0.30": [0, 0],
                  "0.30-0.35": [0, 0], "jr>=0.35": [0, 0]}
           JK_HI_CANDS = [0.0, 2.0, 4.0, 6.0]   # 騎手非線形加点の強さを総当たり（0=現行線形）
+          JK_HI_MAIN = 4.0                      # 採用値: メイン指標(指標A/B・◎融合)はこれで評価
           HISW = {c: [0, 0] for c in JK_HI_CANDS}  # 各候補の 指標A [人気4+実力推しの複勝, 頭数]
           def _jrbucket(jr):
               if jr is None: return "jr不明"
@@ -183,7 +184,9 @@ jobs:
               jk_by = build_jk_by(r, ds)
               if jk_by:
                   jk_races += 1
+              C.W_JK_HI = JK_HI_MAIN   # メイン指標(指標A/B・◎融合)は採用値 W_JK_HI で評価
               probs_j, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
+              C.W_JK_HI = 0.0
 
               by = {h["umaban"]: h for h in rated}
               fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
