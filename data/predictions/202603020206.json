@@ -7,9 +7,9 @@
   "distance_m": 1150,
   "surface": "ダート",
   "going": "良",
-  "updated_at": "2026-06-28T08:38:16+09:00",
-  "market_overround": 1.259,
-  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "updated_at": "2026-07-01T16:03:50+09:00",
+  "market_overround": 1.271,
+  "value_note": "妙味のある馬 2頭（EV≧1.0）。",
   "horses": [
     {
       "umaban": 1,
@@ -19,8 +19,8 @@
       "jockey": "菊沢",
       "trainer": "美浦黒岩",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 16.0,
+      "horse_weight": "430(-2)",
+      "odds_win": 30.1,
       "popularity": 7,
       "features": {
         "n_runs": 5,
@@ -31,15 +31,16 @@
         "style_ratio": 0.428,
         "style": "差し"
       },
-      "form_score": 0.43,
-      "q_win": 0.0497,
-      "p_win": 0.0504,
-      "ev_win": 0.806,
-      "edge": 0.0007,
+      "form_score": -2.6649,
+      "ability_prob": 0.0696,
+      "q_win": 0.0261,
+      "p_win": 0.0266,
+      "ev_win": 0.801,
+      "edge": 0.0005,
       "mark": "",
       "reasons": [
-        "予想勝率 5.0%・7番手評価",
-        "7番人気 / EV 0.806（控除率の壁で理論上マイナス）",
+        "実力+騎手スコア 7.0%・5番手評価",
+        "7番人気 / EV 0.801（控除率の壁で理論上マイナス）",
         "近走: 上がり最速35.1 / 差し / 当条件近走4走（実力で上積み評価）"
       ]
     },
@@ -51,9 +52,9 @@
       "jockey": "高杉",
       "trainer": "美浦武井",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 6.4,
-      "popularity": 3,
+      "horse_weight": "414(-8)",
+      "odds_win": 5.9,
+      "popularity": 4,
       "features": {
         "n_runs": 5,
         "best_agari": 34.2,
@@ -63,16 +64,17 @@
         "style_ratio": 0.328,
         "style": "逃げ・先行"
       },
-      "form_score": 0.43,
-      "q_win": 0.1241,
-      "p_win": 0.1443,
-      "ev_win": 0.924,
-      "edge": 0.0202,
-      "mark": "▲",
+      "form_score": -3.9339,
+      "ability_prob": 0.0196,
+      "q_win": 0.1333,
+      "p_win": 0.081,
+      "ev_win": 0.478,
+      "edge": -0.0523,
+      "mark": "",
       "reasons": [
-        "予想勝率 14.4%・3番手評価",
-        "3番人気 / EV 0.924（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速34.2 / 逃げ・先行 / 当条件近走1走（実力で上積み評価）"
+        "実力+騎手スコア 2.0%・14番手評価",
+        "4番人気 / EV 0.478（やや過剰人気・妙味なし）",
+        "近走: 上がり最速34.2 / 逃げ・先行 / 当条件近走1走（実力面はやや割引）"
       ]
     },
     {
@@ -83,9 +85,9 @@
       "jockey": "▲石田",
       "trainer": "美浦菊川",
       "weight_carried": 52.0,
-      "horse_weight": null,
-      "odds_win": 57.1,
-      "popularity": 11,
+      "horse_weight": "462(0)",
+      "odds_win": 217.0,
+      "popularity": 12,
       "features": {
         "n_runs": 0,
         "best_agari": null,
@@ -95,15 +97,16 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
-      "q_win": 0.0139,
-      "p_win": 0.009,
-      "ev_win": 0.514,
-      "edge": -0.0049,
-      "mark": "",
+      "form_score": -2.3521,
+      "ability_prob": 0.0952,
+      "q_win": 0.0036,
+      "p_win": 0.0033,
+      "ev_win": 0.716,
+      "edge": -0.0003,
+      "mark": "▲",
       "reasons": [
-        "予想勝率 0.9%・11番手評価",
-        "11番人気 / EV 0.514（控除率の壁で理論上マイナス）"
+        "実力+騎手スコア 9.5%・3番手評価",
+        "12番人気 / EV 0.716（控除率の壁で理論上マイナス）"
       ]
     },
     {
@@ -114,8 +117,8 @@
       "jockey": "▲佐藤",
       "trainer": "美浦堀内",
       "weight_carried": 52.0,
-      "horse_weight": null,
-      "odds_win": 12.7,
+      "horse_weight": "434(-12)",
+      "odds_win": 11.7,
       "popularity": 6,
       "features": {
         "n_runs": 5,
@@ -126,16 +129,17 @@
         "style_ratio": 0.31,
         "style": "逃げ・先行"
       },
-      "form_score": 0.15,
-      "q_win": 0.0626,
-      "p_win": 0.0555,
-      "ev_win": 0.705,
-      "edge": -0.0071,
+      "form_score": -4.0032,
+      "ability_prob": 0.0183,
+      "q_win": 0.0672,
+      "p_win": 0.0354,
+      "ev_win": 0.414,
+      "edge": -0.0318,
       "mark": "",
       "reasons": [
-        "予想勝率 5.5%・6番手評価",
-        "6番人気 / EV 0.705（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速37.6 / 逃げ・先行 / 当条件近走5走"
+        "実力+騎手スコア 1.8%・15番手評価",
+        "6番人気 / EV 0.414（やや過剰人気・妙味なし）",
+        "近走: 上がり最速37.6 / 逃げ・先行 / 当条件近走5走（実力面はやや割引）"
       ]
     },
     {
@@ -146,9 +150,9 @@
       "jockey": "石橋脩",
       "trainer": "美浦高柳瑞",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 40.8,
-      "popularity": 10,
+      "horse_weight": "430(+6)",
+      "odds_win": 49.4,
+      "popularity": 9,
       "features": {
         "n_runs": 4,
         "best_agari": 33.5,
@@ -158,15 +162,16 @@
         "style_ratio": 0.473,
         "style": "差し"
       },
-      "form_score": 0.45,
-      "q_win": 0.0195,
-      "p_win": 0.0174,
-      "ev_win": 0.71,
-      "edge": -0.0021,
-      "mark": "",
+      "form_score": -1.4787,
+      "ability_prob": 0.2279,
+      "q_win": 0.0159,
+      "p_win": 0.0307,
+      "ev_win": 1.517,
+      "edge": 0.0148,
+      "mark": "◎",
       "reasons": [
-        "予想勝率 1.7%・9番手評価",
-        "10番人気 / EV 0.71（控除率の壁で理論上マイナス）",
+        "実力+騎手スコア 22.8%・1番手評価",
+        "9番人気 / EV 1.517（理論上プラス＝妙味 +1.5pt）",
         "近走: 上がり最速33.5 / 差し（実力で上積み評価）"
       ]
     },
@@ -178,8 +183,8 @@
       "jockey": "戸崎圭",
       "trainer": "美浦斎藤誠",
       "weight_carried": 57.0,
-      "horse_weight": null,
-      "odds_win": 4.2,
+      "horse_weight": "484(-2)",
+      "odds_win": 4.0,
       "popularity": 2,
       "features": {
         "n_runs": 5,
@@ -190,16 +195,17 @@
         "style_ratio": 0.257,
         "style": "逃げ・先行"
       },
-      "form_score": 0.03,
-      "q_win": 0.1892,
-      "p_win": 0.1843,
-      "ev_win": 0.774,
-      "edge": -0.0049,
-      "mark": "○",
+      "form_score": -2.3722,
+      "ability_prob": 0.0933,
+      "q_win": 0.1967,
+      "p_win": 0.3235,
+      "ev_win": 1.294,
+      "edge": 0.1268,
+      "mark": "△",
       "reasons": [
-        "予想勝率 18.4%・2番手評価",
-        "2番人気 / EV 0.774（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速35.6 / 逃げ・先行"
+        "実力+騎手スコア 9.3%・4番手評価",
+        "2番人気 / EV 1.294（理論上プラス＝妙味 +12.7pt）",
+        "近走: 上がり最速35.6 / 逃げ・先行（実力で上積み評価）"
       ]
     },
     {
@@ -210,8 +216,8 @@
       "jockey": "▲石神道",
       "trainer": "美浦深山",
       "weight_carried": 54.0,
-      "horse_weight": null,
-      "odds_win": 3.3,
+      "horse_weight": "498(-12)",
+      "odds_win": 2.8,
       "popularity": 1,
       "features": {
         "n_runs": 4,
@@ -222,15 +228,16 @@
         "style_ratio": 0.126,
         "style": "逃げ・先行"
       },
-      "form_score": 0.15,
-      "q_win": 0.2408,
-      "p_win": 0.2614,
-      "ev_win": 0.863,
-      "edge": 0.0206,
-      "mark": "◎",
+      "form_score": -3.0305,
+      "ability_prob": 0.0483,
+      "q_win": 0.281,
+      "p_win": 0.3285,
+      "ev_win": 0.92,
+      "edge": 0.0475,
+      "mark": "",
       "reasons": [
-        "予想勝率 26.1%・1番手評価",
-        "1番人気 / EV 0.863（控除率の壁で理論上マイナス）",
+        "実力+騎手スコア 4.8%・9番手評価",
+        "1番人気 / EV 0.92（控除率の壁で理論上マイナス）",
         "近走: 上がり最速36.6 / 逃げ・先行 / 当条件近走3走"
       ]
     },
@@ -242,9 +249,9 @@
       "jockey": "▲上里",
       "trainer": "美浦加藤士",
       "weight_carried": 54.0,
-      "horse_weight": null,
-      "odds_win": 37.0,
-      "popularity": 9,
+      "horse_weight": "480(-8)",
+      "odds_win": 127.3,
+      "popularity": 10,
       "features": {
         "n_runs": 1,
         "best_agari": 47.0,
@@ -254,16 +261,17 @@
         "style_ratio": 1.0,
         "style": "追込"
       },
-      "form_score": -0.18,
-      "q_win": 0.0215,
-      "p_win": 0.0133,
-      "ev_win": 0.492,
-      "edge": -0.0082,
+      "form_score": -2.9977,
+      "ability_prob": 0.0499,
+      "q_win": 0.0062,
+      "p_win": 0.0042,
+      "ev_win": 0.535,
+      "edge": -0.002,
       "mark": "",
       "reasons": [
-        "予想勝率 1.3%・10番手評価",
-        "9番人気 / EV 0.492（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速47.0 / 追込 / 当条件近走1走（実力面はやや割引）"
+        "実力+騎手スコア 5.0%・8番手評価",
+        "10番人気 / EV 0.535（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速47.0 / 追込 / 当条件近走1走"
       ]
     },
     {
@@ -274,9 +282,9 @@
       "jockey": "▲水沼",
       "trainer": "美浦柄崎",
       "weight_carried": 52.0,
-      "horse_weight": null,
-      "odds_win": 61.9,
-      "popularity": 12,
+      "horse_weight": "478(0)",
+      "odds_win": 210.1,
+      "popularity": 11,
       "features": {
         "n_runs": 0,
         "best_agari": null,
@@ -286,15 +294,16 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
-      "q_win": 0.0128,
-      "p_win": 0.0082,
-      "ev_win": 0.508,
-      "edge": -0.0046,
-      "mark": "",
+      "form_score": -2.3091,
+      "ability_prob": 0.0993,
+      "q_win": 0.0037,
+      "p_win": 0.0035,
+      "ev_win": 0.735,
+      "edge": -0.0002,
+      "mark": "○",
       "reasons": [
-        "予想勝率 0.8%・12番手評価",
-        "12番人気 / EV 0.508（控除率の壁で理論上マイナス）"
+        "実力+騎手スコア 9.9%・2番手評価",
+        "11番人気 / EV 0.735（控除率の壁で理論上マイナス）"
       ]
     },
     {
@@ -305,8 +314,8 @@
       "jockey": "小林脩",
       "trainer": "美浦武藤",
       "weight_carried": 57.0,
-      "horse_weight": null,
-      "odds_win": 106.5,
+      "horse_weight": "478(-8)",
+      "odds_win": 358.2,
       "popularity": 14,
       "features": {
         "n_runs": 1,
@@ -317,16 +326,17 @@
         "style_ratio": 0.812,
         "style": "追込"
       },
-      "form_score": -0.3,
-      "q_win": 0.0075,
-      "p_win": 0.0037,
-      "ev_win": 0.394,
-      "edge": -0.0038,
+      "form_score": -3.0485,
+      "ability_prob": 0.0474,
+      "q_win": 0.0022,
+      "p_win": 0.0012,
+      "ev_win": 0.43,
+      "edge": -0.001,
       "mark": "",
       "reasons": [
-        "予想勝率 0.4%・15番手評価",
-        "14番人気 / EV 0.394（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速37.8 / 追込（実力面はやや割引）"
+        "実力+騎手スコア 4.7%・10番手評価",
+        "14番人気 / EV 0.43（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速37.8 / 追込"
       ]
     },
     {
@@ -337,9 +347,9 @@
       "jockey": "松山",
       "trainer": "美浦伊坂",
       "weight_carried": 57.0,
-      "horse_weight": null,
-      "odds_win": 7.3,
-      "popularity": 4,
+      "horse_weight": "488(+2)",
+      "odds_win": 7.8,
+      "popularity": 5,
       "features": {
         "n_runs": 5,
         "best_agari": 36.3,
@@ -349,16 +359,17 @@
         "style_ratio": 0.628,
         "style": "差し"
       },
-      "form_score": 0.19,
-      "q_win": 0.1088,
-      "p_win": 0.1074,
-      "ev_win": 0.784,
-      "edge": -0.0014,
-      "mark": "△",
+      "form_score": -4.041,
+      "ability_prob": 0.0176,
+      "q_win": 0.1009,
+      "p_win": 0.0552,
+      "ev_win": 0.431,
+      "edge": -0.0457,
+      "mark": "",
       "reasons": [
-        "予想勝率 10.7%・4番手評価",
-        "4番人気 / EV 0.784（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速36.3 / 差し / 当条件近走3走（実力で上積み評価）"
+        "実力+騎手スコア 1.8%・16番手評価",
+        "5番人気 / EV 0.431（やや過剰人気・妙味なし）",
+        "近走: 上がり最速36.3 / 差し / 当条件近走3走（実力面はやや割引）"
       ]
     },
     {
@@ -369,8 +380,8 @@
       "jockey": "松岡",
       "trainer": "美浦古賀慎",
       "weight_carried": 57.0,
-      "horse_weight": null,
-      "odds_win": 20.6,
+      "horse_weight": "484(-4)",
+      "odds_win": 36.1,
       "popularity": 8,
       "features": {
         "n_runs": 5,
@@ -381,15 +392,16 @@
         "style_ratio": 0.427,
         "style": "差し"
       },
-      "form_score": -0.03,
-      "q_win": 0.0386,
-      "p_win": 0.0286,
-      "ev_win": 0.589,
-      "edge": -0.01,
+      "form_score": -3.171,
+      "ability_prob": 0.042,
+      "q_win": 0.0218,
+      "p_win": 0.016,
+      "ev_win": 0.578,
+      "edge": -0.0058,
       "mark": "",
       "reasons": [
-        "予想勝率 2.9%・8番手評価",
-        "8番人気 / EV 0.589（やや過剰人気・妙味なし）",
+        "実力+騎手スコア 4.2%・12番手評価",
+        "8番人気 / EV 0.578（控除率の壁で理論上マイナス）",
         "近走: 上がり最速37.7 / 差し / 当条件近走1走（実力面はやや割引）"
       ]
     },
@@ -401,9 +413,9 @@
       "jockey": "柴田大",
       "trainer": "美浦清水英",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 92.0,
-      "popularity": 13,
+      "horse_weight": "430(-8)",
+      "odds_win": 430.9,
+      "popularity": 15,
       "features": {
         "n_runs": 1,
         "best_agari": 44.8,
@@ -413,16 +425,17 @@
         "style_ratio": 0.75,
         "style": "追込"
       },
-      "form_score": -0.3,
-      "q_win": 0.0086,
-      "p_win": 0.0043,
-      "ev_win": 0.396,
-      "edge": -0.0043,
+      "form_score": -2.9914,
+      "ability_prob": 0.0502,
+      "q_win": 0.0018,
+      "p_win": 0.001,
+      "ev_win": 0.431,
+      "edge": -0.0008,
       "mark": "",
       "reasons": [
-        "予想勝率 0.4%・13番手評価",
-        "13番人気 / EV 0.396（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速44.8 / 追込（実力面はやや割引）"
+        "実力+騎手スコア 5.0%・7番手評価",
+        "15番人気 / EV 0.431（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速44.8 / 追込"
       ]
     },
     {
@@ -433,9 +446,9 @@
       "jockey": "小崎",
       "trainer": "美浦嘉藤",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 121.5,
-      "popularity": 16,
+      "horse_weight": "478(0)",
+      "odds_win": 347.0,
+      "popularity": 13,
       "features": {
         "n_runs": 5,
         "best_agari": 36.8,
@@ -445,15 +458,16 @@
         "style_ratio": 0.346,
         "style": "差し"
       },
-      "form_score": 0.09,
-      "q_win": 0.0065,
-      "p_win": 0.004,
-      "ev_win": 0.486,
-      "edge": -0.0025,
+      "form_score": -3.0779,
+      "ability_prob": 0.0461,
+      "q_win": 0.0023,
+      "p_win": 0.0013,
+      "ev_win": 0.451,
+      "edge": -0.001,
       "mark": "",
       "reasons": [
-        "予想勝率 0.4%・14番手評価",
-        "16番人気 / EV 0.486（控除率の壁で理論上マイナス）",
+        "実力+騎手スコア 4.6%・11番手評価",
+        "13番人気 / EV 0.451（控除率の壁で理論上マイナス）",
         "近走: 上がり最速36.8 / 差し / 当条件近走2走"
       ]
     },
@@ -465,9 +479,9 @@
       "jockey": "菅原隆",
       "trainer": "美浦鈴木慎",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 118.5,
-      "popularity": 15,
+      "horse_weight": "458(-2)",
+      "odds_win": 508.9,
+      "popularity": 16,
       "features": {
         "n_runs": 1,
         "best_agari": 38.5,
@@ -477,16 +491,17 @@
         "style_ratio": 0.625,
         "style": "差し"
       },
-      "form_score": -0.18,
-      "q_win": 0.0067,
-      "p_win": 0.0035,
-      "ev_win": 0.415,
-      "edge": -0.0032,
+      "form_score": -2.9247,
+      "ability_prob": 0.0537,
+      "q_win": 0.0015,
+      "p_win": 0.0009,
+      "ev_win": 0.458,
+      "edge": -0.0006,
       "mark": "",
       "reasons": [
-        "予想勝率 0.4%・16番手評価",
-        "15番人気 / EV 0.415（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速38.5 / 差し / 当条件近走1走（実力面はやや割引）"
+        "実力+騎手スコア 5.4%・6番手評価",
+        "16番人気 / EV 0.458（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速38.5 / 差し / 当条件近走1走（実力で上積み評価）"
       ]
     },
     {
@@ -497,9 +512,9 @@
       "jockey": "武藤",
       "trainer": "美浦武藤",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 8.9,
-      "popularity": 5,
+      "horse_weight": "472(+2)",
+      "odds_win": 5.8,
+      "popularity": 3,
       "features": {
         "n_runs": 5,
         "best_agari": 34.3,
@@ -509,18 +524,34 @@
         "style_ratio": 0.388,
         "style": "差し"
       },
-      "form_score": 0.53,
-      "q_win": 0.0893,
-      "p_win": 0.1049,
-      "ev_win": 0.934,
-      "edge": 0.0156,
+      "form_score": -3.8293,
+      "ability_prob": 0.0217,
+      "q_win": 0.1356,
+      "p_win": 0.088,
+      "ev_win": 0.51,
+      "edge": -0.0476,
       "mark": "",
       "reasons": [
-        "予想勝率 10.5%・5番手評価",
-        "5番人気 / EV 0.934（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速34.3 / 差し / 当条件近走2走（実力で上積み評価）"
+        "実力+騎手スコア 2.2%・13番手評価",
+        "3番人気 / EV 0.51（やや過剰人気・妙味なし）",
+        "近走: 上がり最速34.3 / 差し / 当条件近走2走（実力面はやや割引）"
       ]
     }
   ],
-  "tickets": []
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "5",
+      "ev": 1.517,
+      "stake_unit": 1,
+      "note": "1番手評価・妙味 +1.5pt"
+    },
+    {
+      "type": "単勝",
+      "target": "6",
+      "ev": 1.294,
+      "stake_unit": 1,
+      "note": "4番手評価・妙味 +12.7pt"
+    }
+  ]
 }

@@ -7,9 +7,9 @@
   "distance_m": 1200,
   "surface": "芝",
   "going": "良",
-  "updated_at": "2026-06-28T08:38:16+09:00",
-  "market_overround": 1.258,
-  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "updated_at": "2026-07-01T16:03:50+09:00",
+  "market_overround": 1.275,
+  "value_note": "妙味のある馬 1頭（EV≧1.0）。",
   "horses": [
     {
       "umaban": 1,
@@ -19,7 +19,199 @@
       "jockey": "川田",
       "trainer": "栗東橋田",
       "weight_carried": 55.0,
-      "horse_weight": null,
+      "horse_weight": "432(0)",
+      "odds_win": 3.6,
+      "popularity": 2,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -1.0088,
+      "ability_prob": 0.3647,
+      "q_win": 0.2179,
+      "p_win": 0.3909,
+      "ev_win": 1.407,
+      "edge": 0.173,
+      "mark": "◎",
+      "reasons": [
+        "実力+騎手スコア 36.5%・1番手評価",
+        "2番人気 / EV 1.407（理論上プラス＝妙味 +17.3pt）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "メイショウペルル",
+      "horse_id": "2024105611",
+      "sex_age": "牡2",
+      "jockey": "角田和",
+      "trainer": "栗東千田",
+      "weight_carried": 55.0,
+      "horse_weight": "446(0)",
+      "odds_win": 128.5,
+      "popularity": 10,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -2.6546,
+      "ability_prob": 0.0703,
+      "q_win": 0.0061,
+      "p_win": 0.0024,
+      "ev_win": 0.308,
+      "edge": -0.0037,
+      "mark": "",
+      "reasons": [
+        "実力+騎手スコア 7.0%・6番手評価",
+        "10番人気 / EV 0.308（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "スマートエスコート",
+      "horse_id": "2024101049",
+      "sex_age": "牝2",
+      "jockey": "西塚",
+      "trainer": "栗東笹田",
+      "weight_carried": 55.0,
+      "horse_weight": "436(0)",
+      "odds_win": 34.2,
+      "popularity": 6,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -2.9969,
+      "ability_prob": 0.0499,
+      "q_win": 0.0229,
+      "p_win": 0.0089,
+      "ev_win": 0.304,
+      "edge": -0.014,
+      "mark": "",
+      "reasons": [
+        "実力+騎手スコア 5.0%・10番手評価",
+        "6番人気 / EV 0.304（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "シャインロード",
+      "horse_id": "2024107339",
+      "sex_age": "牡2",
+      "jockey": "松若",
+      "trainer": "栗東井上",
+      "weight_carried": 55.0,
+      "horse_weight": "478(0)",
+      "odds_win": 30.4,
+      "popularity": 5,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -2.7652,
+      "ability_prob": 0.063,
+      "q_win": 0.0258,
+      "p_win": 0.0117,
+      "ev_win": 0.356,
+      "edge": -0.0141,
+      "mark": "",
+      "reasons": [
+        "実力+騎手スコア 6.3%・9番手評価",
+        "5番人気 / EV 0.356（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "ヒルノアラゴン",
+      "horse_id": "2024103913",
+      "sex_age": "牡2",
+      "jockey": "秋山稔",
+      "trainer": "栗東北出",
+      "weight_carried": 55.0,
+      "horse_weight": "414(0)",
+      "odds_win": 40.2,
+      "popularity": 7,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -2.7272,
+      "ability_prob": 0.0654,
+      "q_win": 0.0195,
+      "p_win": 0.0087,
+      "ev_win": 0.35,
+      "edge": -0.0108,
+      "mark": "",
+      "reasons": [
+        "実力+騎手スコア 6.5%・7番手評価",
+        "7番人気 / EV 0.35（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 6,
+      "name": "スマートポーション",
+      "horse_id": "2024101076",
+      "sex_age": "牝2",
+      "jockey": "吉村",
+      "trainer": "栗東加藤公",
+      "weight_carried": 55.0,
+      "horse_weight": "468(0)",
+      "odds_win": 97.0,
+      "popularity": 9,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -2.5949,
+      "ability_prob": 0.0747,
+      "q_win": 0.0081,
+      "p_win": 0.0034,
+      "ev_win": 0.33,
+      "edge": -0.0047,
+      "mark": "△",
+      "reasons": [
+        "実力+騎手スコア 7.5%・4番手評価",
+        "9番人気 / EV 0.33（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 7,
+      "name": "エルダークローネ",
+      "horse_id": "2024102930",
+      "sex_age": "牡2",
+      "jockey": "△田山",
+      "trainer": "栗東西村",
+      "weight_carried": 53.0,
+      "horse_weight": "460(0)",
       "odds_win": 4.8,
       "popularity": 3,
       "features": {
@@ -31,201 +223,16 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
-      "q_win": 0.1656,
-      "p_win": 0.1629,
-      "ev_win": 0.782,
-      "edge": -0.0027,
-      "mark": "▲",
-      "reasons": [
-        "予想勝率 16.3%・3番手評価",
-        "3番人気 / EV 0.782（控除率の壁で理論上マイナス）"
-      ]
-    },
-    {
-      "umaban": 2,
-      "name": "メイショウペルル",
-      "horse_id": "2024105611",
-      "sex_age": "牡2",
-      "jockey": "角田和",
-      "trainer": "栗東千田",
-      "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 40.9,
-      "popularity": 9,
-      "features": {
-        "n_runs": 0,
-        "best_agari": null,
-        "avg_agari": null,
-        "dist_surface_fit": 0,
-        "days_since_last": null,
-        "style_ratio": null,
-        "style": null
-      },
-      "form_score": 0.0,
-      "q_win": 0.0194,
-      "p_win": 0.0138,
-      "ev_win": 0.564,
-      "edge": -0.0056,
+      "form_score": -2.643,
+      "ability_prob": 0.0711,
+      "q_win": 0.1634,
+      "p_win": 0.1053,
+      "ev_win": 0.505,
+      "edge": -0.0581,
       "mark": "",
       "reasons": [
-        "予想勝率 1.4%・9番手評価",
-        "9番人気 / EV 0.564（控除率の壁で理論上マイナス）"
-      ]
-    },
-    {
-      "umaban": 3,
-      "name": "スマートエスコート",
-      "horse_id": "2024101049",
-      "sex_age": "牝2",
-      "jockey": "西塚",
-      "trainer": "栗東笹田",
-      "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 25.7,
-      "popularity": 6,
-      "features": {
-        "n_runs": 0,
-        "best_agari": null,
-        "avg_agari": null,
-        "dist_surface_fit": 0,
-        "days_since_last": null,
-        "style_ratio": null,
-        "style": null
-      },
-      "form_score": 0.0,
-      "q_win": 0.0309,
-      "p_win": 0.0236,
-      "ev_win": 0.607,
-      "edge": -0.0073,
-      "mark": "",
-      "reasons": [
-        "予想勝率 2.4%・6番手評価",
-        "6番人気 / EV 0.607（控除率の壁で理論上マイナス）"
-      ]
-    },
-    {
-      "umaban": 4,
-      "name": "シャインロード",
-      "horse_id": "2024107339",
-      "sex_age": "牡2",
-      "jockey": "松若",
-      "trainer": "栗東井上",
-      "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 21.2,
-      "popularity": 5,
-      "features": {
-        "n_runs": 0,
-        "best_agari": null,
-        "avg_agari": null,
-        "dist_surface_fit": 0,
-        "days_since_last": null,
-        "style_ratio": null,
-        "style": null
-      },
-      "form_score": 0.0,
-      "q_win": 0.0375,
-      "p_win": 0.0295,
-      "ev_win": 0.625,
-      "edge": -0.008,
-      "mark": "",
-      "reasons": [
-        "予想勝率 2.9%・5番手評価",
-        "5番人気 / EV 0.625（控除率の壁で理論上マイナス）"
-      ]
-    },
-    {
-      "umaban": 5,
-      "name": "ヒルノアラゴン",
-      "horse_id": "2024103913",
-      "sex_age": "牡2",
-      "jockey": "秋山稔",
-      "trainer": "栗東北出",
-      "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 30.6,
-      "popularity": 7,
-      "features": {
-        "n_runs": 0,
-        "best_agari": null,
-        "avg_agari": null,
-        "dist_surface_fit": 0,
-        "days_since_last": null,
-        "style_ratio": null,
-        "style": null
-      },
-      "form_score": 0.0,
-      "q_win": 0.026,
-      "p_win": 0.0194,
-      "ev_win": 0.594,
-      "edge": -0.0066,
-      "mark": "",
-      "reasons": [
-        "予想勝率 1.9%・7番手評価",
-        "7番人気 / EV 0.594（控除率の壁で理論上マイナス）"
-      ]
-    },
-    {
-      "umaban": 6,
-      "name": "スマートポーション",
-      "horse_id": "2024101076",
-      "sex_age": "牝2",
-      "jockey": "吉村",
-      "trainer": "栗東加藤公",
-      "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 55.7,
-      "popularity": 10,
-      "features": {
-        "n_runs": 0,
-        "best_agari": null,
-        "avg_agari": null,
-        "dist_surface_fit": 0,
-        "days_since_last": null,
-        "style_ratio": null,
-        "style": null
-      },
-      "form_score": 0.0,
-      "q_win": 0.0143,
-      "p_win": 0.0097,
-      "ev_win": 0.54,
-      "edge": -0.0046,
-      "mark": "",
-      "reasons": [
-        "予想勝率 1.0%・10番手評価",
-        "10番人気 / EV 0.54（控除率の壁で理論上マイナス）"
-      ]
-    },
-    {
-      "umaban": 7,
-      "name": "エルダークローネ",
-      "horse_id": "2024102930",
-      "sex_age": "牡2",
-      "jockey": "△田山",
-      "trainer": "栗東西村",
-      "weight_carried": 53.0,
-      "horse_weight": null,
-      "odds_win": 4.1,
-      "popularity": 2,
-      "features": {
-        "n_runs": 0,
-        "best_agari": null,
-        "avg_agari": null,
-        "dist_surface_fit": 0,
-        "days_since_last": null,
-        "style_ratio": null,
-        "style": null
-      },
-      "form_score": 0.0,
-      "q_win": 0.1939,
-      "p_win": 0.1953,
-      "ev_win": 0.801,
-      "edge": 0.0014,
-      "mark": "○",
-      "reasons": [
-        "予想勝率 19.5%・2番手評価",
-        "2番人気 / EV 0.801（控除率の壁で理論上マイナス）"
+        "実力+騎手スコア 7.1%・5番手評価",
+        "3番人気 / EV 0.505（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -236,8 +243,8 @@
       "jockey": "太宰",
       "trainer": "栗東昆",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 37.0,
+      "horse_weight": "448(0)",
+      "odds_win": 67.7,
       "popularity": 8,
       "features": {
         "n_runs": 0,
@@ -248,15 +255,16 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
-      "q_win": 0.0215,
-      "p_win": 0.0156,
-      "ev_win": 0.577,
-      "edge": -0.0059,
-      "mark": "",
+      "form_score": -2.5077,
+      "ability_prob": 0.0815,
+      "q_win": 0.0116,
+      "p_win": 0.0055,
+      "ev_win": 0.372,
+      "edge": -0.0061,
+      "mark": "▲",
       "reasons": [
-        "予想勝率 1.6%・8番手評価",
-        "8番人気 / EV 0.577（控除率の壁で理論上マイナス）"
+        "実力+騎手スコア 8.2%・3番手評価",
+        "8番人気 / EV 0.372（控除率の壁で理論上マイナス）"
       ]
     },
     {
@@ -267,8 +275,8 @@
       "jockey": "◇今村",
       "trainer": "栗東前川",
       "weight_carried": 53.0,
-      "horse_weight": null,
-      "odds_win": 8.5,
+      "horse_weight": "396(0)",
+      "odds_win": 22.8,
       "popularity": 4,
       "features": {
         "n_runs": 0,
@@ -279,15 +287,16 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
-      "q_win": 0.0935,
-      "p_win": 0.0844,
-      "ev_win": 0.717,
-      "edge": -0.0091,
-      "mark": "△",
+      "form_score": -2.7623,
+      "ability_prob": 0.0631,
+      "q_win": 0.0344,
+      "p_win": 0.0163,
+      "ev_win": 0.372,
+      "edge": -0.0181,
+      "mark": "",
       "reasons": [
-        "予想勝率 8.4%・4番手評価",
-        "4番人気 / EV 0.717（控除率の壁で理論上マイナス）"
+        "実力+騎手スコア 6.3%・8番手評価",
+        "4番人気 / EV 0.372（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -298,8 +307,8 @@
       "jockey": "西村淳",
       "trainer": "栗東高野",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 2.0,
+      "horse_weight": "450(0)",
+      "odds_win": 1.6,
       "popularity": 1,
       "features": {
         "n_runs": 0,
@@ -310,17 +319,26 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
-      "q_win": 0.3974,
-      "p_win": 0.4457,
-      "ev_win": 0.891,
-      "edge": 0.0483,
-      "mark": "◎",
+      "form_score": -2.3404,
+      "ability_prob": 0.0963,
+      "q_win": 0.4903,
+      "p_win": 0.4468,
+      "ev_win": 0.715,
+      "edge": -0.0435,
+      "mark": "○",
       "reasons": [
-        "予想勝率 44.6%・1番手評価",
-        "1番人気 / EV 0.891（控除率の壁で理論上マイナス）"
+        "実力+騎手スコア 9.6%・2番手評価",
+        "1番人気 / EV 0.715（やや過剰人気・妙味なし）"
       ]
     }
   ],
-  "tickets": []
+  "tickets": [
+    {
+      "type": "単勝",
+      "target": "1",
+      "ev": 1.407,
+      "stake_unit": 1,
+      "note": "1番手評価・妙味 +17.3pt"
+    }
+  ]
 }
