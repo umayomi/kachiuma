@@ -2,14 +2,10 @@ name: dbg
 on:
   workflow_dispatch:
     inputs:
-      test_start:
-        description: "開始 YYYYMMDD"
+      date:
+        description: "確認する開催日 YYYYMMDD"
         required: true
         default: "20260620"
-      test_end:
-        description: "終了 YYYYMMDD"
-        required: true
-        default: "20260621"
 permissions:
   contents: read
 jobs:
@@ -22,102 +18,40 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -r requirements.txt
-      - name: jockey resolve 失敗の真因診断
+      - name: 出馬表parseで race_class / direction が入るか確認
         run: |
           python - << 'PY'
-          import sys, time, datetime, requests
+          import sys
           sys.path += ["scraper", "analysis"]
-          import netkeiba as nk, jockey_db as J
+          import netkeiba as nk
 
-          ts = "${{ github.event.inputs.test_start }}"
-          te = "${{ github.event.inputs.test_end }}"
+          date = "${{ github.event.inputs.date }}"
+          ids = nk.find_race_ids(date)
+          print(f"{date}: race_id {len(ids)}件\n")
 
-          def days(a, b):
-              d = datetime.datetime.strptime(a, "%Y%m%d").date()
-              e = datetime.datetime.strptime(b, "%Y%m%d").date()
-              while d <= e:
-                  yield d.strftime("%Y%m%d"); d += datetime.timedelta(days=1)
+          ok_cls = ok_dir = 0
+          rows = []
+          for rid in ids:
+              try:
+                  odds = nk.get_win_odds(rid)
+                  html = nk.get(f"{nk.BASE_RACE}/race/shutuba.html?race_id={rid}")
+                  r = nk.parse_shutuba(html, rid, odds_map=odds)
+              except Exception as e:
+                  print("parse失敗", rid, str(e)[:50]); continue
+              rc, cl, dr = r.get("race_class"), r.get("class_label"), r.get("direction")
+              sf, di, go = r.get("surface"), r.get("distance_m"), r.get("going")
+              if rc is not None: ok_cls += 1
+              if dr is not None: ok_dir += 1
+              rows.append(f"  {r.get('track')}{r.get('race_no'):>2}R {sf}{di} {go}"
+                          f"  race_class={rc}({cl})  direction={dr}  馬{len(r.get('horses',[]))}頭")
 
-          # レース取得（軽い・結果ページ）
-          races = []
-          for ds in days(ts, te):
-              for rid in nk.find_race_ids(ds):
-                  try:
-                      r = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
-                      r["_date"] = ds; races.append(r)
-                  except Exception as e:
-                      print("skip", rid, str(e)[:40])
-          print(f"レース {len(races)}R")
-
-          sess = requests.Session()
-          place_memo, all_memo = {}, {}
-
-          def tables(surf, dist, ds, place):
-              sp = J._surface_param(surf)
-              if (sp, dist, place) not in place_memo:
-                  try:
-                      place_memo[(sp, dist, place)] = J.fetch(sess, surf, dist, ds, place=place)
-                  except Exception as e:
-                      print("fetch-fail place", place, dist, str(e)[:40]); place_memo[(sp, dist, place)] = {}
-                  time.sleep(0.7)
-              if (sp, dist) not in all_memo:
-                  try:
-                      all_memo[(sp, dist)] = J.fetch(sess, surf, dist, ds, place="ALL")
-                  except Exception as e:
-                      print("fetch-fail all", dist, str(e)[:40]); all_memo[(sp, dist)] = {}
-                  time.sleep(0.7)
-              return place_memo[(sp, dist, place)], all_memo[(sp, dist)]
-
-          ASCII_MARK = "▲△☆◇★◎○"   # 見習い斤量マーク等（名前に紛れる候補）
-          tot = 0
-          src = {"場×距離": 0, "全場×距離(F)": 0, "なし": 0}
-          # 失敗の内訳カウンタ
-          c_all_empty = 0     # (b) 全場テーブルが空
-          c_name_in_all = 0   # 参考: place で引けず all には居た（解決済のはず）
-          c_genuine = 0       # (c) all は中身あるのに名前が無い（珍距離 or 真の不在）
-          c_mark = 0          # (a) 生名に見習いマーク等が付いている
-          samples = []
-
-          for r in races:
-              ds = r["_date"]
-              place, surf, dist = r.get("track"), r.get("surface"), r.get("distance_m")
-              if not (surf and dist):
-                  continue
-              ptbl, atbl = tables(surf, dist, ds, place or "ALL")
-              for h in r.get("horses", []):
-                  jk = h.get("jockey")
-                  if not jk:
-                      continue
-                  tot += 1
-                  cell, s = J.resolve(ptbl, atbl, jk)
-                  src[s] = src.get(s, 0) + 1
-                  if cell is not None:
-                      continue
-                  # ---- 失敗ケースを解剖 ----
-                  norm = J._norm_name(jk)
-                  has_mark = any(ch in ASCII_MARK for ch in (jk or ""))
-                  in_all = J.lookup(atbl, jk) is not None
-                  if not atbl:
-                      c_all_empty += 1
-                  elif in_all:
-                      c_name_in_all += 1
-                  else:
-                      c_genuine += 1
-                  if has_mark:
-                      c_mark += 1
-                  if len(samples) < 30:
-                      samples.append(
-                          f"  {place}{surf}{dist} 生='{jk}' 正規化='{norm}' "
-                          f"markあり={has_mark} 全場表in={in_all} "
-                          f"場表数={len(ptbl)} 全場表数={len(atbl)}")
-
-          print(f"\n騎手のべ {tot} / 解決元: {src}")
-          miss = src.get('なし', 0)
-          print(f"未解決(0点) {miss}件  = {miss/tot*100:.1f}%")
-          print("\n=== 0点の内訳（真因の切り分け）===")
-          print(f"(a) 生名に見習いマーク等あり : {c_mark}件  ← _norm_name でマーク未除去なら名前バグ")
-          print(f"(b) 全場×距離テーブルが空     : {c_all_empty}件  ← 取得/parseの脆さ")
-          print(f"(c) 全場表に中身あるが名前無し: {c_genuine}件  ← 珍距離 or 真の不在（フォールバックが効く）")
-          print("\n=== 未解決サンプル（生名・正規化・テーブル在否・サイズ）===")
-          print("\n".join(samples))
+          n = len(rows)
+          print(f"=== race_class 取得: {ok_cls}/{n}R  /  direction 取得: {ok_dir}/{n}R ===\n")
+          print("\n".join(rows))
+          if ok_cls == 0 and n:
+              print("\n!! race_class が全レースNone → _parse_class のセレクタ(.RaceData02)が現HTMLと不一致の可能性")
+          elif ok_cls < n:
+              print(f"\n!! {n-ok_cls}R で race_class=None（特定条件だけ滑っている可能性）")
+          else:
+              print("\nOK: 全レースで race_class 取得成功 → 実力スコアは本番でフル稼働できる")
           PY
