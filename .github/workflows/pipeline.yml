@@ -25,7 +25,7 @@ jobs:
           cache: "pip"
 
       - name: Install deps
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt selenium
 
       - name: Resolve target date (JST)
         id: d
@@ -39,14 +39,17 @@ jobs:
       - name: Collect (raw -> data/raw, 非コミット)
         run: python scraper/collect.py --date "${{ steps.d.outputs.date }}"
 
+      - name: Enrich (career_score+騎手 -> 各馬 ability_prob)
+        run: python analysis/enrich.py --in data/raw --budget-min 70
+
       - name: Analyze (raw -> data/predictions)
         run: python analysis/predict.py --in data/raw --out data/predictions
 
-      - name: Commit predictions only
+      - name: Commit predictions + cache
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/predictions
+          git add data/predictions data/horsedb_cache.json
           if git diff --staged --quiet; then
             echo "変更なし"
           else
