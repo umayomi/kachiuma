@@ -96,6 +96,8 @@ def _parse_class(soup: BeautifulSoup, race_name: str | None):
     d2 = soup.select_one(".RaceData02")
     spans = [_text(sp) or "" for sp in d2.select("span")] if d2 else []
     blob = " ".join(spans)
+    # 全角数字→半角（netkeibaは「１勝クラス」等の全角表記）
+    blob = blob.replace("１", "1").replace("２", "2").replace("３", "3").replace("　", " ")
     level, label = None, None
     # 条件クラス（新しい「N勝クラス」と旧「N00万下」両対応）
     if "新馬" in blob:
@@ -182,8 +184,12 @@ def _parse_data01(text: str) -> tuple[int | None, str | None, str | None]:
         surface = "障害"
     m = re.search(r"(\d{3,4})m", text)
     distance = int(m.group(1)) if m else None
-    g = re.search(r"馬場\s*[:：]\s*(良|稍重|重|不良)", text)
-    going = g.group(1) if g else None
+    # 馬場は「馬場:稍重」「馬場:稍」等どちらの表記もあるので両対応（長い順に判定）
+    g = re.search(r"馬場\s*[:：]\s*(稍重|不良|良|稍|重|不)", text)
+    _GOING = {"稍": "稍重", "不": "不良"}
+    going = None
+    if g:
+        going = _GOING.get(g.group(1), g.group(1))
     return distance, surface, going
 
 
