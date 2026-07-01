@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 """
-カチウマ — enrich: career_score(A) の実力prob を form_score として各馬に付与。
+カチウマ — enrich: career_score(A) の「実力+騎手prob」を各馬に付与。
 
 collect.py と predict.py の間に挟むステップ。
   data/raw/*_shutuba.raw.json を読む
   各馬のフルキャリアを取得（horsedb_cache.json を proof と共有・未取得だけ）
-  career_score.ability_probs（騎手込み W_JK=0.80）でレース内・実力prob を算出
-  各馬に form_score = log(prob) と ability_prob（透明性用）を書き戻して保存
+  career_score.ability_probs（騎手込み・W_JK_HI=4.0）でレース内・実力prob を算出
+  各馬に ability_prob（本番の◎決定に使う）を書き戻して保存
+  併せて form_score = log(prob) も残す（後方互換・妙味表示の傾け用）
 
-なぜ log(prob) か:
-  predict.estimate_p は exp(LAMBDA*(f - mean_f)) で市場確率を傾ける。
-  f = log(prob) を入れると  q × (prob / 幾何平均)^LAMBDA  の自然な融合になり、
-  傾けの強さは predict 側の LAMBDA 一本のノブで決まる（バックテストで採否）。
+設計（方針(b)）:
+  predict.py は ability_prob の降順で◎○▲△を打つ（proofで検証したのと同じ生スコア順）。
+  市場q は EV/妙味の表示にだけ使い、◎の決定には混ぜない（proofで融合は複勝率を下げたため）。
+  W_JK_HI=4.0 は4週検証で採用した騎手非線形加点。ここで明示設定して確実に効かせる。
 
 注意:
-  pastrun(系統C)が付けた form_score を上書きする（A優先）。
   ライブ取得(Selenium/umarengod)は Actions 上でのみ到達可能。失敗は握りつぶして
-  「その馬は form_score なし＝オッズのまま」に degrade（予想は必ず出る）。
+  「その馬は ability_prob なし」に degrade（predictはオッズ順にフォールバックできる）。
 
 使い方:
   python analysis/enrich.py --in data/raw            # collect の後・predict の前
@@ -36,6 +36,9 @@ sys.path += ["scraper", "analysis"]
 import horsedb as hd          # noqa: E402
 import career_score as C      # noqa: E402
 import jockey_db as J         # noqa: E402
+
+# 4週検証で採用した騎手非線形加点を確実に効かせる（既定と同値だが明示）
+C.W_JK_HI = 4.0
 
 try:
     import requests
@@ -161,8 +164,8 @@ def enrich_file(path: str, cache: dict, build_jk) -> tuple[int, int]:
         for h in rated:
             p = probs.get(h["umaban"])
             if p and p > 0:
-                h["form_score"] = round(math.log(p), 4)   # predict が exp(LAMBDA*(f-mean)) で傾ける
-                h["ability_prob"] = round(p, 4)            # 透明性（表示・検証用）
+                h["ability_prob"] = round(p, 4)            # 本番の◎はこの降順で決める（方針b）
+                h["form_score"] = round(math.log(p), 4)    # 後方互換・妙味表示の傾け用
                 n_h += 1
     json.dump(lst, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     return n_h, n_r
@@ -206,7 +209,7 @@ def main():
         nh, nr = enrich_file(f, cache, build_jk)
         tot_h += nh
         tot_r += nr
-    print(f"form_score 付与: {tot_h}頭 / {tot_r}R（pastrunのform_scoreは上書き＝A優先）")
+    print(f"ability_prob 付与: {tot_h}頭 / {tot_r}R（predictはこの降順で◎。W_JK_HI={C.W_JK_HI}）")
 
 
 if __name__ == "__main__":
