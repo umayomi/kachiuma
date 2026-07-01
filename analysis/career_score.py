@@ -120,8 +120,10 @@ def ability_breakdown(feat: dict) -> dict:
     """rawの各項の寄与点を返す（合計=ability_raw）。なぜこのスコアか、の分解用。"""
     parts = {"クラス": 0.0, "着差": 0.0, "距離帯": 0.0, "回り": 0.0, "馬場": 0.0, "騎手": 0.0}
     cp = feat.get("class_proven")
-    if cp is not None:
-        parts["クラス"] = W_CLASS * (cp - PIVOT_CLASS)
+    # 着内実績ゼロ(None)は「実力未証明」＝実効クラス0とみなす（0点=中立ではなく最下位評価）。
+    # これを0点にすると未勝利戦で無実績馬が実績馬より上に浮上するバグになる。
+    cp_eff = cp if cp is not None else 0.0
+    parts["クラス"] = W_CLASS * (cp_eff - PIVOT_CLASS)
     mg = feat.get("margin")
     if mg is not None:
         parts["着差"] = W_MARGIN * max(-1.0, min(1.0, (MARGIN_BASE - mg) / MARGIN_BASE))
