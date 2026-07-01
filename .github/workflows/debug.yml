@@ -2,10 +2,10 @@ name: dbg
 on:
   workflow_dispatch:
     inputs:
-      race_ids:
-        description: "確認する race_id をカンマ区切りで（滑ったレース）"
+      date:
+        description: "確認する開催日 YYYYMMDD"
         required: true
-        default: "202605030508,202605030512,202609030508"
+        default: "20260620"
 permissions:
   contents: read
 jobs:
@@ -18,48 +18,41 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -r requirements.txt
-      - name: RaceData01/02/RaceName の生HTMLを出す
+      - name: 出馬表parseで race_class / direction が入るか確認
         run: |
           python - << 'PY'
-          import sys, re
+          import sys
           sys.path += ["scraper", "analysis"]
           import netkeiba as nk
-          from bs4 import BeautifulSoup
 
-          ids = [x.strip() for x in "${{ github.event.inputs.race_ids }}".split(",") if x.strip()]
+          date = "${{ github.event.inputs.date }}"
+          ids = nk.find_race_ids(date)
+          print(f"{date}: race_id {len(ids)}件\n")
+
+          ok_cls = ok_dir = ok_go = 0
+          rows = []
           for rid in ids:
-              print("=" * 60)
-              print("race_id:", rid)
               try:
+                  odds = nk.get_win_odds(rid)
                   html = nk.get(f"{nk.BASE_RACE}/race/shutuba.html?race_id={rid}")
+                  r = nk.parse_shutuba(html, rid, odds_map=odds)
               except Exception as e:
-                  print("取得失敗", str(e)[:60]); continue
-              soup = BeautifulSoup(html, "lxml")
-              for sel in [".RaceName", ".RaceData01", ".RaceData02"]:
-                  el = soup.select_one(sel)
-                  print(f"\n--- {sel} ---")
-                  if el is None:
-                      print("  (要素なし: セレクタが現HTMLと不一致)")
-                      continue
-                  txt = re.sub(r"\s+", " ", el.get_text(" ", strip=True))
-                  print("  text :", txt)
-                  # RaceData02 は span ごとに分けて見たい
-                  if sel == ".RaceData02":
-                      spans = [re.sub(r"\s+", " ", s.get_text(strip=True)) for s in el.select("span")]
-                      print("  spans:", spans)
-                  # RaceName 内のアイコンclassも（グレード判定用）
-                  if sel == ".RaceName":
-                      classes = []
-                      for e in el.find_all(True):
-                          classes += e.get("class", [])
-                      print("  icon-classes:", sorted(set(classes)))
-              # 参考: 現行parseの結果
-              try:
-                  r = nk.parse_shutuba(html, rid, odds_map={})
-                  print("\n  → 現行parse: race_class=", r.get("race_class"),
-                        "class_label=", r.get("class_label"),
-                        "going=", r.get("going"), "surface=", r.get("surface"),
-                        "distance=", r.get("distance_m"))
-              except Exception as e:
-                  print("  parse失敗", str(e)[:60])
+                  print("parse失敗", rid, str(e)[:50]); continue
+              rc, cl, dr = r.get("race_class"), r.get("class_label"), r.get("direction")
+              sf, di, go = r.get("surface"), r.get("distance_m"), r.get("going")
+              if rc is not None: ok_cls += 1
+              if dr is not None: ok_dir += 1
+              if go is not None: ok_go += 1
+              rows.append(f"  {rid}  {r.get('track')}{r.get('race_no'):>2}R {sf}{di} {go}"
+                          f"  race_class={rc}({cl})  direction={dr}  馬{len(r.get('horses',[]))}頭")
+
+          n = len(rows)
+          print(f"=== race_class 取得: {ok_cls}/{n}R  /  direction: {ok_dir}/{n}R  /  馬場: {ok_go}/{n}R ===\n")
+          print("\n".join(rows))
+          if ok_cls == 0 and n:
+              print("\n!! race_class が全レースNone → _parse_class のセレクタ(.RaceData02)が現HTMLと不一致の可能性")
+          elif ok_cls < n:
+              print(f"\n!! {n-ok_cls}R で race_class=None（特定条件だけ滑っている可能性）")
+          else:
+              print("\nOK: 全レースで race_class 取得成功 → 実力スコアは本番でフル稼働できる")
           PY
