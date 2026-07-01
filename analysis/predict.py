@@ -7,7 +7,8 @@
   2) 推定勝率 p: 市場確率を土台に、人気-穴バイアスを補正（q^TAU を正規化, TAU>1で本命寄り）
      → 公開オッズは過小評価されがちな本命をやや高く、過大評価されがちな穴を低く見積もる
   3) EV = p × odるds, edge = p − q
-  4) 印(◎○▲△)= 予想の強さ p の上位（本命・対抗・単穴・連下）
+  4) 印(◎○▲△)= 実力+騎手スコア(ability_prob)の上位（方針b・proofで検証した生スコア順）
+     ability_prob が無い場合のみ市場ベース p の上位にフォールバック
   5) 買い目(tickets)= EV ≧ しきい値 の「妙味」だけ（無ければ"見送り"）
 
 正直な注意:
@@ -82,19 +83,34 @@ def assign_popularity(rated: list[dict]) -> None:
 
 
 def assign_marks(rated: list[dict]) -> None:
-    """印は予想の強さ p の上位に付ける（◎○▲△＝本命/対抗/単穴/連下）。"""
-    for i, h in enumerate(sorted(rated, key=lambda x: -x["p_win"])):
+    """印は『実力+騎手スコア(ability_prob)』の降順で付ける（◎○▲△＝本命/対抗/単穴/連下）。
+    方針(b): proofで検証した生の実力+騎手prob順位をそのまま◎にする。
+    ability_prob が無い馬（enrichのdegrade/取得失敗）は末尾に回す。
+    全馬に ability_prob が無ければ p_win 降順にフォールバック（予想は必ず出る）。"""
+    have_ability = any(h.get("ability_prob") is not None for h in rated)
+    if have_ability:
+        # ability_prob がある馬を優先（降順）、無い馬はp_win降順で後ろに
+        def key(h):
+            a = h.get("ability_prob")
+            return (0, -a) if a is not None else (1, -h.get("p_win", 0))
+        order = sorted(rated, key=key)
+    else:
+        order = sorted(rated, key=lambda x: -x.get("p_win", 0))  # フォールバック=従来挙動
+    for i, h in enumerate(order):
         h["_prank"] = i + 1
         h["mark"] = MARKS[i][0] if i < len(MARKS) else ""
 
 
 def build_reasons(h: dict) -> list[str]:
     """根拠（2〜3行）。強さ→市場比較とEV→（あれば）近走の実力評価。"""
-    p = h["p_win"] * 100
     ev = h["ev_win"]
     edge_pt = round(h["edge"] * 100, 1)
     pop = h.get("popularity", "?")
-    line1 = f"予想勝率 {p:.1f}%・{h['_prank']}番手評価"
+    ab = h.get("ability_prob")
+    if ab is not None:
+        line1 = f"実力+騎手スコア {ab*100:.1f}%・{h['_prank']}番手評価"
+    else:
+        line1 = f"予想勝率 {h['p_win']*100:.1f}%・{h['_prank']}番手評価"
     if ev >= EV_THRESHOLD:
         line2 = f"{pop}番人気 / EV {ev}（理論上プラス＝妙味 {edge_pt:+.1f}pt）"
     elif edge_pt <= -1.0:
