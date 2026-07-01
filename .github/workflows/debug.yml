@@ -2,10 +2,10 @@ name: dbg
 on:
   workflow_dispatch:
     inputs:
-      date:
-        description: "確認する開催日 YYYYMMDD"
+      race_id:
+        description: "検証するrace_id"
         required: true
-        default: "20260620"
+        default: "202610020203"
 permissions:
   contents: read
 jobs:
@@ -17,42 +17,76 @@ jobs:
         with:
           python-version: "3.12"
           cache: "pip"
-      - run: pip install -r requirements.txt
-      - name: 出馬表parseで race_class / direction が入るか確認
+      - run: pip install -r requirements.txt selenium
+      - name: 全馬の実力+騎手スコア内訳を暴く
         run: |
           python - << 'PY'
-          import sys
+          import sys, time, json, requests
           sys.path += ["scraper", "analysis"]
-          import netkeiba as nk
+          import netkeiba as nk, horsedb as hd, career_score as C, jockey_db as J
 
-          date = "${{ github.event.inputs.date }}"
-          ids = nk.find_race_ids(date)
-          print(f"{date}: race_id {len(ids)}件\n")
+          rid = "${{ github.event.inputs.race_id }}"
+          print("race_id:", rid, " W_JK_HI =", C.W_JK_HI)
 
-          ok_cls = ok_dir = ok_go = 0
-          rows = []
-          for rid in ids:
+          # 出馬表（オッズ・騎手・馬ID）
+          odds = nk.get_win_odds(rid)
+          html = nk.get(f"{nk.BASE_RACE}/race/shutuba.html?race_id={rid}")
+          race = nk.parse_shutuba(html, rid, odds_map=odds)
+          ds = rid[:8]
+          print(f"{race.get('track')} {race.get('race_no')}R {race.get('surface')}{race.get('distance_m')} "
+                f"{race.get('going')} race_class={race.get('race_class')}({race.get('class_label')}) "
+                f"direction={race.get('direction')}  {len(race.get('horses',[]))}頭\n")
+
+          rated = [h for h in race["horses"] if h.get("odds_win") and h["odds_win"] > 1.0]
+
+          # 各馬のキャリア取得
+          driver = hd.make_driver()
+          cache = {}
+          for h in rated:
+              hid = h.get("horse_id")
+              if not hid:
+                  cache[h["umaban"]] = []
+                  continue
               try:
-                  odds = nk.get_win_odds(rid)
-                  html = nk.get(f"{nk.BASE_RACE}/race/shutuba.html?race_id={rid}")
-                  r = nk.parse_shutuba(html, rid, odds_map=odds)
+                  cache[h["umaban"]] = hd.trim_career(hd.fetch_horse(driver, hid, wait=1.0))
               except Exception as e:
-                  print("parse失敗", rid, str(e)[:50]); continue
-              rc, cl, dr = r.get("race_class"), r.get("class_label"), r.get("direction")
-              sf, di, go = r.get("surface"), r.get("distance_m"), r.get("going")
-              if rc is not None: ok_cls += 1
-              if dr is not None: ok_dir += 1
-              if go is not None: ok_go += 1
-              rows.append(f"  {rid}  {r.get('track')}{r.get('race_no'):>2}R {sf}{di} {go}"
-                          f"  race_class={rc}({cl})  direction={dr}  馬{len(r.get('horses',[]))}頭")
+                  print("career fail", hid, str(e)[:40]); cache[h["umaban"]] = []
+              time.sleep(1.2)
+          try: driver.quit()
+          except Exception: pass
 
-          n = len(rows)
-          print(f"=== race_class 取得: {ok_cls}/{n}R  /  direction: {ok_dir}/{n}R  /  馬場: {ok_go}/{n}R ===\n")
-          print("\n".join(rows))
-          if ok_cls == 0 and n:
-              print("\n!! race_class が全レースNone → _parse_class のセレクタ(.RaceData02)が現HTMLと不一致の可能性")
-          elif ok_cls < n:
-              print(f"\n!! {n-ok_cls}R で race_class=None（特定条件だけ滑っている可能性）")
-          else:
-              print("\nOK: 全レースで race_class 取得成功 → 実力スコアは本番でフル稼働できる")
+          # 騎手テーブル
+          sess = requests.Session()
+          try:
+              ptbl = J.fetch(sess, race["surface"], race["distance_m"], ds, place=race.get("track") or "ALL")
+              atbl = J.fetch(sess, race["surface"], race["distance_m"], ds, place="ALL")
+          except Exception as e:
+              print("jk-fetch-fail", str(e)[:40]); ptbl, atbl = {}, {}
+          jk_by = {}
+          for h in rated:
+              cell, src = J.resolve(ptbl, atbl, h.get("jockey") or "")
+              if cell:
+                  jk_by[h["umaban"]] = {"rate": J.rate(cell), "starts": cell["starts"]}
+
+          probs, feats = C.ability_probs(cache, {**race, "horses": rated}, ds, jk_by_umaban=jk_by)
+
+          # ability_prob 降順で内訳を表示
+          order = sorted(rated, key=lambda h: -probs[h["umaban"]])
+          print(f"{'順':>2} {'馬番':>3} {'人気':>3} {'prob':>6} {'n':>3} {'clsP':>6} "
+                f"{'クラス':>7}{'着差':>7}{'距離':>6}{'回り':>6}{'馬場':>6}{'騎手':>7}  {'jr':>5}")
+          for i, h in enumerate(order, 1):
+              u = h["umaban"]; f = feats[u]; bd = C.ability_breakdown(f)
+              jr = jk_by.get(u, {}).get("rate")
+              cp = f.get("class_proven")
+              print(f"{i:>2} {u:>3} {h.get('popularity','?'):>3} {probs[u]*100:>5.1f}% "
+                    f"{f.get('n_data',0):>3} {('%.2f'%cp) if cp is not None else '  -':>6} "
+                    f"{bd['クラス']:>+7.2f}{bd['着差']:>+7.2f}{bd['距離帯']:>+6.2f}"
+                    f"{bd['回り']:>+6.2f}{bd['馬場']:>+6.2f}{bd['騎手']:>+7.2f}  "
+                    f"{('%.2f'%jr) if jr is not None else '  - ':>5}  {h.get('name','')}")
+
+          print("\n【診断】◎(prob1位)の馬が、なぜ上位か:")
+          top = order[0]; u = top["umaban"]; f = feats[u]
+          print(f"  馬{u} {top.get('name','')} n_data={f.get('n_data')} class_proven={f.get('class_proven')}")
+          print(f"  → n_data<3 なら proof のMIN_DATAガード対象（本番は未ガード）")
+          print(f"  → class_proven=None なら着内実績ゼロ＝実力測定不能")
           PY
