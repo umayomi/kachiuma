@@ -43,6 +43,17 @@ def _band(d):
     return "L"          # 長距離
 
 
+_GOING_NORM = {"稍重": "稍", "不良": "不"}  # 2文字表記→キャリア側(db.netkeiba)の1文字に揃える
+
+
+def _norm_going(g):
+    """馬場表記を正規化。出馬表/結果側は「稍重/不良」、キャリア側は「稍/不」で
+    表記が割れており、そのまま==比較すると稍重・不良の日にgoing項が全馬死ぬ。"""
+    if not g:
+        return None
+    return _GOING_NORM.get(g, g)
+
+
 def _track_of(venue: str):
     for t in TRACKS:
         if venue and t in venue:
@@ -76,8 +87,11 @@ def _rate(st: int, top3: int):
 def features_from_career(past: list, today: dict) -> dict:
     """today: surface/distance_m/track/direction/going/race_class を持つ今日のレース条件。"""
     surf = today.get("surface")
+    # 障害と平地はキャリアを分離（障害J・G1着内が平地G1格に化ける等の汚染を防ぐ）
+    is_jump = (surf == "障害")
+    past = [r for r in past if (r.get("surface") == "障害") == is_jump]
     tband = _band(today.get("distance_m"))
-    tdir, going = today.get("direction"), today.get("going")
+    tdir, going = today.get("direction"), _norm_going(today.get("going"))
     tcls = today.get("race_class")
 
     def rate_n(pred):
@@ -91,7 +105,7 @@ def features_from_career(past: list, today: dict) -> dict:
 
     band, band_n = rate_n(lambda r: r.get("surface") == surf and _band(r.get("distance_m")) == tband)
     dr, dr_n = rate_n(lambda r: DIRECTION.get(_track_of(r.get("venue"))) == tdir)
-    go, go_n = rate_n(lambda r: r.get("going") == going)
+    go, go_n = rate_n(lambda r: _norm_going(r.get("going")) == going)
 
     # 着内(3着内)走の「質割引クラス」: 勝ち=満点, 2着=0.8, 3着=0.6。
     # 「高い格で勝った」は残し、「高い格で3着」は割り引く（人気薄好走の過大評価を抑制）。
@@ -182,4 +196,14 @@ if __name__ == "__main__":
         print(f"馬{u} prob={probs[u]*100:5.1f}% class_proven={f['class_proven']} "
               f"band={f['band']}(n={f['band_n']}) margin={f['margin']} n={f['n_data']}")
     assert probs[1] > probs[2], "上のクラスで好走のH1が高くなるはず"
-    print("\nOK: 全キャリア実力スコア 健全（上のクラス好走を高評価）")
+
+    # 馬場正規化: 今日「稍重」× キャリア「稍」が一致すること（表記割れで死なない）
+    wet_past = [race_row("H3", 2, 1, 0.3, going="稍") for _ in range(4)]
+    f_wet = features_from_career(wet_past, {**today, "going": "稍重"})
+    assert f_wet["going_n"] == 4, f"稍重×稍 が一致するはず: {f_wet}"
+
+    # 障害分離: 障害J・G1(8)の着内が平地の class_proven に混入しないこと
+    jump_past = [dict(race_row("H4", 1, 8, 0.0), surface="障害")]
+    f_jp = features_from_career(jump_past, today)
+    assert f_jp["class_proven"] is None and f_jp["n_data"] == 0, f"障害走は平地評価から除外: {f_jp}"
+    print("\nOK: 全キャリア実力スコア 健全（クラス質・馬場正規化・障害分離）")
