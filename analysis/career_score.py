@@ -22,6 +22,8 @@ JK_KNEE = 0.30       # この複勝率を超えた騎手から強く加点（デ
 CONF_C0 = 3.0        # 出走C0で信頼度0.5（少データは中立寄りに割引）
 JK_C0 = 3.0          # 騎手は5戦で信頼度0.5（場×距離の薄さを踏まえやや強め）
 MARGIN_BASE = 1.2    # この馬身を境に、近ければ＋・離されれば−
+W_EDGE = 0.0         # 格上挑戦ペナルティ: min(0, class_proven - 今日class) に掛ける。0=OFF(現行)
+DECAY_HALF_D = None  # 時間減衰の半減期(日)。Noneで全キャリア等価重み(現行)。365なら1年前の走=重み0.5
 _QUAL = {1: 1.0, 2: 0.8, 3: 0.6}  # 着内の質（着順）。クラス実績の質割引に使う。
 
 TRACKS = ["札幌", "函館", "福島", "新潟", "東京", "中山", "中京", "京都", "阪神", "小倉"]
@@ -84,8 +86,20 @@ def _rate(st: int, top3: int):
     return (top3 + K * TOP3_BASE) / (st + K) if st else None
 
 
-def features_from_career(past: list, today: dict) -> dict:
-    """today: surface/distance_m/track/direction/going/race_class を持つ今日のレース条件。"""
+def features_from_career(past: list, today: dict, race_date: str = None) -> dict:
+    """today: surface/distance_m/track/direction/going/race_class を持つ今日のレース条件。
+    race_date(YYYYMMDD)を渡すと DECAY_HALF_D による時間減衰重みが有効になる。"""
+    # 時間減衰の重み: DECAY_HALF_D=None か race_date 無しなら全走 w=1.0（現行と完全一致）
+    if DECAY_HALF_D and race_date:
+        d0 = datetime.strptime(race_date, "%Y%m%d").date()
+
+        def _w(r):
+            d = _ymd(r.get("date"))
+            return 0.5 ** ((d0 - d).days / DECAY_HALF_D) if d else 1.0
+    else:
+        def _w(r):
+            return 1.0
+
     surf = today.get("surface")
     # 障害と平地はキャリアを分離（障害J・G1着内が平地G1格に化ける等の汚染を防ぐ）
     is_jump = (surf == "障害")
@@ -95,12 +109,13 @@ def features_from_career(past: list, today: dict) -> dict:
     tcls = today.get("race_class")
 
     def rate_n(pred):
-        st = top3 = 0
+        st = top3 = 0.0
         for r in past:
             if pred(r):
-                st += 1
+                w = _w(r)
+                st += w
                 if r["finish_pos"] <= 3:
-                    top3 += 1
+                    top3 += w
         return _rate(st, top3), st
 
     band, band_n = rate_n(lambda r: r.get("surface") == surf and _band(r.get("distance_m")) == tband)
@@ -109,17 +124,27 @@ def features_from_career(past: list, today: dict) -> dict:
 
     # 着内(3着内)走の「質割引クラス」: 勝ち=満点, 2着=0.8, 3着=0.6。
     # 「高い格で勝った」は残し、「高い格で3着」は割り引く（人気薄好走の過大評価を抑制）。
-    top3_credit = [r["race_class"] * _QUAL[r["finish_pos"]] for r in past
-                   if r.get("finish_pos") in _QUAL and r.get("race_class")]
-    class_proven = (sum(top3_credit) / len(top3_credit)) if top3_credit else None
+    cnum = cden = 0.0
+    for r in past:
+        if r.get("finish_pos") in _QUAL and r.get("race_class"):
+            w = _w(r)
+            cnum += w * r["race_class"] * _QUAL[r["finish_pos"]]
+            cden += w
+    class_proven = (cnum / cden) if cden else None
     class_edge = (class_proven - tcls) if (class_proven is not None and tcls) else None
 
-    behind = [max(0.0, r["margin"]) for r in past if r.get("margin") is not None]
-    margin = (sum(behind) / len(behind)) if behind else None
+    mnum = mden = 0.0
+    for r in past:
+        if r.get("margin") is not None:
+            w = _w(r)
+            mnum += w * max(0.0, r["margin"])
+            mden += w
+    margin = (mnum / mden) if mden else None
 
     return {"band": band, "band_n": band_n, "dir": dr, "dir_n": dr_n,
             "going": go, "going_n": go_n, "class_proven": class_proven,
-            "class_edge": class_edge, "margin": margin, "n_data": len(past)}
+            "class_edge": class_edge, "margin": margin, "n_data": len(past),
+            "today_class": tcls}
 
 
 def _conf(n):
@@ -132,12 +157,18 @@ def ability_raw(feat: dict) -> float:
 
 def ability_breakdown(feat: dict) -> dict:
     """rawの各項の寄与点を返す（合計=ability_raw）。なぜこのスコアか、の分解用。"""
-    parts = {"クラス": 0.0, "着差": 0.0, "距離帯": 0.0, "回り": 0.0, "馬場": 0.0, "騎手": 0.0}
+    parts = {"クラス": 0.0, "格上挑戦": 0.0, "着差": 0.0, "距離帯": 0.0, "回り": 0.0,
+             "馬場": 0.0, "騎手": 0.0}
     cp = feat.get("class_proven")
     # 着内実績ゼロ(None)は「実力未証明」＝実効クラス0とみなす（0点=中立ではなく最下位評価）。
     # これを0点にすると未勝利戦で無実績馬が実績馬より上に浮上するバグになる。
     cp_eff = cp if cp is not None else 0.0
     parts["クラス"] = W_CLASS * (cp_eff - PIVOT_CLASS)
+    # 格上挑戦ペナルティ: 今日のクラスを証明できていない分だけ減点（線形のclass_edgeは
+    # レース内で今日classが全馬共通のためsoftmax不変＝無意味。kink付きのみ情報を持つ）。
+    tc = feat.get("today_class")
+    if W_EDGE and tc:
+        parts["格上挑戦"] = W_EDGE * min(0.0, cp_eff - tc)
     mg = feat.get("margin")
     if mg is not None:
         parts["着差"] = W_MARGIN * max(-1.0, min(1.0, (MARGIN_BASE - mg) / MARGIN_BASE))
@@ -164,7 +195,7 @@ def ability_probs(careers: dict, race: dict, race_date: str, jk_by_umaban: dict 
     for h in race["horses"]:
         u = h["umaban"]
         past = career_before(careers.get(u, []), race_date)
-        feat = features_from_career(past, race)
+        feat = features_from_career(past, race, race_date)
         if jk_by_umaban and u in jk_by_umaban:
             feat["jk_rate"] = jk_by_umaban[u].get("rate")
             feat["jk_starts"] = jk_by_umaban[u].get("starts", 0)
@@ -206,4 +237,26 @@ if __name__ == "__main__":
     jump_past = [dict(race_row("H4", 1, 8, 0.0), surface="障害")]
     f_jp = features_from_career(jump_past, today)
     assert f_jp["class_proven"] is None and f_jp["n_data"] == 0, f"障害走は平地評価から除外: {f_jp}"
-    print("\nOK: 全キャリア実力スコア 健全（クラス質・馬場正規化・障害分離）")
+    # 時間減衰: 近走好調馬 > 昔だけ好調馬（同内容・時期だけ違う）
+    recent = [dict(race_row("H5", 1, 3, 0.0), date="2026-05-01"),
+              dict(race_row("H5", 1, 1, 0.0), date="2024-05-01")]   # 直近が格上で好走
+    old_good = [dict(race_row("H6", 1, 3, 0.0), date="2024-05-01"),
+                dict(race_row("H6", 1, 1, 0.0), date="2026-05-01")]  # 格上好走は2年前
+    DECAY_HALF_D = 365
+    f_re = features_from_career(recent, today, "20260601")
+    f_og = features_from_career(old_good, today, "20260601")
+    assert f_re["class_proven"] > f_og["class_proven"], "減衰: 近走好調が高評価のはず"
+    DECAY_HALF_D = None
+    f_eq = features_from_career(recent, today, "20260601")
+    f_eq2 = features_from_career(old_good, today, "20260601")
+    assert abs(f_eq["class_proven"] - f_eq2["class_proven"]) < 1e-9, "OFF時は時期不問で同値"
+
+    # 格上挑戦: cp<今日class の馬だけ W_EDGE で追加減点（cp>=今日classは無傷）
+    W_EDGE = 0.4
+    f_low = {"class_proven": 1.0, "today_class": 3}
+    f_hi = {"class_proven": 3.5, "today_class": 3}
+    assert ability_breakdown(f_low)["格上挑戦"] == 0.4 * (1.0 - 3)
+    assert ability_breakdown(f_hi)["格上挑戦"] == 0.0
+    W_EDGE = 0.0
+    assert ability_breakdown(f_low)["格上挑戦"] == 0.0, "W_EDGE=0で完全無効のはず"
+    print("\nOK: 全キャリア実力スコア 健全（クラス質・馬場正規化・障害分離・減衰/格上挑戦=既定OFF）")
