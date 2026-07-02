@@ -160,12 +160,14 @@ def enrich_file(path: str, cache: dict, build_jk) -> tuple[int, int]:
         ds = str(r.get("date") or "").replace("-", "")
         cmap = {h["umaban"]: cache.get(h.get("horse_id"), []) for h in rated}
         jk_by = build_jk(r, ds)
-        probs, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
+        probs, feats = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
         for h in rated:
             p = probs.get(h["umaban"])
             if p and p > 0:
                 h["ability_prob"] = round(p, 4)            # 本番の◎はこの降順で決める（方針b）
                 h["form_score"] = round(math.log(p), 4)    # 後方互換・妙味表示の傾け用
+                # proofのevaluable(n_data>=3)と同じ判定を本番でも可能に（隠れ複勝候補バッジ用）
+                h["ability_n_data"] = feats[h["umaban"]]["n_data"]
                 n_h += 1
     json.dump(lst, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     return n_h, n_r
