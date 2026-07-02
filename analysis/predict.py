@@ -33,6 +33,7 @@ JST = timezone(timedelta(hours=9))
 TAU = 1.15           # 人気-穴バイアス補正の指数（>1で本命寄り。1.0で市場そのまま）
 LAMBDA = 0.6         # 実力評価(form_score)をどれだけ効かせるか（0=オッズのみ=Phase2）
 EV_THRESHOLD = 1.0   # これ以上を「妙味（理論上プラス）」とみなす
+HIDDEN_MIN_DATA = 3  # 隠れ複勝候補のevaluable条件（proofのMIN_DATAと同値。キャリア3走未満は対象外）
 # 印の定義（予想の強さ順）
 MARKS = [("◎", "本命"), ("○", "対抗"), ("▲", "単穴"), ("△", "連下")]
 
@@ -139,6 +140,25 @@ def build_reasons(h: dict) -> list[str]:
     return reasons
 
 
+def assign_hidden_picks(rated: list[dict]) -> list[int]:
+    """検証済みの指標Aをそのまま商品化: 『実力+騎手top3 ∩ 人気4番手以下』＝隠れ複勝候補。
+    proofと同一定義（evaluable=n_data>=3 の中で ability_prob 上位3頭、そのうち人気4+）。
+    4週288R実証: 複勝率26.3%（ベースライン12.4%）/ 複勝回収110.2%。
+    ability_n_data が無い馬（旧enrich/degrade）は対象外に落ちるだけで安全。"""
+    ev = [h for h in rated if h.get("ability_prob") is not None
+          and (h.get("ability_n_data") or 0) >= HIDDEN_MIN_DATA]
+    top3 = sorted(ev, key=lambda h: -h["ability_prob"])[:3]
+    picks = []
+    for rank, h in enumerate(top3, start=1):
+        if h.get("popularity", 0) >= 4:
+            h["hidden_pick"] = True
+            h["reasons"].append(
+                f"隠れ複勝候補: 実力+騎手{rank}番手評価なのに{h['popularity']}番人気"
+                f"（市場の見落とし筋・検証で複勝率2倍超）")
+            picks.append(h["umaban"])
+    return picks
+
+
 def build_tickets(rated: list[dict]) -> list[dict]:
     """買い目候補：EV≧しきい値の単勝のみ（妙味）。無ければ空＝見送り。"""
     vals = sorted([h for h in rated if h["ev_win"] >= EV_THRESHOLD],
@@ -156,6 +176,7 @@ def build_race_prediction(race: dict) -> dict:
 
     overround = 1.0
     tickets: list[dict] = []
+    hidden: list[int] = []
     if rated:
         overround = market_devig(rated)
         estimate_p(rated)
@@ -164,6 +185,7 @@ def build_race_prediction(race: dict) -> dict:
         assign_marks(rated)
         for h in rated:
             h["reasons"] = build_reasons(h)
+        hidden = assign_hidden_picks(rated)
         tickets = build_tickets(rated)
         for h in rated:
             h.pop("_prank", None)
@@ -174,6 +196,10 @@ def build_race_prediction(race: dict) -> dict:
                   "mark": "", "reasons": ["オッズ無し（出走取消の可能性）"]})
 
     takeout_pct = round((overround - 1.0) * 100)
+    if hidden:
+        hidden_note = f"隠れ複勝候補: {'・'.join(str(u) + '番' for u in hidden)}。 "
+    else:
+        hidden_note = ""
     if tickets:
         value_note = f"妙味のある馬 {len(tickets)}頭（EV≧{EV_THRESHOLD}）。"
     else:
@@ -186,7 +212,8 @@ def build_race_prediction(race: dict) -> dict:
             "distance_m", "surface", "going")},
         "updated_at": datetime.now(JST).isoformat(timespec="seconds"),
         "market_overround": round(overround, 3),
-        "value_note": value_note,
+        "value_note": hidden_note + value_note,
+        "hidden_picks": hidden,
         "horses": horses,
         "tickets": tickets,
     }
@@ -248,6 +275,7 @@ def main():
             "best_mark_umaban": honma["umaban"] if honma else None,
             "best_ev": best_ev,
             "value_count": len(pred["tickets"]),
+            "hidden_count": len(pred.get("hidden_picks", [])),
         })
 
     index.sort(key=lambda r: (str(r["track"]), r["race_no"] or 0))
