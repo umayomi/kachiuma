@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>カチウマ — 価値馬を、期待値で。</title>
+<title>カチウマ — 市場が見落とす複勝馬を。</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
     --paper:#F5F2E9; --paper-2:#ECE7D8;
     --ink:#16201A; --ink-soft:#5A6B60; --ink-faint:#8A968D;
     --turf:#46B17C; --turf-deep:#2E8A5E;
-    --vermil:#D2674E; --gold:#CBA14A;
+    --vermil:#D2674E; --gold:#CBA14A; --gold-deep:#A8823A;
     --line:rgba(20,33,26,.12);
     --r:14px; --maxw:560px;
   }
@@ -41,9 +41,11 @@
   .pill.live{color:var(--turf);border-color:rgba(70,177,124,.4)}
   .race-title{font-weight:700;font-size:18px;margin:14px 0 2px}
   .race-sub{color:var(--ink-faint);font-size:13px}
+  .race-sub b{color:var(--gold);font-weight:700}
 
   .value-note{font-size:12.5px;color:var(--paper-2);background:var(--ground-2);
     border:1px solid var(--ground-edge);border-radius:10px;padding:10px 12px;margin:13px 0 0}
+
   /* ---- legend (the "わかる" key) ---- */
   .legend{background:var(--ground-2);border:1px solid var(--ground-edge);border-radius:var(--r);
     padding:13px 14px;margin:16px 0;font-size:12.5px;color:var(--paper-2)}
@@ -51,6 +53,8 @@
   .legend .k{display:flex;gap:8px;align-items:flex-start;margin-top:7px}
   .swatch{width:13px;height:13px;border-radius:3px;flex:0 0 auto;margin-top:3px}
   .swatch.p{background:var(--turf)} .swatch.q{background:transparent;border:2px dashed var(--paper-2)}
+  .swatch.g{background:var(--gold)}
+  .swatch.m{background:transparent;color:var(--gold);border:0;font-size:13px;line-height:13px;text-align:center}
 
   /* ---- race nav (全レース切替) ---- */
   .race-nav{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -58,16 +62,20 @@
   .chip-race{flex:0 0 auto;font-family:"Oswald";font-size:13px;letter-spacing:.02em;color:var(--paper-2);
     background:var(--ground-2);border:1px solid var(--ground-edge);border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap}
   .chip-race.on{background:var(--gold);color:#1a1a17;border-color:var(--gold);font-weight:600}
+  .chip-race .hdot{color:var(--gold);margin-left:5px}
+  .chip-race.on .hdot{color:#1a1a17}
 
   /* ---- horse cards ---- */
   .horse{background:var(--paper);color:var(--ink);border-radius:var(--r);
     padding:14px 14px 12px;margin:11px 0;box-shadow:0 1px 0 rgba(0,0,0,.25)}
-  .horse.value{box-shadow:0 0 0 2px var(--gold), 0 6px 18px rgba(203,161,74,.18)}
+  .horse.hidden-pick{box-shadow:0 0 0 2px var(--gold), 0 6px 18px rgba(203,161,74,.18)}
+  .hidden-tag{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#1a1a17;
+    font-weight:700;font-size:11.5px;letter-spacing:.05em;border-radius:6px;padding:3px 9px;margin-bottom:9px}
   .h-top{display:flex;align-items:center;gap:11px}
   .umaban{font-family:"Oswald";font-weight:700;font-size:17px;width:30px;height:30px;flex:0 0 auto;
     display:grid;place-items:center;border-radius:7px;background:var(--ink);color:var(--paper)}
   .mark{font-size:20px;width:24px;text-align:center;flex:0 0 auto}
-  .mark.gold{color:var(--gold)} 
+  .mark.gold{color:var(--gold-deep)}
   .name-wrap{flex:1;min-width:0}
   .name{font-weight:700;font-size:15.5px;line-height:1.3}
   .jockey{font-size:12px;color:var(--ink-soft)}
@@ -78,12 +86,11 @@
   /* ---- the signature: value meter ---- */
   .meter{margin:12px 0 2px}
   .meter-head{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;color:var(--ink-soft)}
-  .ev{font-family:"Oswald";font-weight:700;font-size:19px}
-  .ev.plus{color:var(--turf-deep)} .ev.minus{color:var(--vermil)}
+  .ev{font-family:"Oswald";font-weight:700;font-size:15px}
+  .ev.plus{color:var(--turf-deep)} .ev.minus{color:var(--ink-soft)}
   .track{position:relative;height:26px;background:var(--paper-2);border-radius:7px;margin-top:6px;overflow:hidden}
   .bar-p{position:absolute;left:0;top:0;bottom:0;background:var(--turf);border-radius:7px 0 0 7px;
     transition:width .6s cubic-bezier(.2,.8,.2,1)}
-  .bar-p.minus{background:var(--vermil)}
   .qline{position:absolute;top:-3px;bottom:-3px;width:0;border-left:2px dashed var(--ink);opacity:.55}
   .qtag{position:absolute;top:-16px;transform:translateX(-50%);font-size:10px;color:var(--ink-soft);white-space:nowrap}
   .pct{position:absolute;top:50%;transform:translateY(-50%);font-family:"Oswald";font-weight:600;
@@ -123,7 +130,7 @@
     <div class="brand">
       <h1>KACHIUMA</h1><span class="ja">カチウマ</span>
     </div>
-    <div class="thesis">価値馬を、期待値で。</div>
+    <div class="thesis">市場が見落とす複勝馬を。</div>
     <div id="raceNav" class="race-nav"></div>
     <div class="meta-row" id="meta"></div>
     <div class="race-title" id="raceTitle"></div>
@@ -132,17 +139,17 @@
   </header>
 
   <div class="legend">
-    <b>メーターの読み方</b>
-    <div class="k"><span class="swatch p"></span><span><b>緑のバー＝推定勝率(p)</b>。カチウマが見積もる「来る確率」。</span></div>
-    <div class="k"><span class="swatch q"></span><span><b>点線＝市場想定勝率(q)</b>。オッズから逆算した確率。</span></div>
-    <div class="k"><span class="swatch" style="background:var(--gold)"></span><span><b>緑が点線を超える＝妙味(edge)</b>。市場より高く評価＝買える根拠。<b>期待値(EV)＞1.0</b>が理論上プラス。</span></div>
+    <b>読み方</b>
+    <div class="k"><span class="swatch g"></span><span><b>金枠＝隠れ複勝候補</b>。実力+騎手評価トップ3なのに4番人気以下の馬。直近288Rの検証で複勝率26%（人気4+全体は12%）・複勝回収110%。カチウマの主役はこれ。</span></div>
+    <div class="k"><span class="swatch m">◎</span><span><b>◎○▲△＝実力+騎手スコア順の印</b>。人気とは独立に付けるため、1番人気に◎が付かないことも多い（仕様）。</span></div>
+    <div class="k"><span class="swatch p"></span><span><b>緑バー＝推定勝率p（単勝）</b>／<b>点線＝市場想定勝率q（単勝）</b>。緑が点線を超えていれば市場より高評価。</span></div>
   </div>
 
   <div id="horses"><div class="loading">読み込み中…</div></div>
   <div id="tickets"></div>
 
   <div class="disclaim">
-    馬券の<b>購入は手動</b>で行ってください（このツールは分析のみ）。期待値はあくまで判断材料で、的中を保証しません。控除率（約20〜30%）があり、継続してプラスにするのは簡単ではありません。<b>馬券は20歳になってから。</b>
+    馬券の<b>購入は手動</b>で行ってください（このツールは分析のみ）。隠れ複勝候補の数字は過去検証値で、将来の的中・回収を保証しません。控除率（約20〜30%）があり、継続してプラスにするのは簡単ではありません。<b>馬券は20歳になってから。</b>
   </div>
   <footer>カチウマ — 個人用・分析専用 / データ: netkeiba（個人利用）</footer>
 </div>
@@ -150,7 +157,7 @@
 <script>
 const P = { idx:"/data/predictions/index.json", dir:"/data/predictions/",
             sIdx:"/data/sample/index.json", sDir:"/data/sample/" };
-let DIR = null, RACES = [], IS_SAMPLE = false;
+let DIR = null, RACES = [], IS_SAMPLE = false, MULTI_DATE = false;
 
 async function getJSON(url){ const r = await fetch(url,{cache:"no-store"}); if(!r.ok) throw 0; return r.json(); }
 
@@ -161,13 +168,21 @@ async function load(){
   DIR = dir;
   RACES = idx.races || [];
   if(!RACES.length){ document.getElementById("horses").innerHTML = "<div class='loading'>レースがありません</div>"; return; }
+  MULTI_DATE = new Set(RACES.map(r=>r.date).filter(Boolean)).size > 1;
   renderNav();
   selectRace(RACES[0].race_id);
 }
 
+function chipLabel(r){
+  const d = (MULTI_DATE && r.date)
+    ? r.date.slice(5).split("-").map(x=>parseInt(x,10)).join("/") + " " : "";
+  const dot = (r.hidden_count > 0) ? `<span class="hdot" title="隠れ複勝候補あり">◆</span>` : "";
+  return `${esc(d)}${esc(r.track||"")}${r.race_no}R${dot}`;
+}
+
 function renderNav(){
   document.getElementById("raceNav").innerHTML = RACES.map(r =>
-    `<button class="chip-race" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${esc(r.track||"")}${r.race_no}R</button>`
+    `<button class="chip-race" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${chipLabel(r)}</button>`
   ).join("");
 }
 
@@ -180,34 +195,59 @@ async function selectRace(rid){
   catch { document.getElementById("horses").innerHTML = "<div class='loading'>このレースを読み込めませんでした</div>"; }
 }
 
+// 並び順: 取消は最後 → 隠れ複勝候補 → 印(◎○▲△) → 実力スコア → 推定勝率
+const MARK_RANK = {"◎":0,"○":1,"▲":2,"△":3};
+function sortKey(h){
+  return [
+    (h.odds_win && h.odds_win > 1) ? 0 : 1,
+    h.hidden_pick ? 0 : 1,
+    MARK_RANK[h.mark] ?? 9,
+    -(h.ability_prob ?? -1),
+    -(h.p_win || 0),
+  ];
+}
+function cmp(a,b){
+  const ka = sortKey(a), kb = sortKey(b);
+  for(let i=0;i<ka.length;i++){ if(ka[i]!==kb[i]) return ka[i]-kb[i]; }
+  return 0;
+}
+
 function renderRace(race){
+  const runners = race.horses.filter(h => h.odds_win && h.odds_win > 1);
+  const cancelled = race.horses.length - runners.length;
+  const hidden = race.hidden_picks || race.horses.filter(h=>h.hidden_pick).map(h=>h.umaban);
+
   document.getElementById("meta").innerHTML =
     `<span class="pill live">● 更新 ${fmtTime(race.updated_at)}</span>` +
-    `<span class="pill">${race.track} ${race.race_no}R</span>` +
-    `<span class="pill">${race.surface} ${race.distance_m}m</span>` +
-    `<span class="pill">馬場 ${race.going}</span>` +
+    `<span class="pill">${esc(race.track)} ${race.race_no}R</span>` +
+    `<span class="pill">${esc(race.surface)} ${race.distance_m}m</span>` +
+    `<span class="pill">馬場 ${esc(race.going)}</span>` +
     (IS_SAMPLE ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">SAMPLE</span>` : "");
   document.getElementById("raceTitle").textContent = race.race_name;
-  document.getElementById("raceSub").textContent =
-    `${race.date} ・ ${race.horses.length}頭 ・ 妙味(EV>1) ${race.horses.filter(h=>h.ev_win>1).length}頭`;
+  document.getElementById("raceSub").innerHTML =
+    `${esc(race.date)} ・ 出走${runners.length}頭` +
+    (cancelled ? `（取消${cancelled}）` : "") +
+    ` ・ 隠れ複勝候補 <b class="num">${hidden.length}</b>頭`;
   const vn = document.getElementById("valueNote");
   vn.textContent = race.value_note || "";
   vn.style.display = race.value_note ? "block" : "none";
-  const maxScale = Math.max(...race.horses.map(h=>Math.max(h.p_win,h.q_win)), 0.4);
+  const maxScale = Math.max(...runners.map(h=>Math.max(h.p_win,h.q_win)), 0.4);
   document.getElementById("horses").innerHTML = race.horses
-    .slice().sort((a,b)=> (b.ev_win||0)-(a.ev_win||0))
+    .slice().sort(cmp)
     .map(h=>card(h, maxScale)).join("");
   renderTickets(race.tickets);
 }
 
 function card(h, scale){
-  const plus = h.ev_win > 1.0;
+  const evPlus = h.ev_win > 1.0;
   const pW = Math.min(100, (h.p_win/scale)*100);
   const qW = Math.min(100, (h.q_win/scale)*100);
   const edgePt = (h.edge*100).toFixed(1);
-  const isValue = plus;
+  // バッジで示す「隠れ複勝候補:」のreasons行は二重表示になるので省く
+  const reasons = (h.reasons||[]).filter(r => !(h.hidden_pick && String(r).startsWith("隠れ複勝候補")));
   return `
-  <div class="horse ${isValue?'value':''}">
+  <div class="horse ${h.hidden_pick?'hidden-pick':''}">
+    ${h.hidden_pick?`<div class="hidden-tag">◆ 隠れ複勝候補</div>`:""}
     <div class="h-top">
       <div class="umaban num">${h.umaban}</div>
       <div class="mark ${h.mark==='◎'?'gold':''}">${h.mark||""}</div>
@@ -222,11 +262,11 @@ function card(h, scale){
     </div>
     <div class="meter">
       <div class="meter-head">
-        <span>推定勝率 <b class="num">${(h.p_win*100).toFixed(1)}%</b> ／ 市場 <b class="num">${(h.q_win*100).toFixed(1)}%</b></span>
-        <span class="ev num ${plus?'plus':'minus'}">EV ${h.ev_win?.toFixed(2)}</span>
+        <span>推定勝率(単勝) <b class="num">${(h.p_win*100).toFixed(1)}%</b> ／ 市場 <b class="num">${(h.q_win*100).toFixed(1)}%</b></span>
+        <span class="ev num ${evPlus?'plus':'minus'}">単勝EV ${h.ev_win?.toFixed(2)}</span>
       </div>
-      <div class="track">
-        <div class="bar-p ${plus?'':'minus'}" style="width:${pW}%"></div>
+      <div class="track" role="img" aria-label="推定勝率${(h.p_win*100).toFixed(1)}%、市場想定${(h.q_win*100).toFixed(1)}%">
+        <div class="bar-p" style="width:${pW}%"></div>
         <div class="qtag" style="left:${qW}%">市場 q</div>
         <div class="qline" style="left:${qW}%"></div>
         <div class="pct num">${(h.p_win*100).toFixed(0)}%</div>
@@ -235,7 +275,7 @@ function card(h, scale){
         ${h.edge>0?`妙味 +${edgePt}pt（市場より高評価）`:`妙味 ${edgePt}pt`}
       </div>
     </div>
-    ${h.reasons?.length?`<ul class="reasons">${h.reasons.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>`:""}
+    ${reasons.length?`<ul class="reasons">${reasons.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>`:""}
   </div>`;
 }
 
@@ -243,8 +283,8 @@ function renderTickets(tickets){
   const el = document.getElementById("tickets");
   if(!tickets || !tickets.length){ el.innerHTML=""; return; }
   el.innerHTML = `<div class="tickets">
-    <h2>買い目候補（EVベース）</h2>
-    <div class="sub">期待値が1.0を超える馬・組合せ。最終判断と購入はご自身で。</div>
+    <h2>買い目候補（単勝EVベース）</h2>
+    <div class="sub">単勝の期待値が1.0を超える馬。控除率の壁でほぼ出ません（出ない日が正常）。最終判断と購入はご自身で。</div>
     ${tickets.map(t=>`
       <div class="ticket">
         <span class="t-type">${esc(t.type)}</span>
