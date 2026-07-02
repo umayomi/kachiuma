@@ -46,7 +46,9 @@ jobs:
               ids = nk.find_race_ids(ds); print(f"[races]{ds}:{len(ids)}")
               for rid in ids:
                   try:
-                      r = nk.parse_result(nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}"), rid)
+                      html = nk.get(f"{nk.BASE_RACE}/race/result.html?race_id={rid}")
+                      r = nk.parse_result(html, rid)
+                      r["_fuku"] = nk.parse_fukusho(html) if hasattr(nk, "parse_fukusho") else {}
                   except Exception as e:
                       print("skip", rid, e); continue
                   r["_date"] = ds; races.append(r)
@@ -142,7 +144,11 @@ jobs:
           FUSE_KEYS = [f"◎融合λ={lam:.1f}" for lam in LAMBDAS]
           KEYS += FUSE_KEYS
           dev = {lam: 0 for lam in LAMBDAS}   # 融合◎が1番人気と違ったレース数
-          S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0} for k in KEYS}
+          S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0, "fb": 0, "fpay": 0.0} for k in KEYS}
+          races_pay = 0   # 複勝払戻が取れたR数（回収率はこの分母でのみ算出）
+          NEW_CS = hasattr(C, "W_EDGE") and hasattr(C, "DECAY_HALF_D")
+          if not NEW_CS:
+              print("!! career_score.py が旧版（W_EDGE/DECAY_HALF_D 無し）→ 新スイープはスキップ")
           n_abst = 0
           jk_races = 0   # 騎手データが1頭でも解決したレース数（umarengod 疎通の確認）
 
@@ -157,6 +163,14 @@ jobs:
           JK_HI_CANDS = [0.0, 2.0, 4.0, 6.0]   # 騎手非線形加点の強さを総当たり（0=現行線形）
           JK_HI_MAIN = 4.0                      # 採用値: メイン指標(指標A/B・◎融合)はこれで評価
           HISW = {c: [0, 0] for c in JK_HI_CANDS}  # 各候補の 指標A [人気4+実力推しの複勝, 頭数]
+          # 払戻集計 [複勝払戻計, 払戻データありの頭数]。回収率% = 払戻計/頭数（100円賭け）
+          mkt4_pay = [0.0, 0]
+          VPAP = {"OFF": [0.0, 0], "ON": [0.0, 0]}
+          HISWP = {c: [0.0, 0] for c in JK_HI_CANDS}
+          EDGE_CANDS = [0.0, 0.2, 0.4, 0.8]     # 格上挑戦ペナルティ W_EDGE（0=現行）
+          DECAY_CANDS = [None, 720, 365, 180]   # 時間減衰 半減期(日)（None=現行・全走等価）
+          EDSW = {c: [0, 0] for c in EDGE_CANDS};  EDSWP = {c: [0.0, 0] for c in EDGE_CANDS}
+          DCSW = {c: [0, 0] for c in DECAY_CANDS}; DCSWP = {c: [0.0, 0] for c in DECAY_CANDS}
           def _jrbucket(jr):
               if jr is None: return "jr不明"
               if jr < 0.25: return "jr<0.25"
@@ -164,10 +178,13 @@ jobs:
               if jr < 0.35: return "0.30-0.35"
               return "jr>=0.35"
 
-          def bet(name, u, by):
+          def bet(name, u, by, fuku=None):
               s = S[name]; s["b"] += 1; fp = by[u]["finish_pos"]
               if fp and fp <= 3: s["t3"] += 1
               if fp == 1: s["w"] += 1; s["pay"] += UNIT * by[u]["odds_win"]
+              if fuku:                        # 払戻が取れたレースのみ複勝回収率に算入
+                  s["fb"] += 1
+                  if fp and fp <= 3: s["fpay"] += fuku.get(u, 0)
 
           for r in races:
               ds = r["_date"]
@@ -189,8 +206,11 @@ jobs:
               C.W_JK_HI = 0.0
 
               by = {h["umaban"]: h for h in rated}
+              fuku = r.get("_fuku") or None
+              if fuku:
+                  races_pay += 1
               fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
-              bet("1番人気(基準)", fav, by)
+              bet("1番人気(基準)", fav, by, fuku)
 
               # --- 本番predict と同じ融合で LAMBDA を総当たり（◎=融合p最大） ---
               fvals = {u: math.log(probs_j[u]) for u in probs_j if probs_j[u] > 0}
@@ -200,7 +220,7 @@ jobs:
                       base = {u: (q[u] ** TAU) * math.exp(lam * (fvals[u] - mean_f))
                               for u in fvals}
                       topf = max(base, key=lambda u: base[u])
-                      bet(f"◎融合λ={lam:.1f}", topf, by)
+                      bet(f"◎融合λ={lam:.1f}", topf, by, fuku)
                       if topf != fav:
                           dev[lam] += 1
 
@@ -216,6 +236,10 @@ jobs:
                       mkt4[1] += 1
                       if by[u]["finish_pos"] <= 3:
                           mkt4[0] += 1
+                      if fuku:
+                          mkt4_pay[1] += 1
+                          if by[u]["finish_pos"] <= 3:
+                              mkt4_pay[0] += fuku.get(u, 0)
               hidden = {u for u in by if pop[u] >= 4 and by[u]["finish_pos"] <= 3}  # 隠れ複勝馬
               for u in by:                                   # 人気4+ を実jrで層別→3着内率
                   if pop[u] >= 4:
@@ -231,6 +255,10 @@ jobs:
                       VPA[tag][1] += 1
                       if by[u]["finish_pos"] <= 3:
                           VPA[tag][0] += 1
+                      if fuku:
+                          VPAP[tag][1] += 1
+                          if by[u]["finish_pos"] <= 3:
+                              VPAP[tag][0] += fuku.get(u, 0)
                       if tag == "ON":                        # 騎手が解決できていたか
                           vp_jk[1] += 1
                           if u in jk_by:
@@ -239,45 +267,66 @@ jobs:
                   VPB[tag][1] += len(hidden)
 
               # === 騎手非線形加点 W_JK_HI のスイープ（指標A=人気4+実力推しの複勝率）===
+              def _sweep_pick(pc, HIT, PAY):
+                  for u in sorted(evaluable, key=lambda u: -pc[u])[:3]:
+                      if pop[u] >= 4:
+                          HIT[1] += 1
+                          if by[u]["finish_pos"] <= 3:
+                              HIT[0] += 1
+                          if fuku:
+                              PAY[1] += 1
+                              if by[u]["finish_pos"] <= 3:
+                                  PAY[0] += fuku.get(u, 0)
               for c in JK_HI_CANDS:
                   C.W_JK_HI = c
                   pc, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
-                  top3c = sorted(evaluable, key=lambda u: -pc[u])[:3]
-                  for u in top3c:
-                      if pop[u] >= 4:
-                          HISW[c][1] += 1
-                          if by[u]["finish_pos"] <= 3:
-                              HISW[c][0] += 1
+                  _sweep_pick(pc, HISW[c], HISWP[c])
+              # === 格上挑戦ペナルティ W_EDGE / 時間減衰 のスイープ（騎手ON=採用値で固定） ===
+              if NEW_CS:
+                  C.W_JK_HI = JK_HI_MAIN
+                  for c in EDGE_CANDS:
+                      C.W_EDGE = c
+                      pc, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
+                      _sweep_pick(pc, EDSW[c], EDSWP[c])
+                  C.W_EDGE = 0.0
+                  for c in DECAY_CANDS:
+                      C.DECAY_HALF_D = c
+                      pc, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
+                      _sweep_pick(pc, DCSW[c], DCSWP[c])
+                  C.DECAY_HALF_D = None
               C.W_JK_HI = 0.0   # 既定に戻す（他指標は線形=現行のまま）
 
               # --- 騎手なし（現行ロジックそのまま＝回帰ガード） ---
               top = max(evaluable, key=lambda u: probs_nj[u])
-              bet("実力上位(複勝)", top, by)
+              bet("実力上位(複勝)", top, by, fuku)
               if top == fav:
-                  bet("信頼本命(実力上位=1番人気)", top, by)
+                  bet("信頼本命(実力上位=1番人気)", top, by, fuku)
               for u in evaluable:
                   if probs_nj[u] - q.get(u, 0) >= GAP:
-                      bet("妙味(実力-市場≥5%)", u, by)
+                      bet("妙味(実力-市場≥5%)", u, by, fuku)
 
               # --- 騎手込み ---
               topj = max(evaluable, key=lambda u: probs_j[u])
-              bet("実力上位+騎手(複勝)", topj, by)
+              bet("実力上位+騎手(複勝)", topj, by, fuku)
               if topj == fav:
-                  bet("信頼本命+騎手", topj, by)
+                  bet("信頼本命+騎手", topj, by, fuku)
               for u in evaluable:
                   if probs_j[u] - q.get(u, 0) >= GAP:
-                      bet("妙味+騎手(実力-市場≥5%)", u, by)
+                      bet("妙味+騎手(実力-市場≥5%)", u, by, fuku)
 
           def pct(a, b):
               return f"{a/b*100:5.1f}%" if b else "  -  "
+          def rec(p):
+              return f"複回収{p[0]/p[1]:5.1f}%" if p[1] else "複回収  -  "
           base4 = mkt4[0] / mkt4[1] * 100 if mkt4[1] else 0.0
           L = [f"全キャリア実証: テスト{len(races)}R / カバレッジ{got}/{len(hids)}頭 / MIN_DATA={MIN_DATA}",
                f"（実力上位がデータ不足で見送り: {n_abst}R / 騎手データ解決: {jk_races}R）", "",
                "■ 目的指標: 市場が見落とす『人気4+の3着内(隠れ複勝馬)』を実力+騎手で拾えるか",
-               f"  ベースライン 人気4+ の複勝率: {base4:.1f}%  ({mkt4[0]}/{mkt4[1]})",
+               f"  複勝払戻の取得: {races_pay}/{len(races)}R（複勝回収率はこのレースのみで算出・100円賭け）",
+               f"  ベースライン 人気4+ の複勝率: {base4:.1f}%  ({mkt4[0]}/{mkt4[1]})  {rec(mkt4_pay)}",
                "  指標A: 実力top3に入った人気4+馬の複勝率（市場非推しの実力推し）",
-               f"    騎手OFF: {pct(*VPA['OFF'])} ({VPA['OFF'][0]}/{VPA['OFF'][1]})  ベース比 {VPA['OFF'][0]/VPA['OFF'][1]*100-base4:+.1f}pt" if VPA['OFF'][1] else "    騎手OFF: 該当なし",
-               f"    騎手ON : {pct(*VPA['ON'])} ({VPA['ON'][0]}/{VPA['ON'][1]})  ベース比 {VPA['ON'][0]/VPA['ON'][1]*100-base4:+.1f}pt" if VPA['ON'][1] else "    騎手ON : 該当なし",
+               f"    騎手OFF: {pct(*VPA['OFF'])} ({VPA['OFF'][0]}/{VPA['OFF'][1]})  ベース比 {VPA['OFF'][0]/VPA['OFF'][1]*100-base4:+.1f}pt  {rec(VPAP['OFF'])}" if VPA['OFF'][1] else "    騎手OFF: 該当なし",
+               f"    騎手ON : {pct(*VPA['ON'])} ({VPA['ON'][0]}/{VPA['ON'][1]})  ベース比 {VPA['ON'][0]/VPA['ON'][1]*100-base4:+.1f}pt  {rec(VPAP['ON'])}" if VPA['ON'][1] else "    騎手ON : 該当なし",
                "  指標B: 隠れ複勝馬をモデルtop3で捕捉できた割合(recall)",
                f"    騎手OFF: {pct(*VPB['OFF'])} ({VPB['OFF'][0]}/{VPB['OFF'][1]})    騎手ON: {pct(*VPB['ON'])} ({VPB['ON'][0]}/{VPB['ON'][1]})",
                f"  実力推し(人気4+)で騎手が解決できた割合: {pct(*vp_jk)} ({vp_jk[0]}/{vp_jk[1]})  ←低いほどロブチェン型0点の取りこぼし", "",
@@ -286,17 +335,26 @@ jobs:
                  for b in ["jr不明", "jr<0.25", "0.25-0.30", "0.30-0.35", "jr>=0.35"]],
                "    → 高jr層ほど3着内率が高ければ騎手信号は本物。騎手項の強化に進む。平坦ならproxyのリーク。", "",
                "  ◆ 騎手非線形加点 W_JK_HI スイープ（指標A=人気4+実力推しの複勝率。ベース比が伸びる値を採用）:",
-               *[f"    W_JK_HI={c:<4}: {pct(*HISW[c])} ({HISW[c][0]}/{HISW[c][1]})  ベース比 {HISW[c][0]/HISW[c][1]*100-base4:+.1f}pt"
+               *[f"    W_JK_HI={c:<4}: {pct(*HISW[c])} ({HISW[c][0]}/{HISW[c][1]})  ベース比 {HISW[c][0]/HISW[c][1]*100-base4:+.1f}pt  {rec(HISWP[c])}"
                  if HISW[c][1] else f"    W_JK_HI={c:<4}: 該当なし" for c in JK_HI_CANDS],
                "    → W_JK_HI=0 は現行線形。ベース比が最大になる値が採用候補（過剰なら頭数が増え率が落ちる）。", "",
+               "  ◆ 格上挑戦ペナルティ W_EDGE スイープ（指標A・騎手ON固定。0.0=現行）:",
+               *([f"    W_EDGE={c:<4}: {pct(*EDSW[c])} ({EDSW[c][0]}/{EDSW[c][1]})  ベース比 {EDSW[c][0]/EDSW[c][1]*100-base4:+.1f}pt  {rec(EDSWP[c])}"
+                  if EDSW[c][1] else f"    W_EDGE={c:<4}: 該当なし" for c in EDGE_CANDS] if NEW_CS else ["    （career_score旧版のためスキップ）"]),
+               "    → 今日のクラス未証明分を追加減点。複勝率と複回収の両方が0.0を上回る値のみ採用候補。", "",
+               "  ◆ 時間減衰 半減期スイープ（指標A・騎手ON固定。None=現行・全走等価）:",
+               *([f"    半減期={str(c):<5}: {pct(*DCSW[c])} ({DCSW[c][0]}/{DCSW[c][1]})  ベース比 {DCSW[c][0]/DCSW[c][1]*100-base4:+.1f}pt  {rec(DCSWP[c])}"
+                  if DCSW[c][1] else f"    半減期={str(c):<5}: 該当なし" for c in DECAY_CANDS] if NEW_CS else ["    （career_score旧版のためスキップ）"]),
+               "    → 近走を重視するほど良いか。複勝率と複回収の両方がNoneを上回る値のみ採用候補。", "",
                "■ 参考: ◎1点・妙味など（◎は市場が強く、実力での上書きは複勝率を上げない）",
-               f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}"]
+               f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}{'複回収率':>9}"]
           for k in KEYS:
               s = S[k]
               if s["b"] == 0:
                   L.append(f"{k:<28}{'0':>5}  （該当なし）"); continue
+              fr = f"{s['fpay']/s['fb']:>8.1f}%" if s["fb"] else f"{'-':>9}"
               L.append(f"{k:<28}{s['b']:>5}{s['t3']/s['b']*100:>7.1f}%"
-                       f"{s['w']/s['b']*100:>7.1f}%{s['pay']/(s['b']*UNIT)*100:>8.1f}%")
+                       f"{s['w']/s['b']*100:>7.1f}%{s['pay']/(s['b']*UNIT)*100:>8.1f}%{fr}")
           L += ["",
                 "◎融合 = 本番predictと同じ q^TAU×実力^LAMBDA の◎。λ別の複勝率を比較。",
                 "λ=0.0 は市場のみ(≒1番人気)。λを上げるほど実力寄り。市場(λ=0)を複勝率で",
