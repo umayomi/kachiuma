@@ -7,9 +7,13 @@
   "distance_m": 1800,
   "surface": "芝",
   "going": "良",
-  "updated_at": "2026-07-01T16:03:50+09:00",
+  "updated_at": "2026-07-02T23:21:38+09:00",
   "market_overround": 1.257,
-  "value_note": "妙味のある馬 3頭（EV≧1.0）。",
+  "value_note": "隠れ複勝候補: 14番・7番。 妙味のある馬 3頭（EV≧1.0）。",
+  "hidden_picks": [
+    14,
+    7
+  ],
   "horses": [
     {
       "umaban": 1,
@@ -33,6 +37,7 @@
       },
       "form_score": -3.6449,
       "ability_prob": 0.0261,
+      "ability_n_data": 3,
       "q_win": 0.0884,
       "p_win": 0.0607,
       "ev_win": 0.546,
@@ -66,6 +71,7 @@
       },
       "form_score": -3.9766,
       "ability_prob": 0.0187,
+      "ability_n_data": 2,
       "q_win": 0.0428,
       "p_win": 0.0216,
       "ev_win": 0.402,
@@ -99,6 +105,7 @@
       },
       "form_score": -3.0501,
       "ability_prob": 0.0474,
+      "ability_n_data": 9,
       "q_win": 0.0717,
       "p_win": 0.0681,
       "ev_win": 0.756,
@@ -132,6 +139,7 @@
       },
       "form_score": -4.5475,
       "ability_prob": 0.0106,
+      "ability_n_data": 9,
       "q_win": 0.0134,
       "p_win": 0.004,
       "ev_win": 0.238,
@@ -165,6 +173,7 @@
       },
       "form_score": -3.3973,
       "ability_prob": 0.0335,
+      "ability_n_data": 3,
       "q_win": 0.1421,
       "p_win": 0.1215,
       "ev_win": 0.68,
@@ -198,6 +207,7 @@
       },
       "form_score": -3.8994,
       "ability_prob": 0.0203,
+      "ability_n_data": 9,
       "q_win": 0.102,
       "p_win": 0.0614,
       "ev_win": 0.479,
@@ -231,6 +241,7 @@
       },
       "form_score": -1.7442,
       "ability_prob": 0.1748,
+      "ability_n_data": 5,
       "q_win": 0.01,
       "p_win": 0.0155,
       "ev_win": 1.228,
@@ -239,8 +250,10 @@
       "reasons": [
         "実力+騎手スコア 17.5%・2番手評価",
         "15番人気 / EV 1.228（理論上プラス＝妙味 +0.5pt）",
-        "近走: 上がり最速34.1 / 追込 / 当条件近走3走（実力で上積み評価）"
-      ]
+        "近走: 上がり最速34.1 / 追込 / 当条件近走3走（実力で上積み評価）",
+        "隠れ複勝候補: 実力+騎手2番手評価なのに15番人気（市場の見落とし筋・検証で複勝率2倍超）"
+      ],
+      "hidden_pick": true
     },
     {
       "umaban": 8,
@@ -264,6 +277,7 @@
       },
       "form_score": -3.9457,
       "ability_prob": 0.0193,
+      "ability_n_data": 4,
       "q_win": 0.0568,
       "p_win": 0.0304,
       "ev_win": 0.426,
@@ -297,6 +311,7 @@
       },
       "form_score": -4.0352,
       "ability_prob": 0.0177,
+      "ability_n_data": 9,
       "q_win": 0.0428,
       "p_win": 0.0208,
       "ev_win": 0.387,
@@ -330,6 +345,7 @@
       },
       "form_score": -2.4938,
       "ability_prob": 0.0826,
+      "ability_n_data": 7,
       "q_win": 0.0052,
       "p_win": 0.0047,
       "ev_win": 0.713,
@@ -363,6 +379,7 @@
       },
       "form_score": -3.5545,
       "ability_prob": 0.0286,
+      "ability_n_data": 6,
       "q_win": 0.0293,
       "p_win": 0.018,
       "ev_win": 0.49,
@@ -396,6 +413,7 @@
       },
       "form_score": -1.9052,
       "ability_prob": 0.1488,
+      "ability_n_data": 6,
       "q_win": 0.1263,
       "p_win": 0.2596,
       "ev_win": 1.635,
@@ -429,6 +447,7 @@
       },
       "form_score": -3.499,
       "ability_prob": 0.0302,
+      "ability_n_data": 6,
       "q_win": 0.1474,
       "p_win": 0.1192,
       "ev_win": 0.644,
@@ -462,6 +481,7 @@
       },
       "form_score": -1.36,
       "ability_prob": 0.2567,
+      "ability_n_data": 3,
       "q_win": 0.0577,
       "p_win": 0.1463,
       "ev_win": 2.019,
@@ -470,8 +490,10 @@
       "reasons": [
         "実力+騎手スコア 25.7%・1番手評価",
         "7番人気 / EV 2.019（理論上プラス＝妙味 +8.9pt）",
-        "近走: 上がり最速33.8 / 差し / 当条件近走2走（実力で上積み評価）"
-      ]
+        "近走: 上がり最速33.8 / 差し / 当条件近走2走（実力で上積み評価）",
+        "隠れ複勝候補: 実力+騎手1番手評価なのに7番人気（市場の見落とし筋・検証で複勝率2倍超）"
+      ],
+      "hidden_pick": true
     },
     {
       "umaban": 15,
@@ -495,6 +517,7 @@
       },
       "form_score": -2.8892,
       "ability_prob": 0.0556,
+      "ability_n_data": 5,
       "q_win": 0.0273,
       "p_win": 0.0247,
       "ev_win": 0.719,
@@ -528,6 +551,7 @@
       },
       "form_score": -3.534,
       "ability_prob": 0.0292,
+      "ability_n_data": 6,
       "q_win": 0.0367,
       "p_win": 0.0236,
       "ev_win": 0.512,

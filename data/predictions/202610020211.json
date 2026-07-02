@@ -7,9 +7,12 @@
   "distance_m": 1200,
   "surface": "芝",
   "going": "良",
-  "updated_at": "2026-07-01T16:03:50+09:00",
+  "updated_at": "2026-07-02T23:21:38+09:00",
   "market_overround": 1.269,
-  "value_note": "妙味のある馬 1頭（EV≧1.0）。",
+  "value_note": "隠れ複勝候補: 7番。 妙味のある馬 1頭（EV≧1.0）。",
+  "hidden_picks": [
+    7
+  ],
   "horses": [
     {
       "umaban": 1,
@@ -33,6 +36,7 @@
       },
       "form_score": -2.8354,
       "ability_prob": 0.0587,
+      "ability_n_data": 17,
       "q_win": 0.0313,
       "p_win": 0.0134,
       "ev_win": 0.338,
@@ -66,6 +70,7 @@
       },
       "form_score": -2.8506,
       "ability_prob": 0.0578,
+      "ability_n_data": 20,
       "q_win": 0.0515,
       "p_win": 0.0235,
       "ev_win": 0.36,
@@ -99,6 +104,7 @@
       },
       "form_score": -2.0086,
       "ability_prob": 0.1342,
+      "ability_n_data": 14,
       "q_win": 0.063,
       "p_win": 0.0491,
       "ev_win": 0.614,
@@ -132,6 +138,7 @@
       },
       "form_score": -2.5551,
       "ability_prob": 0.0777,
+      "ability_n_data": 23,
       "q_win": 0.0616,
       "p_win": 0.0345,
       "ev_win": 0.442,
@@ -165,6 +172,7 @@
       },
       "form_score": -2.5927,
       "ability_prob": 0.0748,
+      "ability_n_data": 27,
       "q_win": 0.0352,
       "p_win": 0.0177,
       "ev_win": 0.396,
@@ -198,6 +206,7 @@
       },
       "form_score": -2.9153,
       "ability_prob": 0.0542,
+      "ability_n_data": 18,
       "q_win": 0.4378,
       "p_win": 0.265,
       "ev_win": 0.477,
@@ -231,6 +240,7 @@
       },
       "form_score": -2.5112,
       "ability_prob": 0.0812,
+      "ability_n_data": 13,
       "q_win": 0.0383,
       "p_win": 0.0205,
       "ev_win": 0.422,
@@ -239,8 +249,10 @@
       "reasons": [
         "実力+騎手スコア 8.1%・3番手評価",
         "6番人気 / EV 0.422（やや過剰人気・妙味なし）",
-        "近走: 上がり最速33.3 / 差し / 当条件近走4走（実力面はやや割引）"
-      ]
+        "近走: 上がり最速33.3 / 差し / 当条件近走4走（実力面はやや割引）",
+        "隠れ複勝候補: 実力+騎手3番手評価なのに6番人気（市場の見落とし筋・検証で複勝率2倍超）"
+      ],
+      "hidden_pick": true
     },
     {
       "umaban": 8,
@@ -264,6 +276,7 @@
       },
       "form_score": -0.7734,
       "ability_prob": 0.4615,
+      "ability_n_data": 19,
       "q_win": 0.2814,
       "p_win": 0.5763,
       "ev_win": 1.614,
