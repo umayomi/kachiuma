@@ -247,6 +247,35 @@ def parse_shutuba(html: str, race_id: str, odds_map: dict[int, float] | None = N
     return race
 
 
+def parse_fukusho(html: str) -> dict[int, int]:
+    """結果ページから複勝払戻 {馬番: 100円あたりの払戻円} を抽出。
+    race.netkeiba (tr.Fukusho) と db.netkeiba (先頭セルが「複勝」の行) の両形式に対応。
+    馬番列=全て1..18の数列、払戻列=「円」を含む or 全て100以上、で列を内容判別する
+    （人気列も1..18なので、馬番は最初に該当した列を採用）。
+    取れなければ {} を返す（呼び出し側はそのレースを回収率集計から除外する）。"""
+    soup = BeautifulSoup(html, "lxml")
+    rows = soup.select("tr.Fukusho")
+    if not rows:
+        rows = []
+        for tr in soup.find_all("tr"):
+            c = tr.find(["th", "td"])
+            if c is not None and c.get_text(strip=True) == "複勝":
+                rows.append(tr)
+    for tr in rows:
+        cols = []
+        for td in tr.find_all("td"):
+            txt = td.get_text("\n")
+            nums = [int(m.replace(",", "")) for m in re.findall(r"[\d,]+", txt)]
+            nums = [n for n in nums if n > 0]
+            cols.append((nums, "円" in txt))
+        uma = next((n for n, _ in cols if n and all(1 <= x <= 18 for x in n)), None)
+        pay = next((n for n, en in cols
+                    if n and n is not uma and (en or all(x >= 100 for x in n))), None)
+        if uma and pay and len(uma) == len(pay):
+            return dict(zip(uma, pay))
+    return {}
+
+
 def get_win_odds(race_id: str) -> dict[int, float]:
     """単勝オッズをAPIから取得。{馬番: オッズ}。失敗時は空。"""
     url = f"{BASE_RACE}/api/api_get_jra_odds.html?race_id={race_id}&type=1&action=init"
