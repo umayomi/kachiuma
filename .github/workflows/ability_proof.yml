@@ -165,6 +165,14 @@ jobs:
           HISW = {c: [0, 0] for c in JK_HI_CANDS}  # 各候補の 指標A [人気4+実力推しの複勝, 頭数]
           # 払戻集計 [複勝払戻計, 払戻データありの頭数]。回収率% = 払戻計/頭数（100円賭け）
           mkt4_pay = [0.0, 0]
+          BKS = ["新馬・未勝利", "条件戦(1-3勝)", "OP・重賞", "クラス不明"]
+          def _bk(c):
+              if not c: return "クラス不明"
+              return "新馬・未勝利" if c <= 1 else ("条件戦(1-3勝)" if c <= 4 else "OP・重賞")
+          NRB = {b: 0 for b in BKS}                    # 層ごとのR数
+          BASE_S = {b: [0, 0] for b in BKS}            # 層内ベースライン(人気4+)
+          STRA = {b: [0, 0] for b in BKS}              # 層別 指標A(騎手ON)
+          STRAP = {b: [0.0, 0] for b in BKS}           # 層別 複勝払戻
           VPAP = {"OFF": [0.0, 0], "ON": [0.0, 0]}
           HISWP = {c: [0.0, 0] for c in JK_HI_CANDS}
           EDGE_CANDS = [0.0, 0.2, 0.4, 0.8]     # 格上挑戦ペナルティ W_EDGE（0=現行）
@@ -209,6 +217,8 @@ jobs:
               fuku = r.get("_fuku") or None
               if fuku:
                   races_pay += 1
+              rbk = _bk(r.get("race_class"))
+              NRB[rbk] += 1
               fav = min(rated, key=lambda h: h["odds_win"])["umaban"]
               bet("1番人気(基準)", fav, by, fuku)
 
@@ -240,6 +250,9 @@ jobs:
                           mkt4_pay[1] += 1
                           if by[u]["finish_pos"] <= 3:
                               mkt4_pay[0] += fuku.get(u, 0)
+                      BASE_S[rbk][1] += 1
+                      if by[u]["finish_pos"] <= 3:
+                          BASE_S[rbk][0] += 1
               hidden = {u for u in by if pop[u] >= 4 and by[u]["finish_pos"] <= 3}  # 隠れ複勝馬
               for u in by:                                   # 人気4+ を実jrで層別→3着内率
                   if pop[u] >= 4:
@@ -259,6 +272,14 @@ jobs:
                           VPAP[tag][1] += 1
                           if by[u]["finish_pos"] <= 3:
                               VPAP[tag][0] += fuku.get(u, 0)
+                      if tag == "ON":
+                          STRA[rbk][1] += 1
+                          if by[u]["finish_pos"] <= 3:
+                              STRA[rbk][0] += 1
+                          if fuku:
+                              STRAP[rbk][1] += 1
+                              if by[u]["finish_pos"] <= 3:
+                                  STRAP[rbk][0] += fuku.get(u, 0)
                       if tag == "ON":                        # 騎手が解決できていたか
                           vp_jk[1] += 1
                           if u in jk_by:
@@ -334,6 +355,13 @@ jobs:
                *[f"    {b:<10}: {pct(*JRB[b])} ({JRB[b][0]}/{JRB[b][1]})"
                  for b in ["jr不明", "jr<0.25", "0.25-0.30", "0.30-0.35", "jr>=0.35"]],
                "    → 高jr層ほど3着内率が高ければ騎手信号は本物。騎手項の強化に進む。平坦ならproxyのリーク。", "",
+               "  ◆ レースクラス層別（指標A・騎手ON。バッジが重賞でも通用するかの審判）:",
+               *[(f"    {b:<10}: {NRB[b]:>3}R  層内ベース {pct(*BASE_S[b])} → 指標A {pct(*STRA[b])} "
+                  f"({STRA[b][0]}/{STRA[b][1]})  "
+                  f"{'ベース比 %+.1fpt  ' % (STRA[b][0]/STRA[b][1]*100 - BASE_S[b][0]/BASE_S[b][1]*100) if STRA[b][1] and BASE_S[b][1] else ''}"
+                  f"{rec(STRAP[b])}")
+                 for b in BKS if NRB[b]],
+               "    → 層内ベースを上回れない層があれば、その層でのバッジ表示を再検討。", "",
                "  ◆ 騎手非線形加点 W_JK_HI スイープ（指標A=人気4+実力推しの複勝率。ベース比が伸びる値を採用）:",
                *[f"    W_JK_HI={c:<4}: {pct(*HISW[c])} ({HISW[c][0]}/{HISW[c][1]})  ベース比 {HISW[c][0]/HISW[c][1]*100-base4:+.1f}pt  {rec(HISWP[c])}"
                  if HISW[c][1] else f"    W_JK_HI={c:<4}: 該当なし" for c in JK_HI_CANDS],
