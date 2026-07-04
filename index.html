@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#12211A" />
+<meta name="description" content="カチウマ — 市場が見落とす複勝馬（隠れ複勝候補）を実力+騎手スコアで拾う個人用予想サイト" />
 <title>カチウマ — 市場が見落とす複勝馬を。</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,6 +48,28 @@
   .value-note{font-size:12.5px;color:var(--paper-2);background:var(--ground-2);
     border:1px solid var(--ground-edge);border-radius:10px;padding:10px 12px;margin:13px 0 0}
 
+  /* ---- daily digest (本日の隠れ複勝候補) ---- */
+  .digest{background:var(--ground-2);border:1px solid rgba(203,161,74,.45);border-radius:var(--r);
+    padding:13px 14px;margin:14px 0 0}
+  .digest h2{font-size:14px;margin:0 0 2px;color:var(--gold);letter-spacing:.05em}
+  .digest .d-sub{font-size:11.5px;color:var(--ink-faint);margin-bottom:8px}
+  .d-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;cursor:pointer;
+    background:transparent;border:0;border-top:1px solid var(--ground-edge);padding:9px 2px;color:var(--paper)}
+  .d-item:first-of-type{border-top:0}
+  .d-race{font-family:"Oswald";font-size:12.5px;color:var(--paper-2);flex:0 0 auto;min-width:74px}
+  .d-uma{font-family:"Oswald";font-weight:700;font-size:14px;width:26px;height:26px;flex:0 0 auto;
+    display:grid;place-items:center;border-radius:6px;background:var(--gold);color:#1a1a17}
+  .d-name{font-weight:700;font-size:13.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .d-pop{font-size:11.5px;color:var(--ink-faint);flex:0 0 auto}
+  .d-none{font-size:12.5px;color:var(--paper-2);padding:4px 0}
+
+  .stale{background:rgba(210,103,78,.12);border:1px solid rgba(210,103,78,.5);border-radius:10px;
+    padding:9px 12px;font-size:12px;color:var(--paper-2);margin:13px 0 0}
+
+  .horse.cxl{opacity:.55;padding:10px 14px}
+  .horse.cxl .h-top{gap:11px}
+  .cxl-note{font-size:12px;color:var(--ink-soft);flex:0 0 auto}
+
   /* ---- legend (the "わかる" key) ---- */
   .legend{background:var(--ground-2);border:1px solid var(--ground-edge);border-radius:var(--r);
     padding:13px 14px;margin:16px 0;font-size:12.5px;color:var(--paper-2)}
@@ -56,7 +80,16 @@
   .swatch.g{background:var(--gold)}
   .swatch.m{background:transparent;color:var(--gold);border:0;font-size:13px;line-height:13px;text-align:center}
 
-  /* ---- race nav (全レース切替) ---- */
+  /* ---- track tabs (競馬場選択・1段目) ---- */
+  .track-tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+  .track-tabs::-webkit-scrollbar{display:none}
+  .chip-track{flex:0 0 auto;font-weight:700;font-size:14px;letter-spacing:.03em;color:var(--paper-2);
+    background:var(--ground-2);border:1px solid var(--ground-edge);border-radius:11px;padding:9px 15px;cursor:pointer;white-space:nowrap}
+  .chip-track.on{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .chip-track .hdot{color:var(--gold);font-size:12px;margin-left:4px}
+  .chip-track.on .hdot{color:var(--gold-deep)}
+
+  /* ---- race nav (選択場のR切替・2段目) ---- */
   .race-nav{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .race-nav::-webkit-scrollbar{display:none}
   .chip-race{flex:0 0 auto;font-family:"Oswald";font-size:13px;letter-spacing:.02em;color:var(--paper-2);
@@ -131,16 +164,19 @@
       <h1>KACHIUMA</h1><span class="ja">カチウマ</span>
     </div>
     <div class="thesis">市場が見落とす複勝馬を。</div>
+    <div id="trackTabs" class="track-tabs"></div>
     <div id="raceNav" class="race-nav"></div>
     <div class="meta-row" id="meta"></div>
     <div class="race-title" id="raceTitle"></div>
     <div class="race-sub" id="raceSub"></div>
     <div class="value-note" id="valueNote" style="display:none"></div>
+    <div id="stale"></div>
+    <div id="digest"></div>
   </header>
 
   <div class="legend">
     <b>読み方</b>
-    <div class="k"><span class="swatch g"></span><span><b>金枠＝隠れ複勝候補</b>。実力+騎手評価トップ3なのに4番人気以下の馬。直近288Rの検証で複勝率26%（人気4+全体は12%）・複勝回収110%。カチウマの主役はこれ。</span></div>
+    <div class="k"><span class="swatch g"></span><span><b>金枠＝隠れ複勝候補</b>。実力+騎手評価トップ3なのに4番人気以下の馬。検証312Rで複勝率25%（人気4+全体13%）、ベタ買いを大きく上回る成績。優位が確認できた新馬・未勝利／条件戦のみ表示（重賞・OPは対象外）。</span></div>
     <div class="k"><span class="swatch m">◎</span><span><b>◎○▲△＝実力+騎手スコア順の印</b>。人気とは独立に付けるため、1番人気に◎が付かないことも多い（仕様）。</span></div>
     <div class="k"><span class="swatch p"></span><span><b>緑バー＝推定勝率p（単勝）</b>／<b>点線＝市場想定勝率q（単勝）</b>。緑が点線を超えていれば市場より高評価。</span></div>
   </div>
@@ -158,6 +194,11 @@
 const P = { idx:"/data/predictions/index.json", dir:"/data/predictions/",
             sIdx:"/data/sample/index.json", sDir:"/data/sample/" };
 let DIR = null, RACES = [], IS_SAMPLE = false, MULTI_DATE = false;
+const RACE_CACHE = {};
+async function getRace(rid){
+  if(!RACE_CACHE[rid]) RACE_CACHE[rid] = await getJSON(DIR + rid + ".json");
+  return RACE_CACHE[rid];
+}
 
 async function getJSON(url){ const r = await fetch(url,{cache:"no-store"}); if(!r.ok) throw 0; return r.json(); }
 
@@ -170,28 +211,102 @@ async function load(){
   if(!RACES.length){ document.getElementById("horses").innerHTML = "<div class='loading'>レースがありません</div>"; return; }
   MULTI_DATE = new Set(RACES.map(r=>r.date).filter(Boolean)).size > 1;
   renderNav();
+  renderStale();
+  renderDigest();   // 非同期・待たない
   selectRace(RACES[0].race_id);
 }
 
-function chipLabel(r){
+function renderStale(){
+  const dates = RACES.map(r=>r.date).filter(Boolean).sort();
+  if(!dates.length) return;
+  const jst = new Date(Date.now() + 9*3600*1000).toISOString().slice(0,10);
+  if(dates[dates.length-1] < jst){
+    document.getElementById("stale").innerHTML =
+      `<div class="stale">※ 表示中は <b>${esc(dates[dates.length-1])}</b> の予想です（次の開催日の朝に更新されます）</div>`;
+  }
+}
+
+async function renderDigest(){
+  const el = document.getElementById("digest");
+  const targets = RACES.filter(r => r.hidden_count > 0);
+  if(!targets.length){
+    el.innerHTML = `<div class="digest"><h2>◆ 本日の隠れ複勝候補</h2>
+      <div class="d-none">該当なし。無い日は「無い」が正解（無理に候補は作りません）。</div></div>`;
+    return;
+  }
+  const loaded = await Promise.all(targets.map(r => getRace(r.race_id).catch(() => null)));
+  const items = [];
+  loaded.forEach((race, i) => {
+    if(!race) return;
+    const meta = targets[i];
+    const label = `${MULTI_DATE && meta.date ? meta.date.slice(5).split("-").map(x=>parseInt(x,10)).join("/")+" " : ""}${meta.track||""}${meta.race_no}R`;
+    for(const h of race.horses || []){
+      if(h.hidden_pick){
+        items.push(`<button class="d-item" onclick="selectRace('${meta.race_id}')">
+          <span class="d-race num">${esc(label)}</span><span class="d-uma num">${h.umaban}</span>
+          <span class="d-name">${esc(h.name)}</span>
+          <span class="d-pop">${h.popularity?h.popularity+"番人気":""}・${h.odds_win?.toFixed(1) ?? "-"}倍</span>
+        </button>`);
+      }
+    }
+  });
+  el.innerHTML = `<div class="digest"><h2>◆ 本日の隠れ複勝候補 ${items.length}頭</h2>
+    <div class="d-sub">実力+騎手トップ3 × 4番人気以下（新馬・未勝利／条件戦のみ）。タップでレースへ。</div>
+    ${items.join("")}</div>`;
+}
+
+let ACTIVE_GROUP = null, CURRENT_RID = null;
+
+function groupKey(r){
+  return (MULTI_DATE && r.date ? r.date + "|" : "") + (r.track || "?");
+}
+function groupLabel(r){
   const d = (MULTI_DATE && r.date)
     ? r.date.slice(5).split("-").map(x=>parseInt(x,10)).join("/") + " " : "";
-  const dot = (r.hidden_count > 0) ? `<span class="hdot" title="隠れ複勝候補あり">◆</span>` : "";
-  return `${esc(d)}${esc(r.track||"")}${r.race_no}R${dot}`;
+  return `${d}${r.track || "?"}`;
 }
 
 function renderNav(){
-  document.getElementById("raceNav").innerHTML = RACES.map(r =>
-    `<button class="chip-race" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${chipLabel(r)}</button>`
-  ).join("");
+  const seen = new Set(), groups = [];
+  for(const r of RACES){
+    const k = groupKey(r);
+    if(!seen.has(k)){ seen.add(k); groups.push(k); }
+  }
+  if(!groups.includes(ACTIVE_GROUP)) ACTIVE_GROUP = groups[0];
+  const hcnt = {};
+  for(const r of RACES){
+    const k = groupKey(r);
+    hcnt[k] = (hcnt[k] || 0) + (r.hidden_count > 0 ? 1 : 0);
+  }
+  document.getElementById("trackTabs").innerHTML = groups.map(k => {
+    const r0 = RACES.find(r => groupKey(r) === k);
+    const dot = hcnt[k] ? `<span class="hdot" title="隠れ複勝候補ありのレース数">◆${hcnt[k]}</span>` : "";
+    return `<button class="chip-track ${k === ACTIVE_GROUP ? 'on' : ''}" onclick="selectGroup('${k}')">${esc(groupLabel(r0))}${dot}</button>`;
+  }).join("");
+  document.getElementById("raceNav").innerHTML = RACES
+    .filter(r => groupKey(r) === ACTIVE_GROUP)
+    .map(r => {
+      const dot = (r.hidden_count > 0) ? `<span class="hdot" title="隠れ複勝候補あり">◆</span>` : "";
+      return `<button class="chip-race ${r.race_id === CURRENT_RID ? 'on' : ''}" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${r.race_no}R${dot}</button>`;
+    }).join("");
+}
+
+function selectGroup(k){
+  ACTIVE_GROUP = k;
+  const first = RACES.find(r => groupKey(r) === k);
+  if(first) selectRace(first.race_id);
+  else renderNav();
 }
 
 async function selectRace(rid){
-  document.querySelectorAll(".chip-race").forEach(b => b.classList.toggle("on", b.dataset.id === rid));
+  CURRENT_RID = rid;
+  const meta = RACES.find(r => r.race_id === rid);
+  if(meta) ACTIVE_GROUP = groupKey(meta);   // ダイジェスト等から別場のレースへ飛んでもタブが追従
+  renderNav();
   const chip = document.querySelector(`.chip-race[data-id='${rid}']`);
   if(chip) chip.scrollIntoView({inline:"center", block:"nearest"});
   document.getElementById("horses").innerHTML = "<div class='loading'>読み込み中…</div>";
-  try { renderRace(await getJSON(DIR + rid + ".json")); }
+  try { renderRace(await getRace(rid)); }
   catch { document.getElementById("horses").innerHTML = "<div class='loading'>このレースを読み込めませんでした</div>"; }
 }
 
@@ -222,6 +337,7 @@ function renderRace(race){
     `<span class="pill">${esc(race.track)} ${race.race_no}R</span>` +
     `<span class="pill">${esc(race.surface)} ${race.distance_m}m</span>` +
     `<span class="pill">馬場 ${esc(race.going)}</span>` +
+    (race.race_class >= 5 ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">重賞・OP／バッジ対象外</span>` : "") +
     (IS_SAMPLE ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">SAMPLE</span>` : "");
   document.getElementById("raceTitle").textContent = race.race_name;
   document.getElementById("raceSub").innerHTML =
@@ -239,6 +355,12 @@ function renderRace(race){
 }
 
 function card(h, scale){
+  if(!(h.odds_win > 1)){
+    return `<div class="horse cxl"><div class="h-top">
+      <div class="umaban num">${h.umaban}</div><div class="mark"></div>
+      <div class="name-wrap"><div class="name">${esc(h.name)}</div><div class="jockey">${esc(h.jockey||"")}</div></div>
+      <span class="cxl-note">オッズ無し（取消・除外の可能性）</span></div></div>`;
+  }
   const evPlus = h.ev_win > 1.0;
   const pW = Math.min(100, (h.p_win/scale)*100);
   const qW = Math.min(100, (h.q_win/scale)*100);
@@ -267,7 +389,7 @@ function card(h, scale){
       </div>
       <div class="track" role="img" aria-label="推定勝率${(h.p_win*100).toFixed(1)}%、市場想定${(h.q_win*100).toFixed(1)}%">
         <div class="bar-p" style="width:${pW}%"></div>
-        <div class="qtag" style="left:${qW}%">市場 q</div>
+        <div class="qtag" style="left:${Math.min(93, Math.max(6, qW))}%">市場 q</div>
         <div class="qline" style="left:${qW}%"></div>
         <div class="pct num">${(h.p_win*100).toFixed(0)}%</div>
       </div>
