@@ -1,0 +1,183 @@
+{
+  "race_id": "202602010805",
+  "date": "2026-07-05",
+  "track": "函館",
+  "race_no": 5,
+  "race_name": "2歳新馬",
+  "distance_m": 1800,
+  "surface": "芝",
+  "going": "良",
+  "race_class": 1,
+  "updated_at": "2026-07-05T08:47:16+09:00",
+  "market_overround": 1.276,
+  "value_note": "EV>1の馬なし。控除率 約28%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "hidden_picks": [],
+  "horses": [
+    {
+      "umaban": 1,
+      "name": "ショウナンガレオン",
+      "horse_id": "2024106438",
+      "sex_age": "牡2",
+      "jockey": "鮫島駿",
+      "trainer": "美浦加藤士",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 1.6,
+      "popularity": 1,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -2.3222,
+      "ability_prob": 0.0981,
+      "ability_n_data": 0,
+      "q_win": 0.4897,
+      "p_win": 0.5378,
+      "ev_win": 0.86,
+      "edge": 0.0481,
+      "mark": "△",
+      "reasons": [
+        "実力+騎手スコア 9.8%・4番手評価",
+        "1番人気 / EV 0.86（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 2,
+      "name": "ダノンキューブ",
+      "horse_id": "2024106180",
+      "sex_age": "牝2",
+      "jockey": "武豊",
+      "trainer": "栗東橋口",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 4.2,
+      "popularity": 2,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -1.4332,
+      "ability_prob": 0.2385,
+      "ability_n_data": 0,
+      "q_win": 0.1866,
+      "p_win": 0.1773,
+      "ev_win": 0.745,
+      "edge": -0.0093,
+      "mark": "○",
+      "reasons": [
+        "実力+騎手スコア 23.8%・2番手評価",
+        "2番人気 / EV 0.745（控除率の壁で理論上マイナス）"
+      ]
+    },
+    {
+      "umaban": 3,
+      "name": "スーパーユタカ",
+      "horse_id": "2024107390",
+      "sex_age": "牡2",
+      "jockey": "横山武",
+      "trainer": "美浦武井",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 5.5,
+      "popularity": 3,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -0.9756,
+      "ability_prob": 0.377,
+      "ability_n_data": 0,
+      "q_win": 0.1425,
+      "p_win": 0.13,
+      "ev_win": 0.715,
+      "edge": -0.0125,
+      "mark": "◎",
+      "reasons": [
+        "実力+騎手スコア 37.7%・1番手評価",
+        "3番人気 / EV 0.715（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 4,
+      "name": "サトノパラディ",
+      "horse_id": "2024106326",
+      "sex_age": "牝2",
+      "jockey": "▲小林美",
+      "trainer": "栗東平田",
+      "weight_carried": 52.0,
+      "horse_weight": null,
+      "odds_win": 7.5,
+      "popularity": 4,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -2.4962,
+      "ability_prob": 0.0824,
+      "ability_n_data": 0,
+      "q_win": 0.1045,
+      "p_win": 0.091,
+      "ev_win": 0.682,
+      "edge": -0.0135,
+      "mark": "",
+      "reasons": [
+        "実力+騎手スコア 8.2%・5番手評価",
+        "4番人気 / EV 0.682（やや過剰人気・妙味なし）"
+      ]
+    },
+    {
+      "umaban": 5,
+      "name": "アートオブブライト",
+      "horse_id": "2024104687",
+      "sex_age": "牡2",
+      "jockey": "丹内",
+      "trainer": "美浦水野",
+      "weight_carried": 55.0,
+      "horse_weight": null,
+      "odds_win": 10.2,
+      "popularity": 5,
+      "features": {
+        "n_runs": 0,
+        "best_agari": null,
+        "avg_agari": null,
+        "dist_surface_fit": 0,
+        "days_since_last": null,
+        "style_ratio": null,
+        "style": null
+      },
+      "form_score": -1.5894,
+      "ability_prob": 0.204,
+      "ability_n_data": 0,
+      "q_win": 0.0768,
+      "p_win": 0.0639,
+      "ev_win": 0.652,
+      "edge": -0.0129,
+      "mark": "▲",
+      "reasons": [
+        "実力+騎手スコア 20.4%・3番手評価",
+        "5番人気 / EV 0.652（やや過剰人気・妙味なし）"
+      ]
+    }
+  ],
+  "tickets": []
+}
