@@ -141,11 +141,20 @@ def build_reasons(h: dict) -> list[str]:
     return reasons
 
 
-def assign_hidden_picks(rated: list[dict]) -> list[int]:
+HIDDEN_MAX_CLASS = 4   # バッジ対象の上限クラス（OP・重賞=class>=5は非表示。
+                       # 層別検証312R: 新馬未勝利+17.1pt/条件戦+10.5ptに対しOP重賞は+5.2pt(1.4σ)・
+                       # 複回収78%でベタ買いと同等のため対象外。データが積めたら再判定）
+
+
+def assign_hidden_picks(rated: list[dict], race_class=None) -> list[int]:
     """検証済みの指標Aをそのまま商品化: 『実力+騎手top3 ∩ 人気4番手以下』＝隠れ複勝候補。
     proofと同一定義（evaluable=n_data>=3 の中で ability_prob 上位3頭、そのうち人気4+）。
-    4週288R実証: 複勝率26.3%（ベースライン12.4%）/ 複勝回収110.2%。
+    層別検証(312R)で優位が確認できた 新馬・未勝利／条件戦(1-3勝) のみ表示（OP・重賞は非表示）。
     ability_n_data が無い馬（旧enrich/degrade）は対象外に落ちるだけで安全。"""
+    for h in rated:
+        h.pop("hidden_pick", None)   # 再実行時の残骸をクリア（冪等性）
+    if race_class and race_class > HIDDEN_MAX_CLASS:
+        return []
     ev = [h for h in rated if h.get("ability_prob") is not None
           and (h.get("ability_n_data") or 0) >= HIDDEN_MIN_DATA]
     top3 = sorted(ev, key=lambda h: -h["ability_prob"])[:3]
@@ -155,7 +164,7 @@ def assign_hidden_picks(rated: list[dict]) -> list[int]:
             h["hidden_pick"] = True
             h["reasons"].append(
                 f"隠れ複勝候補: 実力+騎手{rank}番手評価なのに{h['popularity']}番人気"
-                f"（市場の見落とし筋・検証で複勝率2倍超）")
+                f"（市場の見落とし筋・検証で人気4+平均を大きく上回る複勝率）")
             picks.append(h["umaban"])
     return picks
 
@@ -186,7 +195,7 @@ def build_race_prediction(race: dict) -> dict:
         assign_marks(rated)
         for h in rated:
             h["reasons"] = build_reasons(h)
-        hidden = assign_hidden_picks(rated)
+        hidden = assign_hidden_picks(rated, race.get("race_class"))
         tickets = build_tickets(rated)
         for h in rated:
             h.pop("_prank", None)
@@ -210,7 +219,7 @@ def build_race_prediction(race: dict) -> dict:
     return {
         **{k: race.get(k) for k in
            ("race_id", "date", "track", "race_no", "race_name",
-            "distance_m", "surface", "going")},
+            "distance_m", "surface", "going", "race_class")},
         "updated_at": datetime.now(JST).isoformat(timespec="seconds"),
         "market_overround": round(overround, 3),
         "value_note": hidden_note + value_note,
