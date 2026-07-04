@@ -1,0 +1,46 @@
+name: tally-results
+
+on:
+  schedule:
+    - cron: "0 15 * * 0,1"   # 日・月 の JST 0:00（土日開催の結果を翌未明に集計）
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "この日以降のみ集計 (YYYYMMDD)。空なら全予想を対象に差分集計"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  tally:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Tally (予想×確定結果 -> data/results.json)
+        run: |
+          if [ -n "${{ github.event.inputs.since }}" ]; then
+            python analysis/tally.py --since "${{ github.event.inputs.since }}"
+          else
+            python analysis/tally.py
+          fi
+
+      - name: Commit results
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/results.json
+          if git diff --staged --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "results: 実績集計 $(TZ=Asia/Tokyo date +%Y%m%d)"
+            git push
+          fi
