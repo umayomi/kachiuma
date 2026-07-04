@@ -53,14 +53,11 @@
     padding:13px 14px;margin:14px 0 0}
   .digest h2{font-size:14px;margin:0 0 2px;color:var(--gold);letter-spacing:.05em}
   .digest .d-sub{font-size:11.5px;color:var(--ink-faint);margin-bottom:8px}
-  .d-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;cursor:pointer;
-    background:transparent;border:0;border-top:1px solid var(--ground-edge);padding:9px 2px;color:var(--paper)}
-  .d-item:first-of-type{border-top:0}
-  .d-race{font-family:"Oswald";font-size:12.5px;color:var(--paper-2);flex:0 0 auto;min-width:74px}
-  .d-uma{font-family:"Oswald";font-weight:700;font-size:14px;width:26px;height:26px;flex:0 0 auto;
-    display:grid;place-items:center;border-radius:6px;background:var(--gold);color:#1a1a17}
-  .d-name{font-weight:700;font-size:13.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .d-pop{font-size:11.5px;color:var(--ink-faint);flex:0 0 auto}
+  .d-wrap{display:flex;flex-wrap:wrap;gap:7px}
+  .d-chip{display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+    background:var(--ground);border:1px solid var(--ground-edge);border-radius:9px;
+    padding:6px 10px;color:var(--paper-2);font-size:12.5px;white-space:nowrap}
+  .d-chip b{font-family:"Oswald";font-weight:700;font-size:13.5px;color:var(--gold);letter-spacing:.04em}
   .d-none{font-size:12.5px;color:var(--paper-2);padding:4px 0}
 
   .stale{background:rgba(210,103,78,.12);border:1px solid rgba(210,103,78,.5);border-radius:10px;
@@ -75,6 +72,10 @@
     padding:13px 14px;margin:16px 0;font-size:12.5px;color:var(--paper-2)}
   .legend b{color:var(--paper)}
   .legend .k{display:flex;gap:8px;align-items:flex-start;margin-top:7px}
+  .legend summary{cursor:pointer;list-style:none;-webkit-tap-highlight-color:transparent}
+  .legend summary::-webkit-details-marker{display:none}
+  .legend summary b::after{content:" ▾";color:var(--ink-faint)}
+  .legend[open] summary b::after{content:" ▴"}
   .swatch{width:13px;height:13px;border-radius:3px;flex:0 0 auto;margin-top:3px}
   .swatch.p{background:var(--turf)} .swatch.q{background:transparent;border:2px dashed var(--paper-2)}
   .swatch.g{background:var(--gold)}
@@ -174,12 +175,12 @@
     <div id="digest"></div>
   </header>
 
-  <div class="legend">
-    <b>読み方</b>
+  <details class="legend" id="legend" ontoggle="try{localStorage.setItem('kachiuma_legend', this.open?'1':'0')}catch(e){}">
+    <summary><b>読み方</b>（タップで開閉）</summary>
     <div class="k"><span class="swatch g"></span><span><b>金枠＝隠れ複勝候補</b>。実力+騎手評価トップ3なのに4番人気以下の馬。検証312Rで複勝率25%（人気4+全体13%）、ベタ買いを大きく上回る成績。優位が確認できた新馬・未勝利／条件戦のみ表示（重賞・OPは対象外）。</span></div>
     <div class="k"><span class="swatch m">◎</span><span><b>◎○▲△＝実力+騎手スコア順の印</b>。人気とは独立に付けるため、1番人気に◎が付かないことも多い（仕様）。</span></div>
     <div class="k"><span class="swatch p"></span><span><b>緑バー＝推定勝率p（単勝）</b>／<b>点線＝市場想定勝率q（単勝）</b>。緑が点線を超えていれば市場より高評価。</span></div>
-  </div>
+  </details>
 
   <div id="horses"><div class="loading">読み込み中…</div></div>
   <div id="tickets"></div>
@@ -235,24 +236,20 @@ async function renderDigest(){
     return;
   }
   const loaded = await Promise.all(targets.map(r => getRace(r.race_id).catch(() => null)));
-  const items = [];
+  const chips = [];
+  let total = 0;
   loaded.forEach((race, i) => {
     if(!race) return;
     const meta = targets[i];
+    const umas = (race.horses || []).filter(h => h.hidden_pick).map(h => h.umaban);
+    if(!umas.length) return;
+    total += umas.length;
     const label = `${MULTI_DATE && meta.date ? meta.date.slice(5).split("-").map(x=>parseInt(x,10)).join("/")+" " : ""}${meta.track||""}${meta.race_no}R`;
-    for(const h of race.horses || []){
-      if(h.hidden_pick){
-        items.push(`<button class="d-item" onclick="selectRace('${meta.race_id}')">
-          <span class="d-race num">${esc(label)}</span><span class="d-uma num">${h.umaban}</span>
-          <span class="d-name">${esc(h.name)}</span>
-          <span class="d-pop">${h.popularity?h.popularity+"番人気":""}・${h.odds_win?.toFixed(1) ?? "-"}倍</span>
-        </button>`);
-      }
-    }
+    chips.push(`<button class="d-chip" onclick="selectRace('${meta.race_id}')">${esc(label)}<b class="num">${umas.join("・")}</b></button>`);
   });
-  el.innerHTML = `<div class="digest"><h2>◆ 本日の隠れ複勝候補 ${items.length}頭</h2>
-    <div class="d-sub">実力+騎手トップ3 × 4番人気以下（新馬・未勝利／条件戦のみ）。タップでレースへ。</div>
-    ${items.join("")}</div>`;
+  el.innerHTML = `<div class="digest"><h2>◆ 本日の隠れ複勝候補 ${total}頭／${chips.length}R</h2>
+    <div class="d-sub">実力+騎手トップ3 × 4番人気以下（新馬・未勝利／条件戦のみ）。数字は馬番。タップでレースへ。</div>
+    <div class="d-wrap">${chips.join("")}</div></div>`;
 }
 
 let ACTIVE_GROUP = null, CURRENT_RID = null;
@@ -420,6 +417,7 @@ function renderTickets(tickets){
 const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmtTime = s => { try{ const d=new Date(s); return d.toLocaleString("ja-JP",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"});}catch{return s;} };
 
+try{ if(localStorage.getItem('kachiuma_legend') !== '0' && !localStorage.getItem('kachiuma_seen')){ document.getElementById('legend').open = true; } localStorage.setItem('kachiuma_seen','1'); }catch(e){}
 load().catch(()=>{ document.getElementById("horses").innerHTML="<div class='loading'>データを読み込めませんでした</div>"; });
 </script>
 </body>
