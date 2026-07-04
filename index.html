@@ -48,6 +48,25 @@
   .value-note{font-size:12.5px;color:var(--paper-2);background:var(--ground-2);
     border:1px solid var(--ground-edge);border-radius:10px;padding:10px 12px;margin:13px 0 0}
 
+  /* ---- track record (実績サマリー) ---- */
+  .record{background:var(--ground-2);border:1px solid var(--ground-edge);border-radius:var(--r);
+    padding:13px 14px;margin:14px 0 0}
+  .record h2{font-size:14px;margin:0 0 2px;letter-spacing:.04em}
+  .record .r-sub{font-size:11.5px;color:var(--ink-faint);margin-bottom:10px}
+  .r-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .r-cell{background:var(--ground);border:1px solid var(--ground-edge);border-radius:10px;padding:10px 11px}
+  .r-cell.gold{border-color:rgba(203,161,74,.4)}
+  .r-label{font-size:11.5px;color:var(--paper-2);margin-bottom:5px}
+  .r-label b{color:var(--gold)}
+  .r-nums{display:flex;align-items:baseline;gap:10px}
+  .r-big{font-family:"Oswald";font-weight:700;font-size:21px}
+  .r-big.gold{color:var(--gold)} .r-big.turf{color:var(--turf)}
+  .r-unit{font-size:11px;color:var(--ink-faint)}
+  .r-roi{font-family:"Oswald";font-weight:600;font-size:14px}
+  .r-roi.plus{color:var(--turf)} .r-roi.minus{color:var(--paper-2)}
+  .r-n{font-size:11px;color:var(--ink-faint);margin-top:4px}
+  .r-strat{margin-top:9px;font-size:11.5px;color:var(--ink-faint);line-height:1.7}
+
   /* ---- daily digest (本日の隠れ複勝候補) ---- */
   .digest{background:var(--ground-2);border:1px solid rgba(203,161,74,.45);border-radius:var(--r);
     padding:13px 14px;margin:14px 0 0}
@@ -172,6 +191,7 @@
     <div class="race-sub" id="raceSub"></div>
     <div class="value-note" id="valueNote" style="display:none"></div>
     <div id="stale"></div>
+    <div id="record"></div>
     <div id="digest"></div>
   </header>
 
@@ -213,6 +233,7 @@ async function load(){
   MULTI_DATE = new Set(RACES.map(r=>r.date).filter(Boolean)).size > 1;
   renderNav();
   renderStale();
+  renderRecord();   // 非同期・待たない（results.json 無ければ非表示）
   renderDigest();   // 非同期・待たない
   selectRace(RACES[0].race_id);
 }
@@ -225,6 +246,47 @@ function renderStale(){
     document.getElementById("stale").innerHTML =
       `<div class="stale">※ 表示中は <b>${esc(dates[dates.length-1])}</b> の予想です（次の開催日の朝に更新されます）</div>`;
   }
+}
+
+function pctRoi(stat){
+  const t3 = stat.b ? stat.t3 / stat.b * 100 : null;
+  const roi = stat.fb ? stat.fpay / stat.fb : null;  // 100円賭けの回収率(%)
+  return {t3, roi, b: stat.b};
+}
+
+async function renderRecord(){
+  const el = document.getElementById("record");
+  let store;
+  try { store = await getJSON((IS_SAMPLE ? P.sDir.replace("sample","results") : "/data/") + "results.json"); }
+  catch { el.innerHTML = ""; return; }
+  const bk = store.buckets || {};
+  const hp = (bk["隠れ複勝候補"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
+  const hon = (bk["◎(本命)"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
+  if(!hp.b && !hon.b){ el.innerHTML = ""; return; }
+  const H = pctRoi(hp), O = pctRoi(hon);
+  const cell = (label, gold, m) => {
+    if(!m.b) return "";
+    const roiTxt = m.roi != null ? `複回収 <span class="r-roi ${m.roi>=100?'plus':'minus'}">${m.roi.toFixed(0)}%</span>` : "";
+    return `<div class="r-cell ${gold?'gold':''}">
+      <div class="r-label">${label}</div>
+      <div class="r-nums"><span class="r-big ${gold?'gold':'turf'}">${m.t3.toFixed(0)}<span class="r-unit">%</span></span>
+        <span class="r-unit">複勝的中</span></div>
+      <div class="r-n">${roiTxt} ・ ${m.b}件</div>
+    </div>`;
+  };
+  // クラス層別（隠れ複勝候補）の1行サマリー
+  const seg = ["新馬・未勝利","条件戦(1-3勝)","OP・重賞"].map(b => {
+    const s = (bk["隠れ複勝候補"] || {})[b];
+    if(!s || !s.b) return null;
+    const p = pctRoi(s);
+    return `${b} ${p.t3.toFixed(0)}%(${s.b})`;
+  }).filter(Boolean).join(" ／ ");
+  el.innerHTML = `<div class="record">
+    <h2>実績（本番予想の実測）</h2>
+    <div class="r-sub">${esc(store.updated_at ? store.updated_at.slice(0,10) : "")}時点・累計${store.n_races||0}R。複勝=3着以内、回収率は100円賭け換算。</div>
+    <div class="r-grid">${cell("◆ 隠れ複勝候補", true, H)}${cell("◎ 本命", false, O)}</div>
+    ${seg ? `<div class="r-strat">◆内訳: ${esc(seg)}</div>` : ""}
+  </div>`;
 }
 
 async function renderDigest(){
