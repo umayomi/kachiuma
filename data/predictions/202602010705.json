@@ -7,9 +7,10 @@
   "distance_m": 1000,
   "surface": "ダート",
   "going": "良",
-  "updated_at": "2026-07-04T08:51:23+09:00",
-  "market_overround": 1.261,
-  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "race_class": 1,
+  "updated_at": "2026-07-04T11:57:22+09:00",
+  "market_overround": 1.277,
+  "value_note": "EV>1の馬なし。控除率 約28%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
   "hidden_picks": [],
   "horses": [
     {
@@ -20,8 +21,8 @@
       "jockey": "小沢",
       "trainer": "栗東緒方",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 7.0,
+      "horse_weight": "436(0)",
+      "odds_win": 7.9,
       "popularity": 4,
       "features": {
         "n_runs": 0,
@@ -35,14 +36,14 @@
       "form_score": -2.8851,
       "ability_prob": 0.0558,
       "ability_n_data": 0,
-      "q_win": 0.1133,
-      "p_win": 0.1005,
-      "ev_win": 0.704,
-      "edge": -0.0128,
+      "q_win": 0.0991,
+      "p_win": 0.0854,
+      "ev_win": 0.675,
+      "edge": -0.0137,
       "mark": "△",
       "reasons": [
         "実力+騎手スコア 5.6%・4番手評価",
-        "4番人気 / EV 0.704（やや過剰人気・妙味なし）"
+        "4番人気 / EV 0.675（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -53,8 +54,8 @@
       "jockey": "原田和",
       "trainer": "美浦萱野",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 14.7,
+      "horse_weight": "438(0)",
+      "odds_win": 13.2,
       "popularity": 5,
       "features": {
         "n_runs": 0,
@@ -68,14 +69,14 @@
       "form_score": -2.8629,
       "ability_prob": 0.0571,
       "ability_n_data": 0,
-      "q_win": 0.0539,
-      "p_win": 0.0428,
-      "ev_win": 0.629,
-      "edge": -0.0111,
+      "q_win": 0.0593,
+      "p_win": 0.0473,
+      "ev_win": 0.624,
+      "edge": -0.012,
       "mark": "▲",
       "reasons": [
         "実力+騎手スコア 5.7%・3番手評価",
-        "5番人気 / EV 0.629（やや過剰人気・妙味なし）"
+        "5番人気 / EV 0.624（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -86,8 +87,8 @@
       "jockey": "丹内",
       "trainer": "美浦伊藤圭",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 1.8,
+      "horse_weight": "438(0)",
+      "odds_win": 1.6,
       "popularity": 1,
       "features": {
         "n_runs": 0,
@@ -101,14 +102,14 @@
       "form_score": -3.1027,
       "ability_prob": 0.0449,
       "ability_n_data": 0,
-      "q_win": 0.4406,
-      "p_win": 0.4791,
-      "ev_win": 0.862,
-      "edge": 0.0385,
+      "q_win": 0.4893,
+      "p_win": 0.5359,
+      "ev_win": 0.857,
+      "edge": 0.0466,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 4.5%・5番手評価",
-        "1番人気 / EV 0.862（控除率の壁で理論上マイナス）"
+        "1番人気 / EV 0.857（控除率の壁で理論上マイナス）"
       ]
     },
     {
@@ -119,8 +120,8 @@
       "jockey": "◇古川奈",
       "trainer": "栗東小崎",
       "weight_carried": 53.0,
-      "horse_weight": null,
-      "odds_win": 4.2,
+      "horse_weight": "408(0)",
+      "odds_win": 5.0,
       "popularity": 3,
       "features": {
         "n_runs": 0,
@@ -134,14 +135,14 @@
       "form_score": -2.1947,
       "ability_prob": 0.1114,
       "ability_n_data": 0,
-      "q_win": 0.1888,
-      "p_win": 0.1808,
-      "ev_win": 0.759,
-      "edge": -0.008,
+      "q_win": 0.1566,
+      "p_win": 0.1446,
+      "ev_win": 0.723,
+      "edge": -0.012,
       "mark": "○",
       "reasons": [
         "実力+騎手スコア 11.1%・2番手評価",
-        "3番人気 / EV 0.759（控除率の壁で理論上マイナス）"
+        "3番人気 / EV 0.723（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -152,8 +153,8 @@
       "jockey": "横山武",
       "trainer": "栗東緒方",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 3.9,
+      "horse_weight": "434(0)",
+      "odds_win": 4.0,
       "popularity": 2,
       "features": {
         "n_runs": 0,
@@ -167,14 +168,14 @@
       "form_score": -0.3137,
       "ability_prob": 0.7307,
       "ability_n_data": 0,
-      "q_win": 0.2033,
-      "p_win": 0.1968,
-      "ev_win": 0.768,
-      "edge": -0.0065,
+      "q_win": 0.1957,
+      "p_win": 0.1868,
+      "ev_win": 0.747,
+      "edge": -0.0089,
       "mark": "◎",
       "reasons": [
         "実力+騎手スコア 73.1%・1番手評価",
-        "2番人気 / EV 0.768（控除率の壁で理論上マイナス）"
+        "2番人気 / EV 0.747（控除率の壁で理論上マイナス）"
       ]
     }
   ],

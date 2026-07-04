@@ -7,12 +7,12 @@
   "distance_m": 1700,
   "surface": "ダート",
   "going": "不良",
-  "updated_at": "2026-07-04T08:51:23+09:00",
-  "market_overround": 1.26,
-  "value_note": "隠れ複勝候補: 4番・14番。 EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "race_class": 1,
+  "updated_at": "2026-07-04T11:57:22+09:00",
+  "market_overround": 1.256,
+  "value_note": "隠れ複勝候補: 4番。 EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
   "hidden_picks": [
-    4,
-    14
+    4
   ],
   "horses": [
     {
@@ -24,8 +24,8 @@
       "trainer": "栗東小栗",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 24.3,
-      "popularity": 11,
+      "odds_win": 25.7,
+      "popularity": 12,
       "features": {
         "n_runs": 4,
         "best_agari": 37.1,
@@ -38,14 +38,14 @@
       "form_score": -3.3901,
       "ability_prob": 0.0337,
       "ability_n_data": 5,
-      "q_win": 0.0327,
-      "p_win": 0.0281,
-      "ev_win": 0.683,
+      "q_win": 0.031,
+      "p_win": 0.0264,
+      "ev_win": 0.678,
       "edge": -0.0046,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 3.4%・9番手評価",
-        "11番人気 / EV 0.683（控除率の壁で理論上マイナス）",
+        "12番人気 / EV 0.678（控除率の壁で理論上マイナス）",
         "近走: 上がり最速37.1 / 追込 / 当条件近走3走"
       ]
     },
@@ -58,8 +58,8 @@
       "trainer": "栗東西村",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 28.3,
-      "popularity": 12,
+      "odds_win": 25.1,
+      "popularity": 11,
       "features": {
         "n_runs": 3,
         "best_agari": 36.1,
@@ -72,14 +72,14 @@
       "form_score": -3.7062,
       "ability_prob": 0.0246,
       "ability_n_data": 3,
-      "q_win": 0.0281,
-      "p_win": 0.0236,
-      "ev_win": 0.668,
-      "edge": -0.0045,
+      "q_win": 0.0317,
+      "p_win": 0.0271,
+      "ev_win": 0.68,
+      "edge": -0.0046,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 2.5%・12番手評価",
-        "12番人気 / EV 0.668（控除率の壁で理論上マイナス）",
+        "11番人気 / EV 0.68（控除率の壁で理論上マイナス）",
         "近走: 上がり最速36.1 / 逃げ・先行 / 当条件近走1走"
       ]
     },
@@ -92,8 +92,8 @@
       "trainer": "栗東茶木",
       "weight_carried": 55.0,
       "horse_weight": null,
-      "odds_win": 34.9,
-      "popularity": 13,
+      "odds_win": 54.4,
+      "popularity": 14,
       "features": {
         "n_runs": 3,
         "best_agari": 38.8,
@@ -106,14 +106,14 @@
       "form_score": -4.1091,
       "ability_prob": 0.0164,
       "ability_n_data": 3,
-      "q_win": 0.0227,
-      "p_win": 0.0185,
-      "ev_win": 0.646,
-      "edge": -0.0042,
+      "q_win": 0.0146,
+      "p_win": 0.0111,
+      "ev_win": 0.604,
+      "edge": -0.0035,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 1.6%・15番手評価",
-        "13番人気 / EV 0.646（控除率の壁で理論上マイナス）",
+        "14番人気 / EV 0.604（控除率の壁で理論上マイナス）",
         "近走: 上がり最速38.8 / 差し / 当条件近走2走"
       ]
     },
@@ -126,8 +126,8 @@
       "trainer": "栗東茶木",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 8.5,
-      "popularity": 5,
+      "odds_win": 11.0,
+      "popularity": 6,
       "features": {
         "n_runs": 4,
         "best_agari": 39.1,
@@ -140,16 +140,16 @@
       "form_score": -1.5998,
       "ability_prob": 0.2019,
       "ability_n_data": 5,
-      "q_win": 0.0934,
-      "p_win": 0.094,
-      "ev_win": 0.799,
-      "edge": 0.0006,
+      "q_win": 0.0724,
+      "p_win": 0.0701,
+      "ev_win": 0.771,
+      "edge": -0.0023,
       "mark": "◎",
       "reasons": [
         "実力+騎手スコア 20.2%・1番手評価",
-        "5番人気 / EV 0.799（控除率の壁で理論上マイナス）",
+        "6番人気 / EV 0.771（控除率の壁で理論上マイナス）",
         "近走: 上がり最速39.1 / 差し / 当条件近走4走",
-        "隠れ複勝候補: 実力+騎手1番手評価なのに5番人気（市場の見落とし筋・検証で複勝率2倍超）"
+        "隠れ複勝候補: 実力+騎手1番手評価なのに6番人気（市場の見落とし筋・検証で人気4+平均を大きく上回る複勝率）"
       ],
       "hidden_pick": true
     },
@@ -162,8 +162,8 @@
       "trainer": "栗東秋山",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 7.4,
-      "popularity": 3,
+      "odds_win": 7.3,
+      "popularity": 4,
       "features": {
         "n_runs": 5,
         "best_agari": 37.1,
@@ -176,14 +176,14 @@
       "form_score": -2.4475,
       "ability_prob": 0.0865,
       "ability_n_data": 5,
-      "q_win": 0.1073,
-      "p_win": 0.1103,
-      "ev_win": 0.816,
-      "edge": 0.003,
+      "q_win": 0.109,
+      "p_win": 0.1121,
+      "ev_win": 0.818,
+      "edge": 0.0031,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 8.6%・6番手評価",
-        "3番人気 / EV 0.816（控除率の壁で理論上マイナス）",
+        "4番人気 / EV 0.818（控除率の壁で理論上マイナス）",
         "近走: 上がり最速37.1 / 差し / 当条件近走4走"
       ]
     },
@@ -210,14 +210,14 @@
       "form_score": -2.1017,
       "ability_prob": 0.1222,
       "ability_n_data": 3,
-      "q_win": 0.1985,
-      "p_win": 0.2238,
-      "ev_win": 0.895,
-      "edge": 0.0253,
+      "q_win": 0.199,
+      "p_win": 0.2241,
+      "ev_win": 0.896,
+      "edge": 0.0251,
       "mark": "○",
       "reasons": [
         "実力+騎手スコア 12.2%・2番手評価",
-        "1番人気 / EV 0.895（控除率の壁で理論上マイナス）",
+        "1番人気 / EV 0.896（控除率の壁で理論上マイナス）",
         "近走: 上がり最速37.2 / 逃げ・先行 / 当条件近走3走"
       ]
     },
@@ -230,8 +230,8 @@
       "trainer": "栗東鈴木孝",
       "weight_carried": 55.0,
       "horse_weight": null,
-      "odds_win": 22.0,
-      "popularity": 10,
+      "odds_win": 17.9,
+      "popularity": 8,
       "features": {
         "n_runs": 2,
         "best_agari": 36.8,
@@ -244,14 +244,14 @@
       "form_score": -4.0362,
       "ability_prob": 0.0177,
       "ability_n_data": 2,
-      "q_win": 0.0361,
-      "p_win": 0.0315,
-      "ev_win": 0.693,
-      "edge": -0.0046,
+      "q_win": 0.0445,
+      "p_win": 0.04,
+      "ev_win": 0.716,
+      "edge": -0.0045,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 1.8%・14番手評価",
-        "10番人気 / EV 0.693（控除率の壁で理論上マイナス）",
+        "8番人気 / EV 0.716（控除率の壁で理論上マイナス）",
         "近走: 上がり最速36.8 / 追込"
       ]
     },
@@ -264,7 +264,7 @@
       "trainer": "栗東千田",
       "weight_carried": 55.0,
       "horse_weight": null,
-      "odds_win": 110.2,
+      "odds_win": 101.7,
       "popularity": 15,
       "features": {
         "n_runs": 3,
@@ -278,14 +278,14 @@
       "form_score": -4.4059,
       "ability_prob": 0.0122,
       "ability_n_data": 3,
-      "q_win": 0.0072,
-      "p_win": 0.0049,
-      "ev_win": 0.54,
-      "edge": -0.0023,
+      "q_win": 0.0078,
+      "p_win": 0.0054,
+      "ev_win": 0.549,
+      "edge": -0.0024,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 1.2%・16番手評価",
-        "15番人気 / EV 0.54（控除率の壁で理論上マイナス）",
+        "15番人気 / EV 0.549（控除率の壁で理論上マイナス）",
         "近走: 上がり最速36.1 / 追込 / 当条件近走2走"
       ]
     },
@@ -298,7 +298,7 @@
       "trainer": "栗東谷",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 5.7,
+      "odds_win": 5.4,
       "popularity": 2,
       "features": {
         "n_runs": 5,
@@ -312,14 +312,14 @@
       "form_score": -2.3454,
       "ability_prob": 0.0958,
       "ability_n_data": 10,
-      "q_win": 0.1393,
-      "p_win": 0.1489,
-      "ev_win": 0.849,
-      "edge": 0.0096,
+      "q_win": 0.1474,
+      "p_win": 0.1587,
+      "ev_win": 0.857,
+      "edge": 0.0113,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 9.6%・5番手評価",
-        "2番人気 / EV 0.849（控除率の壁で理論上マイナス）",
+        "2番人気 / EV 0.857（控除率の壁で理論上マイナス）",
         "近走: 上がり最速37.9 / 逃げ・先行 / 当条件近走4走"
       ]
     },
@@ -332,7 +332,7 @@
       "trainer": "栗東高柳大",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 20.5,
+      "odds_win": 20.4,
       "popularity": 9,
       "features": {
         "n_runs": 3,
@@ -346,14 +346,14 @@
       "form_score": -3.4022,
       "ability_prob": 0.0333,
       "ability_n_data": 3,
-      "q_win": 0.0387,
-      "p_win": 0.0341,
-      "ev_win": 0.699,
+      "q_win": 0.039,
+      "p_win": 0.0344,
+      "ev_win": 0.702,
       "edge": -0.0046,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 3.3%・10番手評価",
-        "9番人気 / EV 0.699（控除率の壁で理論上マイナス）",
+        "9番人気 / EV 0.702（控除率の壁で理論上マイナス）",
         "近走: 上がり最速37.5 / 追込 / 当条件近走2走"
       ]
     },
@@ -366,8 +366,8 @@
       "trainer": "栗東西園翔",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 19.7,
-      "popularity": 8,
+      "odds_win": 15.9,
+      "popularity": 7,
       "features": {
         "n_runs": 5,
         "best_agari": 39.1,
@@ -380,14 +380,14 @@
       "form_score": -3.2782,
       "ability_prob": 0.0377,
       "ability_n_data": 5,
-      "q_win": 0.0403,
-      "p_win": 0.0358,
-      "ev_win": 0.705,
-      "edge": -0.0045,
+      "q_win": 0.0501,
+      "p_win": 0.0459,
+      "ev_win": 0.73,
+      "edge": -0.0042,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 3.8%・8番手評価",
-        "8番人気 / EV 0.705（控除率の壁で理論上マイナス）",
+        "7番人気 / EV 0.73（控除率の壁で理論上マイナス）",
         "近走: 上がり最速39.1 / 逃げ・先行 / 当条件近走5走"
       ]
     },
@@ -400,8 +400,8 @@
       "trainer": "栗東庄野",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 37.2,
-      "popularity": 14,
+      "odds_win": 35.3,
+      "popularity": 13,
       "features": {
         "n_runs": 2,
         "best_agari": 39.4,
@@ -414,14 +414,14 @@
       "form_score": -3.6596,
       "ability_prob": 0.0257,
       "ability_n_data": 2,
-      "q_win": 0.0213,
-      "p_win": 0.0172,
-      "ev_win": 0.64,
-      "edge": -0.0041,
+      "q_win": 0.0225,
+      "p_win": 0.0183,
+      "ev_win": 0.646,
+      "edge": -0.0042,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 2.6%・11番手評価",
-        "14番人気 / EV 0.64（控除率の壁で理論上マイナス）",
+        "13番人気 / EV 0.646（控除率の壁で理論上マイナス）",
         "近走: 上がり最速39.4 / 逃げ・先行 / 当条件近走1走"
       ]
     },
@@ -434,8 +434,8 @@
       "trainer": "栗東須貝",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 19.1,
-      "popularity": 7,
+      "odds_win": 22.2,
+      "popularity": 10,
       "features": {
         "n_runs": 5,
         "best_agari": 34.8,
@@ -448,14 +448,14 @@
       "form_score": -3.0422,
       "ability_prob": 0.0477,
       "ability_n_data": 5,
-      "q_win": 0.0416,
-      "p_win": 0.0371,
-      "ev_win": 0.709,
-      "edge": -0.0045,
+      "q_win": 0.0359,
+      "p_win": 0.0313,
+      "ev_win": 0.695,
+      "edge": -0.0046,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 4.8%・7番手評価",
-        "7番人気 / EV 0.709（控除率の壁で理論上マイナス）",
+        "10番人気 / EV 0.695（控除率の壁で理論上マイナス）",
         "近走: 上がり最速34.8 / 差し"
       ]
     },
@@ -468,8 +468,8 @@
       "trainer": "栗東長谷川",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 8.4,
-      "popularity": 4,
+      "odds_win": 7.1,
+      "popularity": 3,
       "features": {
         "n_runs": 5,
         "best_agari": 37.7,
@@ -482,18 +482,16 @@
       "form_score": -2.1069,
       "ability_prob": 0.1216,
       "ability_n_data": 11,
-      "q_win": 0.0945,
-      "p_win": 0.0953,
-      "ev_win": 0.801,
-      "edge": 0.0008,
+      "q_win": 0.1121,
+      "p_win": 0.1158,
+      "ev_win": 0.822,
+      "edge": 0.0037,
       "mark": "▲",
       "reasons": [
         "実力+騎手スコア 12.2%・3番手評価",
-        "4番人気 / EV 0.801（控除率の壁で理論上マイナス）",
-        "近走: 上がり最速37.7 / 差し / 当条件近走2走",
-        "隠れ複勝候補: 実力+騎手3番手評価なのに4番人気（市場の見落とし筋・検証で複勝率2倍超）"
-      ],
-      "hidden_pick": true
+        "3番人気 / EV 0.822（控除率の壁で理論上マイナス）",
+        "近走: 上がり最速37.7 / 差し / 当条件近走2走"
+      ]
     },
     {
       "umaban": 15,
@@ -504,8 +502,8 @@
       "trainer": "栗東岡田",
       "weight_carried": 57.0,
       "horse_weight": null,
-      "odds_win": 8.6,
-      "popularity": 6,
+      "odds_win": 10.3,
+      "popularity": 5,
       "features": {
         "n_runs": 4,
         "best_agari": 38.1,
@@ -518,14 +516,14 @@
       "form_score": -2.2642,
       "ability_prob": 0.1039,
       "ability_n_data": 6,
-      "q_win": 0.0923,
-      "p_win": 0.0928,
-      "ev_win": 0.798,
-      "edge": 0.0005,
+      "q_win": 0.0773,
+      "p_win": 0.0755,
+      "ev_win": 0.778,
+      "edge": -0.0018,
       "mark": "△",
       "reasons": [
         "実力+騎手スコア 10.4%・4番手評価",
-        "6番人気 / EV 0.798（控除率の壁で理論上マイナス）",
+        "5番人気 / EV 0.778（控除率の壁で理論上マイナス）",
         "近走: 上がり最速38.1 / 逃げ・先行 / 当条件近走2走"
       ]
     },
@@ -538,7 +536,7 @@
       "trainer": "栗東荒川",
       "weight_carried": 54.0,
       "horse_weight": null,
-      "odds_win": 130.3,
+      "odds_win": 138.3,
       "popularity": 16,
       "features": {
         "n_runs": 3,
@@ -552,14 +550,14 @@
       "form_score": -3.9668,
       "ability_prob": 0.0189,
       "ability_n_data": 3,
-      "q_win": 0.0061,
-      "p_win": 0.0041,
-      "ev_win": 0.534,
+      "q_win": 0.0058,
+      "p_win": 0.0038,
+      "ev_win": 0.526,
       "edge": -0.002,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 1.9%・13番手評価",
-        "16番人気 / EV 0.534（控除率の壁で理論上マイナス）",
+        "16番人気 / EV 0.526（控除率の壁で理論上マイナス）",
         "近走: 上がり最速36.8 / 追込"
       ]
     }
