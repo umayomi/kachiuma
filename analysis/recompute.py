@@ -79,6 +79,46 @@ def _restore_condition(pred: dict, sleep: float) -> dict:
     return pred
 
 
+def make_jk_tables_dated(sess):
+    """騎手複勝率テーブルを (race_date, surface, dist, place) でメモ化して返す。
+    ※ enrich.make_jk_tables はキーに日付を含まないため単日運用専用。recompute は
+      複数日を跨ぐので、日付を無視すると『最初に見た日の騎手表』を別日レースに誤用する。
+      period_3y は日付ごとに (D-3年〜D前日) を返す＝日付ごとに別テーブルが必要。
+    リーク防止も自動: 各レース日Dの騎手成績は D前日 までで集計される（当日を含めない）。
+    これは本番 enrich がその日に引いたのと同じ期間なので、過去日の騎手表を忠実に再現する
+    （umarengod の過去成績は後から変わらないため）。"""
+    import jockey_db as J
+    place_memo, all_memo = {}, {}
+
+    def _tbl(memo, key, surface, dist, ds, place):
+        if key not in memo:
+            try:
+                memo[key] = J.fetch(sess, surface, dist, ds, place=place)
+            except Exception as e:
+                print("  jk-fetch-fail", place, dist, str(e).splitlines()[0][:40])
+                memo[key] = {}
+            time.sleep(0.8)
+        return memo[key]
+
+    def build(r, ds):
+        if sess is None or not ds:
+            return {}
+        place, surf, dist = r.get("track"), r.get("surface"), r.get("distance_m")
+        if not (surf and dist):
+            return {}
+        sp = J._surface_param(surf)
+        ptbl = _tbl(place_memo, (ds, sp, dist, place or "ALL"), surf, dist, ds, place or "ALL")
+        atbl = _tbl(all_memo, (ds, sp, dist), surf, dist, ds, "ALL")
+        out = {}
+        for h in r.get("horses", []):
+            cell, _ = J.resolve(ptbl, atbl, h.get("jockey") or "")
+            if cell:
+                out[h["umaban"]] = {"rate": J.rate(cell), "starts": cell["starts"]}
+        return out
+
+    return build
+
+
 def recompute_race(pred: dict, cache: dict, jk_by=None) -> dict:
     """1レースを現行ロジックで打ち直す。predのhorses(umaban/horse_id/jockey/odds_win)を使う。"""
     ds = str(pred.get("date") or "").replace("-", "")
@@ -105,7 +145,8 @@ def main():
     ap.add_argument("--cache", default=DEFAULT_CACHE)
     ap.add_argument("--since", default=None, help="YYYYMMDD 以降のみ")
     ap.add_argument("--no-fetch", action="store_true", help="結果ページを引かない(going補完なし)")
-    ap.add_argument("--with-jockey", action="store_true", help="騎手複勝率も引く(Actions専用・低速)")
+    ap.add_argument("--no-jockey", action="store_true",
+                    help="騎手OFFで再計算(オフライン/テスト用)。既定は騎手ON=本番と一致")
     ap.add_argument("--sleep", type=float, default=0.4)
     args = ap.parse_args()
 
@@ -114,13 +155,14 @@ def main():
     files = [f for f in files if not f.endswith("index.json")]
 
     build_jk = None
-    if args.with_jockey:
+    if args.no_jockey:
+        print("騎手OFF で再計算（--no-jockey 指定）※本番の◎とは一致しない点に注意")
+    else:
         try:
             import requests
-            import enrich as E
             sess = requests.Session()
-            build_jk = E.make_jk_tables(sess)
-            print("騎手ON で再計算（umarengod をライブ取得）")
+            build_jk = make_jk_tables_dated(sess)   # 日付対応メモ(enrichの単日メモは使わない)
+            print("騎手ON で再計算（umarengod をライブ取得・日付ごとに集計＝本番と一致）")
         except Exception as e:
             print("騎手テーブル準備失敗→騎手OFFで続行:", str(e)[:60])
 
