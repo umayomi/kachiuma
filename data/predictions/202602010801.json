@@ -8,7 +8,7 @@
   "surface": "芝",
   "going": "良",
   "race_class": 1,
-  "updated_at": "2026-07-05T08:47:16+09:00",
+  "updated_at": "2026-07-05T10:39:45+09:00",
   "market_overround": 1.296,
   "value_note": "EV>1の馬なし。控除率 約30%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
   "hidden_picks": [],
@@ -33,8 +33,8 @@
         "style_ratio": 0.729,
         "style": "追込"
       },
-      "form_score": -3.7877,
-      "ability_prob": 0.0226,
+      "form_score": -3.7574,
+      "ability_prob": 0.0233,
       "ability_n_data": 2,
       "q_win": 0.0288,
       "p_win": 0.0207,
@@ -67,16 +67,16 @@
         "style_ratio": 0.8,
         "style": "追込"
       },
-      "form_score": -3.0383,
-      "ability_prob": 0.0479,
+      "form_score": -3.0435,
+      "ability_prob": 0.0477,
       "ability_n_data": 1,
       "q_win": 0.0547,
       "p_win": 0.0433,
       "ev_win": 0.611,
       "edge": -0.0114,
-      "mark": "○",
+      "mark": "▲",
       "reasons": [
-        "実力+騎手スコア 4.8%・2番手評価",
+        "実力+騎手スコア 4.8%・3番手評価",
         "5番人気 / EV 0.611（やや過剰人気・妙味なし）",
         "近走: 上がり最速34.7 / 追込 / 当条件近走1走"
       ]
@@ -101,8 +101,8 @@
         "style_ratio": 0.25,
         "style": "逃げ・先行"
       },
-      "form_score": -3.2788,
-      "ability_prob": 0.0377,
+      "form_score": -3.259,
+      "ability_prob": 0.0384,
       "ability_n_data": 1,
       "q_win": 0.0454,
       "p_win": 0.035,
@@ -135,8 +135,8 @@
         "style_ratio": 0.625,
         "style": "差し"
       },
-      "form_score": -3.4612,
-      "ability_prob": 0.0314,
+      "form_score": -3.4414,
+      "ability_prob": 0.032,
       "ability_n_data": 1,
       "q_win": 0.0721,
       "p_win": 0.0595,
@@ -144,7 +144,7 @@
       "edge": -0.0126,
       "mark": "",
       "reasons": [
-        "実力+騎手スコア 3.1%・5番手評価",
+        "実力+騎手スコア 3.2%・5番手評価",
         "3番人気 / EV 0.637（やや過剰人気・妙味なし）",
         "近走: 上がり最速35.2 / 差し / 当条件近走1走"
       ]
@@ -169,16 +169,16 @@
         "style_ratio": 0.2,
         "style": "逃げ・先行"
       },
-      "form_score": -3.057,
-      "ability_prob": 0.047,
+      "form_score": -3.0371,
+      "ability_prob": 0.048,
       "ability_n_data": 1,
       "q_win": 0.0638,
       "p_win": 0.0517,
       "ev_win": 0.626,
       "edge": -0.0121,
-      "mark": "▲",
+      "mark": "○",
       "reasons": [
-        "実力+騎手スコア 4.7%・3番手評価",
+        "実力+騎手スコア 4.8%・2番手評価",
         "4番人気 / EV 0.626（やや過剰人気・妙味なし）",
         "近走: 上がり最速35.2 / 逃げ・先行 / 当条件近走1走"
       ]
@@ -203,8 +203,8 @@
         "style_ratio": 0.2,
         "style": "逃げ・先行"
       },
-      "form_score": -0.2773,
-      "ability_prob": 0.7578,
+      "form_score": -0.2824,
+      "ability_prob": 0.7539,
       "ability_n_data": 1,
       "q_win": 0.5936,
       "p_win": 0.672,
@@ -212,7 +212,7 @@
       "edge": 0.0784,
       "mark": "◎",
       "reasons": [
-        "実力+騎手スコア 75.8%・1番手評価",
+        "実力+騎手スコア 75.4%・1番手評価",
         "1番人気 / EV 0.874（控除率の壁で理論上マイナス）",
         "近走: 上がり最速34.9 / 逃げ・先行 / 当条件近走1走"
       ]
@@ -237,8 +237,8 @@
         "style_ratio": 0.887,
         "style": "追込"
       },
-      "form_score": -3.8473,
-      "ability_prob": 0.0213,
+      "form_score": -3.8275,
+      "ability_prob": 0.0218,
       "ability_n_data": 1,
       "q_win": 0.1118,
       "p_win": 0.0985,
@@ -246,7 +246,7 @@
       "edge": -0.0133,
       "mark": "",
       "reasons": [
-        "実力+騎手スコア 2.1%・7番手評価",
+        "実力+騎手スコア 2.2%・7番手評価",
         "2番人気 / EV 0.68（やや過剰人気・妙味なし）",
         "近走: 上がり最速33.8 / 追込 / 当条件近走2走"
       ]
@@ -271,8 +271,8 @@
         "style_ratio": 0.4,
         "style": "差し"
       },
-      "form_score": -4.1038,
-      "ability_prob": 0.0165,
+      "form_score": -4.0839,
+      "ability_prob": 0.0168,
       "ability_n_data": 1,
       "q_win": 0.015,
       "p_win": 0.0098,
@@ -305,8 +305,8 @@
         "style_ratio": 0.8,
         "style": "追込"
       },
-      "form_score": -4.0359,
-      "ability_prob": 0.0177,
+      "form_score": -4.016,
+      "ability_prob": 0.018,
       "ability_n_data": 1,
       "q_win": 0.0147,
       "p_win": 0.0096,

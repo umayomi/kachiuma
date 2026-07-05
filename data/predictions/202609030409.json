@@ -7,7 +7,11 @@
   "distance_m": 1200,
   "surface": "芝",
   "going": "良",
-  "updated_at": "2026-06-20T14:59:15+09:00",
+  "race_class": 8,
+  "updated_at": "2026-07-05T10:45:21+09:00",
+  "market_overround": 1.26,
+  "value_note": "EV>1の馬なし。控除率 約26%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "hidden_picks": [],
   "horses": [
     {
       "umaban": 1,
@@ -19,17 +23,19 @@
       "weight_carried": 56.0,
       "horse_weight": "444(+2)",
       "odds_win": 31.0,
-      "popularity": 11,
+      "popularity": 10,
       "q_win": 0.0256,
-      "p_win": 0.0325,
-      "ev_win": 1.008,
-      "edge": 0.0069,
+      "p_win": 0.0205,
+      "ev_win": 0.636,
+      "edge": -0.0051,
       "reasons": [
-        "期待値 1.008（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.7pt)",
-        "11番人気（オッズ 31.0倍）"
+        "実力+騎手スコア 25.9%・1番手評価",
+        "10番人気 / EV 0.636（控除率の壁で理論上マイナス）"
       ],
-      "mark": "△"
+      "mark": "◎",
+      "ability_prob": 0.2594,
+      "form_score": -1.3495,
+      "ability_n_data": 12
     },
     {
       "umaban": 2,
@@ -41,17 +47,19 @@
       "weight_carried": 56.0,
       "horse_weight": "460(+4)",
       "odds_win": 48.4,
-      "popularity": 13,
+      "popularity": 12,
       "q_win": 0.0164,
-      "p_win": 0.0247,
-      "ev_win": 1.195,
-      "edge": 0.0083,
+      "p_win": 0.0123,
+      "ev_win": 0.595,
+      "edge": -0.0041,
       "reasons": [
-        "期待値 1.195（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
-        "13番人気（オッズ 48.4倍）"
+        "実力+騎手スコア 3.6%・13番手評価",
+        "12番人気 / EV 0.595（控除率の壁で理論上マイナス）"
       ],
-      "mark": "○"
+      "mark": "",
+      "ability_prob": 0.0364,
+      "form_score": -3.313,
+      "ability_n_data": 22
     },
     {
       "umaban": 3,
@@ -64,13 +72,12 @@
       "horse_weight": null,
       "odds_win": -2.0,
       "popularity": 1,
-      "q_win": 0.0,
-      "p_win": 0.0107,
-      "ev_win": -0.021,
-      "edge": 0.0107,
+      "q_win": 0,
+      "p_win": 0,
+      "ev_win": 0,
+      "edge": 0,
       "reasons": [
-        "市場想定よりこちらの評価が高く、妙味あり(+1.1pt)",
-        "1番人気（オッズ -2.0倍）"
+        "オッズ無し（出走取消の可能性）"
       ],
       "mark": ""
     },
@@ -84,15 +91,19 @@
       "weight_carried": 56.0,
       "horse_weight": "448(0)",
       "odds_win": 11.3,
-      "popularity": 7,
+      "popularity": 6,
       "q_win": 0.0702,
-      "p_win": 0.0704,
-      "ev_win": 0.796,
-      "edge": 0.0002,
+      "p_win": 0.0653,
+      "ev_win": 0.738,
+      "edge": -0.0049,
       "reasons": [
-        "7番人気（オッズ 11.3倍）"
+        "実力+騎手スコア 8.0%・5番手評価",
+        "6番人気 / EV 0.738（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "",
+      "ability_prob": 0.0803,
+      "form_score": -2.5215,
+      "ability_n_data": 27
     },
     {
       "umaban": 5,
@@ -104,16 +115,19 @@
       "weight_carried": 56.0,
       "horse_weight": "464(+6)",
       "odds_win": 14.1,
-      "popularity": 9,
+      "popularity": 8,
       "q_win": 0.0563,
-      "p_win": 0.0586,
-      "ev_win": 0.826,
-      "edge": 0.0023,
+      "p_win": 0.0506,
+      "ev_win": 0.713,
+      "edge": -0.0057,
       "reasons": [
-        "市場想定よりこちらの評価が高く、妙味あり(+0.2pt)",
-        "9番人気（オッズ 14.1倍）"
+        "実力+騎手スコア 4.9%・11番手評価",
+        "8番人気 / EV 0.713（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "",
+      "ability_prob": 0.0491,
+      "form_score": -3.0146,
+      "ability_n_data": 12
     },
     {
       "umaban": 6,
@@ -125,16 +139,19 @@
       "weight_carried": 56.0,
       "horse_weight": "480(+4)",
       "odds_win": 8.9,
-      "popularity": 4,
+      "popularity": 3,
       "q_win": 0.0892,
-      "p_win": 0.0865,
-      "ev_win": 0.77,
-      "edge": -0.0027,
+      "p_win": 0.086,
+      "ev_win": 0.765,
+      "edge": -0.0032,
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-0.3pt)",
-        "4番人気（オッズ 8.9倍）"
+        "実力+騎手スコア 5.2%・8番手評価",
+        "3番人気 / EV 0.765（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "",
+      "ability_prob": 0.0518,
+      "form_score": -2.9604,
+      "ability_n_data": 33
     },
     {
       "umaban": 7,
@@ -146,16 +163,19 @@
       "weight_carried": 58.0,
       "horse_weight": "546(-2)",
       "odds_win": 3.3,
-      "popularity": 2,
+      "popularity": 1,
       "q_win": 0.2406,
-      "p_win": 0.2152,
-      "ev_win": 0.71,
-      "edge": -0.0254,
+      "p_win": 0.2691,
+      "ev_win": 0.888,
+      "edge": 0.0285,
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-2.5pt)",
-        "2番人気（オッズ 3.3倍）"
+        "実力+騎手スコア 5.0%・10番手評価",
+        "1番人気 / EV 0.888（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "",
+      "ability_prob": 0.0498,
+      "form_score": -2.9995,
+      "ability_n_data": 20
     },
     {
       "umaban": 8,
@@ -167,17 +187,19 @@
       "weight_carried": 56.0,
       "horse_weight": "464(+2)",
       "odds_win": 52.8,
-      "popularity": 14,
+      "popularity": 13,
       "q_win": 0.015,
-      "p_win": 0.0235,
-      "ev_win": 1.241,
-      "edge": 0.0085,
+      "p_win": 0.0111,
+      "ev_win": 0.586,
+      "edge": -0.0039,
       "reasons": [
-        "期待値 1.241（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.9pt)",
-        "14番人気（オッズ 52.8倍）"
+        "実力+騎手スコア 8.9%・2番手評価",
+        "13番人気 / EV 0.586（控除率の壁で理論上マイナス）"
       ],
-      "mark": "◎"
+      "mark": "○",
+      "ability_prob": 0.0886,
+      "form_score": -2.4241,
+      "ability_n_data": 19
     },
     {
       "umaban": 9,
@@ -189,15 +211,19 @@
       "weight_carried": 58.0,
       "horse_weight": "472(0)",
       "odds_win": 11.2,
-      "popularity": 6,
+      "popularity": 5,
       "q_win": 0.0709,
-      "p_win": 0.071,
-      "ev_win": 0.795,
-      "edge": 0.0001,
+      "p_win": 0.066,
+      "ev_win": 0.739,
+      "edge": -0.0049,
       "reasons": [
-        "6番人気（オッズ 11.2倍）"
+        "実力+騎手スコア 5.0%・9番手評価",
+        "5番人気 / EV 0.739（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "",
+      "ability_prob": 0.0504,
+      "form_score": -2.9885,
+      "ability_n_data": 11
     },
     {
       "umaban": 10,
@@ -209,16 +235,19 @@
       "weight_carried": 58.0,
       "horse_weight": "450(-6)",
       "odds_win": 13.4,
-      "popularity": 8,
+      "popularity": 7,
       "q_win": 0.0592,
-      "p_win": 0.061,
-      "ev_win": 0.817,
-      "edge": 0.0018,
+      "p_win": 0.0537,
+      "ev_win": 0.72,
+      "edge": -0.0055,
       "reasons": [
-        "市場想定よりこちらの評価が高く、妙味あり(+0.2pt)",
-        "8番人気（オッズ 13.4倍）"
+        "実力+騎手スコア 8.2%・4番手評価",
+        "7番人気 / EV 0.72（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "△",
+      "ability_prob": 0.0817,
+      "form_score": -2.5045,
+      "ability_n_data": 31
     },
     {
       "umaban": 11,
@@ -230,16 +259,19 @@
       "weight_carried": 56.0,
       "horse_weight": "486(-4)",
       "odds_win": 9.6,
-      "popularity": 5,
+      "popularity": 4,
       "q_win": 0.0827,
-      "p_win": 0.081,
-      "ev_win": 0.778,
-      "edge": -0.0017,
+      "p_win": 0.0788,
+      "ev_win": 0.756,
+      "edge": -0.0039,
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-0.2pt)",
-        "5番人気（オッズ 9.6倍）"
+        "実力+騎手スコア 8.2%・3番手評価",
+        "4番人気 / EV 0.756（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "▲",
+      "ability_prob": 0.082,
+      "form_score": -2.5015,
+      "ability_n_data": 17
     },
     {
       "umaban": 12,
@@ -251,17 +283,19 @@
       "weight_carried": 56.0,
       "horse_weight": "424(+8)",
       "odds_win": 44.7,
-      "popularity": 12,
+      "popularity": 11,
       "q_win": 0.0178,
-      "p_win": 0.0258,
-      "ev_win": 1.153,
-      "edge": 0.008,
+      "p_win": 0.0135,
+      "ev_win": 0.603,
+      "edge": -0.0043,
       "reasons": [
-        "期待値 1.153（理論上プラス圏）",
-        "市場想定よりこちらの評価が高く、妙味あり(+0.8pt)",
-        "12番人気（オッズ 44.7倍）"
+        "実力+騎手スコア 5.5%・7番手評価",
+        "11番人気 / EV 0.603（控除率の壁で理論上マイナス）"
       ],
-      "mark": "▲"
+      "mark": "",
+      "ability_prob": 0.0554,
+      "form_score": -2.8925,
+      "ability_n_data": 30
     },
     {
       "umaban": 13,
@@ -273,16 +307,19 @@
       "weight_carried": 58.0,
       "horse_weight": "508(-4)",
       "odds_win": 22.3,
-      "popularity": 10,
+      "popularity": 9,
       "q_win": 0.0356,
-      "p_win": 0.041,
-      "ev_win": 0.914,
-      "edge": 0.0054,
+      "p_win": 0.0299,
+      "ev_win": 0.667,
+      "edge": -0.0057,
       "reasons": [
-        "市場想定よりこちらの評価が高く、妙味あり(+0.5pt)",
-        "10番人気（オッズ 22.3倍）"
+        "実力+騎手スコア 4.9%・12番手評価",
+        "9番人気 / EV 0.667（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "",
+      "ability_prob": 0.0487,
+      "form_score": -3.0218,
+      "ability_n_data": 18
     },
     {
       "umaban": 14,
@@ -294,42 +331,20 @@
       "weight_carried": 55.0,
       "horse_weight": "538(-8)",
       "odds_win": 3.6,
-      "popularity": 3,
+      "popularity": 2,
       "q_win": 0.2205,
-      "p_win": 0.1981,
-      "ev_win": 0.713,
-      "edge": -0.0224,
+      "p_win": 0.2434,
+      "ev_win": 0.876,
+      "edge": 0.0229,
       "reasons": [
-        "人気先行で、評価ほどの妙味は薄い(-2.2pt)",
-        "3番人気（オッズ 3.6倍）"
+        "実力+騎手スコア 6.6%・6番手評価",
+        "2番人気 / EV 0.876（控除率の壁で理論上マイナス）"
       ],
-      "mark": ""
+      "mark": "",
+      "ability_prob": 0.0664,
+      "form_score": -2.7114,
+      "ability_n_data": 9
     }
   ],
-  "tickets": [
-    {
-      "type": "単勝",
-      "target": "1",
-      "ev": 1.008,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "2",
-      "ev": 1.195,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "8",
-      "ev": 1.241,
-      "stake_unit": 1
-    },
-    {
-      "type": "単勝",
-      "target": "12",
-      "ev": 1.153,
-      "stake_unit": 1
-    }
-  ]
+  "tickets": []
 }

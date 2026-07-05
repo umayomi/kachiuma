@@ -7,9 +7,11 @@
   "distance_m": 1200,
   "surface": "芝",
   "going": "重",
-  "updated_at": "2026-06-27T08:47:07+09:00",
+  "race_class": 1,
+  "updated_at": "2026-07-05T10:47:19+09:00",
   "market_overround": 1.271,
   "value_note": "EV>1の馬なし。控除率 約27%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
+  "hidden_picks": [],
   "horses": [
     {
       "umaban": 1,
@@ -31,16 +33,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.869,
       "q_win": 0.0412,
       "p_win": 0.0341,
       "ev_win": 0.651,
       "edge": -0.0071,
       "mark": "",
       "reasons": [
-        "予想勝率 3.4%・7番手評価",
+        "実力+騎手スコア 5.7%・7番手評価",
         "7番人気 / EV 0.651（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0568,
+      "ability_n_data": 0
     },
     {
       "umaban": 2,
@@ -62,16 +66,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.9199,
       "q_win": 0.1967,
       "p_win": 0.206,
       "ev_win": 0.824,
       "edge": 0.0093,
-      "mark": "▲",
+      "mark": "",
       "reasons": [
-        "予想勝率 20.6%・3番手評価",
+        "実力+騎手スコア 5.4%・9番手評価",
         "3番人気 / EV 0.824（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0539,
+      "ability_n_data": 0
     },
     {
       "umaban": 3,
@@ -93,16 +99,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.6447,
       "q_win": 0.069,
       "p_win": 0.0618,
       "ev_win": 0.705,
       "edge": -0.0072,
-      "mark": "",
+      "mark": "○",
       "reasons": [
-        "予想勝率 6.2%・5番手評価",
+        "実力+騎手スコア 7.1%・2番手評価",
         "5番人気 / EV 0.705（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.071,
+      "ability_n_data": 0
     },
     {
       "umaban": 4,
@@ -124,16 +132,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.869,
       "q_win": 0.035,
       "p_win": 0.0283,
       "ev_win": 0.637,
       "edge": -0.0067,
       "mark": "",
       "reasons": [
-        "予想勝率 2.8%・8番手評価",
+        "実力+騎手スコア 5.7%・8番手評価",
         "8番人気 / EV 0.637（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0568,
+      "ability_n_data": 0
     },
     {
       "umaban": 5,
@@ -155,16 +165,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.7846,
       "q_win": 0.0486,
       "p_win": 0.0413,
       "ev_win": 0.669,
       "edge": -0.0073,
-      "mark": "",
+      "mark": "▲",
       "reasons": [
-        "予想勝率 4.1%・6番手評価",
+        "実力+騎手スコア 6.2%・3番手評価",
         "6番人気 / EV 0.669（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0618,
+      "ability_n_data": 0
     },
     {
       "umaban": 6,
@@ -186,16 +198,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -0.7508,
       "q_win": 0.2017,
       "p_win": 0.2121,
       "ev_win": 0.827,
       "edge": 0.0104,
-      "mark": "○",
+      "mark": "◎",
       "reasons": [
-        "予想勝率 21.2%・2番手評価",
+        "実力+騎手スコア 47.2%・1番手評価",
         "2番人気 / EV 0.827（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.472,
+      "ability_n_data": 0
     },
     {
       "umaban": 7,
@@ -217,16 +231,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.8035,
       "q_win": 0.0846,
       "p_win": 0.0781,
       "ev_win": 0.726,
       "edge": -0.0065,
       "mark": "△",
       "reasons": [
-        "予想勝率 7.8%・4番手評価",
+        "実力+騎手スコア 6.1%・4番手評価",
         "4番人気 / EV 0.726（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0606,
+      "ability_n_data": 0
     },
     {
       "umaban": 8,
@@ -248,16 +264,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.815,
       "q_win": 0.0275,
       "p_win": 0.0214,
       "ev_win": 0.612,
       "edge": -0.0061,
       "mark": "",
       "reasons": [
-        "予想勝率 2.1%・9番手評価",
+        "実力+騎手スコア 6.0%・5番手評価",
         "9番人気 / EV 0.612（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0599,
+      "ability_n_data": 0
     },
     {
       "umaban": 9,
@@ -279,16 +297,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -2.8176,
       "q_win": 0.2713,
       "p_win": 0.2982,
       "ev_win": 0.865,
       "edge": 0.0269,
-      "mark": "◎",
+      "mark": "",
       "reasons": [
-        "予想勝率 29.8%・1番手評価",
+        "実力+騎手スコア 6.0%・6番手評価",
         "1番人気 / EV 0.865（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0597,
+      "ability_n_data": 0
     },
     {
       "umaban": 10,
@@ -310,16 +330,18 @@
         "style_ratio": null,
         "style": null
       },
-      "form_score": 0.0,
+      "form_score": -3.0461,
       "q_win": 0.0244,
       "p_win": 0.0187,
       "ev_win": 0.602,
       "edge": -0.0057,
       "mark": "",
       "reasons": [
-        "予想勝率 1.9%・10番手評価",
+        "実力+騎手スコア 4.8%・10番手評価",
         "10番人気 / EV 0.602（控除率の壁で理論上マイナス）"
-      ]
+      ],
+      "ability_prob": 0.0475,
+      "ability_n_data": 0
     }
   ],
   "tickets": []
