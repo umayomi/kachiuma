@@ -1,0 +1,55 @@
+name: recompute-history
+
+on:
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "この日以降のみ再計算 (YYYYMMDD)。空なら全予想"
+        required: false
+        default: ""
+      reset_results:
+        description: "results.json をリセットして集計し直す (true/false)"
+        required: false
+        default: "true"
+
+permissions:
+  contents: write
+
+jobs:
+  recompute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Recompute predictions with current logic
+        run: |
+          if [ -n "${{ github.event.inputs.since }}" ]; then
+            python analysis/recompute.py --in data/predictions --since "${{ github.event.inputs.since }}"
+          else
+            python analysis/recompute.py --in data/predictions
+          fi
+
+      - name: Reset results.json (optional)
+        if: ${{ github.event.inputs.reset_results == 'true' }}
+        run: rm -f data/results.json
+
+      - name: Re-tally with recomputed predictions
+        run: python analysis/tally.py
+
+      - name: Commit recomputed predictions + results
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/predictions data/results.json
+          if git diff --staged --quiet; then
+            echo "変更なし"
+          else
+            git commit -m "recompute: 過去予想を現行ロジックで再計算 + 実績再集計"
+            git push
+          fi
