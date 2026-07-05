@@ -25,9 +25,9 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - name: Install deps
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt beautifulsoup4 lxml
 
-      - name: Recompute predictions with current logic
+      - name: Recompute predictions with current logic (騎手ON=本番と一致)
         run: |
           if [ -n "${{ github.event.inputs.since }}" ]; then
             python analysis/recompute.py --in data/predictions --since "${{ github.event.inputs.since }}"
