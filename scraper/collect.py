@@ -81,9 +81,14 @@ def collect_day(date: str, with_result: bool, with_past: bool) -> None:
     for rid in race_ids:
         try:
             odds = nk.get_win_odds(rid)
+            place = nk.get_place_odds(rid)   # 複勝オッズ {馬番:(下限,上限)}。取れなければ空
             html = nk.get(f"{nk.BASE_RACE}/race/shutuba.html?race_id={rid}")
             race = nk.parse_shutuba(html, rid, odds_map=odds)
             race["date"] = _fmt_date(date)
+            for h in race.get("horses", []):
+                po = place.get(h["umaban"]) if place else None
+                if po:
+                    h["odds_place_low"], h["odds_place_high"] = po
             _attach_features(race, rid, date)
             races.append(race)
         except Exception as e:  # noqa
