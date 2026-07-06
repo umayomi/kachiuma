@@ -154,7 +154,7 @@ def _race_header(soup: BeautifulSoup, race_id: str) -> dict:
     race_no = int(race_id[-2:])
     name = _text(soup.select_one(".RaceName")) or _text(soup.select_one(".RaceList_Item02 .RaceName"))
     data01 = _text(soup.select_one(".RaceData01"))
-    distance_m, surface, going = _parse_data01(data01)
+    distance_m, surface, going, post_time = _parse_data01(data01)
     race_class, class_label = _parse_class(soup, name)
     return {
         "race_id": race_id,
@@ -168,6 +168,7 @@ def _race_header(soup: BeautifulSoup, race_id: str) -> dict:
         "direction": DIRECTION.get(track),
         "race_class": race_class,      # 数値の格(1〜8)。不明はNone
         "class_label": class_label,
+        "post_time": post_time,        # 発走時刻 "HH:MM"（RaceData01由来・追加取得なし）
     }
 
 
@@ -190,7 +191,10 @@ def _parse_data01(text: str) -> tuple[int | None, str | None, str | None]:
     going = None
     if g:
         going = _GOING.get(g.group(1), g.group(1))
-    return distance, surface, going
+    # 発走時刻「15:40発走」→ "15:40"。無ければ None。
+    t = re.search(r"(\d{1,2}:\d{2})\s*発走", text)
+    post_time = t.group(1) if t else None
+    return distance, surface, going, post_time
 
 
 def parse_shutuba(html: str, race_id: str, odds_map: dict[int, float] | None = None) -> dict:
@@ -291,6 +295,39 @@ def get_win_odds(race_id: str) -> dict[int, float]:
                 continue
     except Exception as e:  # noqa
         log.warning("単勝オッズAPI失敗 %s : %s", race_id, e)
+    return out
+
+
+def get_place_odds(race_id: str, debug: bool = False) -> dict[int, tuple[float, float]]:
+    """複勝オッズをAPIから取得。{馬番: (下限, 上限)}。失敗時は空。
+    単勝(type=1)と同じ api_get_jra_odds を type=2 で叩く。netkeiba の複勝は
+    レンジ(min,max)で返るため、配列の先頭2要素を (低, 高) として拾う。
+    ※ レスポンス構造は単勝と同型と推定。実際の並びは Actions ログで要確認のため、
+      debug=True で生JSONの該当部分を出力できるようにしてある（推測で確定させない）。"""
+    url = f"{BASE_RACE}/api/api_get_jra_odds.html?race_id={race_id}&type=2&action=init"
+    out: dict[int, tuple[float, float]] = {}
+    try:
+        raw = get(url)
+        data = json.loads(raw)
+        odds = (data.get("data") or {}).get("odds") or {}
+        place = odds.get("2") or {}  # "2" = 複勝
+        if debug:
+            # 生構造を1頭ぶんだけダンプ（Actionsで実際の並びを確認する用）
+            sample = next(iter(place.items()), None)
+            log.info("複勝odds構造サンプル %s: %s", race_id, sample)
+        for uma, arr in place.items():
+            try:
+                if isinstance(arr, (list, tuple)) and len(arr) >= 2:
+                    lo, hi = float(arr[0]), float(arr[1])
+                else:  # 単一値しか無い場合は下限=上限
+                    lo = hi = float(arr[0] if isinstance(arr, (list, tuple)) else arr)
+                if lo > hi:            # 念のため昇順に
+                    lo, hi = hi, lo
+                out[int(uma)] = (lo, hi)
+            except (ValueError, TypeError, IndexError):
+                continue
+    except Exception as e:  # noqa
+        log.warning("複勝オッズAPI失敗 %s : %s", race_id, e)
     return out
 
 
