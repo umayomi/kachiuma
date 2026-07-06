@@ -108,7 +108,7 @@ def tally(pred_dir: str, out_path: str, since: str | None, sleep: float) -> None
 
     files = sorted(glob.glob(f"{pred_dir}/*.json"))
     files = [f for f in files if not f.endswith("index.json")]
-    n_new, n_pending, n_skip = 0, 0, 0
+    n_new, n_pending, n_skip, n_backfill = 0, 0, 0, 0
 
     for f in files:
         try:
@@ -118,9 +118,13 @@ def tally(pred_dir: str, out_path: str, since: str | None, sleep: float) -> None
         rid = pred.get("race_id")
         if not rid or not isinstance(pred.get("horses"), list):
             continue
-        if rid in done:
-            continue
         if since and str(pred.get("date", "")).replace("-", "") < since:
+            continue
+        already = rid in done
+        # 集計済みでも「明細(races)が未生成」なら、明細だけを埋めるために処理する
+        # （明細機能を後から足したので、既存doneレースは明細が欠けている）
+        backfill_only = already and rid not in race_detail
+        if already and not backfill_only:
             continue
 
         # 結果ページ取得（確定前は着順が入らない→pendingで次回に回す）
@@ -174,17 +178,21 @@ def tally(pred_dir: str, out_path: str, since: str | None, sleep: float) -> None
                 "picks": sorted(picks, key=lambda x: (not x["hidden"], x["finish"])),
             }
 
-        for h in pred["horses"]:
-            u = h.get("umaban")
-            mk = h.get("mark")
-            if mk in MARK_TO_KEY:
-                record(MARK_TO_KEY[mk], u)
-                record("印全体(◎○▲△)", u)
-            if h.get("hidden_pick"):
-                record("隠れ複勝候補", u)
+        if not backfill_only:      # 集計は未集計レースのみ（doneの再集計＝二重計上を防ぐ）
+            for h in pred["horses"]:
+                u = h.get("umaban")
+                mk = h.get("mark")
+                if mk in MARK_TO_KEY:
+                    record(MARK_TO_KEY[mk], u)
+                    record("印全体(◎○▲△)", u)
+                if h.get("hidden_pick"):
+                    record("隠れ複勝候補", u)
 
         done.add(rid)
-        n_new += 1
+        if backfill_only:
+            n_backfill += 1
+        else:
+            n_new += 1
         if sleep:
             time.sleep(sleep)
 
@@ -211,7 +219,8 @@ def tally(pred_dir: str, out_path: str, since: str | None, sleep: float) -> None
         rp = f"複回収 {rec:5.1f}%" if rec is not None else "複回収  -  "
         return f"  {strat:<16}{b:<12}: {s['b']:>4}件 複勝率 {t3:5.1f}% ({s['t3']}/{s['b']})  {rp}"
 
-    print(f"新規集計 {n_new}R / 確定待ち {n_pending}R / 取得失敗 {n_skip}R / 累積 {len(done)}R")
+    print(f"新規集計 {n_new}R / 明細補完 {n_backfill}R / 確定待ち {n_pending}R / "
+          f"取得失敗 {n_skip}R / 累積 {len(done)}R / 明細 {len(race_detail)}R")
     print("―― 実測成績（全体）――")
     for strat in ["隠れ複勝候補", "◎(本命)", "印全体(◎○▲△)"]:
         print(line(strat))
