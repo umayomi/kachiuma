@@ -8,8 +8,9 @@
   "surface": "芝",
   "going": "良",
   "race_class": 1,
-  "updated_at": "2026-07-05T10:39:57+09:00",
-  "market_overround": 1.276,
+  "post_time": "12:10",
+  "updated_at": "2026-07-06T13:37:42+09:00",
+  "market_overround": 1.28,
   "value_note": "EV>1の馬なし。控除率 約28%の壁で、オッズだけでは妙味は出にくい回。妙味の面では見送り目線。",
   "hidden_picks": [],
   "horses": [
@@ -21,9 +22,11 @@
       "jockey": "鮫島駿",
       "trainer": "美浦加藤士",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 1.6,
+      "horse_weight": "486(0)",
+      "odds_win": 1.3,
       "popularity": 1,
+      "odds_place_low": 1.1,
+      "odds_place_high": 1.1,
       "features": {
         "n_runs": 0,
         "best_agari": null,
@@ -36,10 +39,10 @@
       "form_score": -2.3222,
       "ability_prob": 0.0981,
       "ability_n_data": 0,
-      "q_win": 0.4897,
-      "p_win": 0.5378,
+      "q_win": 0.601,
+      "p_win": 0.6617,
       "ev_win": 0.86,
-      "edge": 0.0481,
+      "edge": 0.0607,
       "mark": "△",
       "reasons": [
         "実力+騎手スコア 9.8%・4番手評価",
@@ -54,9 +57,11 @@
       "jockey": "武豊",
       "trainer": "栗東橋口",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 4.2,
+      "horse_weight": "438(0)",
+      "odds_win": 6.0,
       "popularity": 2,
+      "odds_place_low": 1.5,
+      "odds_place_high": 3.6,
       "features": {
         "n_runs": 0,
         "best_agari": null,
@@ -69,14 +74,14 @@
       "form_score": -1.4332,
       "ability_prob": 0.2385,
       "ability_n_data": 0,
-      "q_win": 0.1866,
-      "p_win": 0.1773,
-      "ev_win": 0.745,
-      "edge": -0.0093,
+      "q_win": 0.1302,
+      "p_win": 0.114,
+      "ev_win": 0.684,
+      "edge": -0.0162,
       "mark": "○",
       "reasons": [
         "実力+騎手スコア 23.8%・2番手評価",
-        "2番人気 / EV 0.745（控除率の壁で理論上マイナス）"
+        "2番人気 / EV 0.684（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -87,9 +92,11 @@
       "jockey": "横山武",
       "trainer": "美浦武井",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 5.5,
+      "horse_weight": "488(0)",
+      "odds_win": 6.1,
       "popularity": 3,
+      "odds_place_low": 1.8,
+      "odds_place_high": 4.3,
       "features": {
         "n_runs": 0,
         "best_agari": null,
@@ -102,14 +109,14 @@
       "form_score": -0.9756,
       "ability_prob": 0.377,
       "ability_n_data": 0,
-      "q_win": 0.1425,
-      "p_win": 0.13,
-      "ev_win": 0.715,
-      "edge": -0.0125,
+      "q_win": 0.1281,
+      "p_win": 0.1118,
+      "ev_win": 0.682,
+      "edge": -0.0163,
       "mark": "◎",
       "reasons": [
         "実力+騎手スコア 37.7%・1番手評価",
-        "3番人気 / EV 0.715（やや過剰人気・妙味なし）"
+        "3番人気 / EV 0.682（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -120,9 +127,11 @@
       "jockey": "▲小林美",
       "trainer": "栗東平田",
       "weight_carried": 52.0,
-      "horse_weight": null,
-      "odds_win": 7.5,
-      "popularity": 4,
+      "horse_weight": "438(0)",
+      "odds_win": 13.0,
+      "popularity": 5,
+      "odds_place_low": 2.8,
+      "odds_place_high": 7.0,
       "features": {
         "n_runs": 0,
         "best_agari": null,
@@ -135,14 +144,14 @@
       "form_score": -2.4962,
       "ability_prob": 0.0824,
       "ability_n_data": 0,
-      "q_win": 0.1045,
-      "p_win": 0.091,
-      "ev_win": 0.682,
-      "edge": -0.0135,
+      "q_win": 0.0601,
+      "p_win": 0.0468,
+      "ev_win": 0.608,
+      "edge": -0.0133,
       "mark": "",
       "reasons": [
         "実力+騎手スコア 8.2%・5番手評価",
-        "4番人気 / EV 0.682（やや過剰人気・妙味なし）"
+        "5番人気 / EV 0.608（やや過剰人気・妙味なし）"
       ]
     },
     {
@@ -153,9 +162,11 @@
       "jockey": "丹内",
       "trainer": "美浦水野",
       "weight_carried": 55.0,
-      "horse_weight": null,
-      "odds_win": 10.2,
-      "popularity": 5,
+      "horse_weight": "458(0)",
+      "odds_win": 9.7,
+      "popularity": 4,
+      "odds_place_low": 2.2,
+      "odds_place_high": 5.4,
       "features": {
         "n_runs": 0,
         "best_agari": null,
@@ -168,14 +179,14 @@
       "form_score": -1.5894,
       "ability_prob": 0.204,
       "ability_n_data": 0,
-      "q_win": 0.0768,
-      "p_win": 0.0639,
-      "ev_win": 0.652,
-      "edge": -0.0129,
+      "q_win": 0.0806,
+      "p_win": 0.0657,
+      "ev_win": 0.637,
+      "edge": -0.0149,
       "mark": "▲",
       "reasons": [
         "実力+騎手スコア 20.4%・3番手評価",
-        "5番人気 / EV 0.652（やや過剰人気・妙味なし）"
+        "4番人気 / EV 0.637（やや過剰人気・妙味なし）"
       ]
     }
   ],
