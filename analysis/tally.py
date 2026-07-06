@@ -68,7 +68,7 @@ def load_results(path: str) -> dict:
             return json.load(open(path, encoding="utf-8"))
         except Exception:
             pass
-    return {"done_race_ids": [], "buckets": {}, "meta": {}}
+    return {"done_race_ids": [], "buckets": {}, "races": {}, "meta": {}}
 
 
 def _ensure_bucket(agg: dict, key: str):
@@ -93,6 +93,7 @@ MARK_TO_KEY = {"◎": "◎(本命)", "○": "○(対抗)", "▲": "▲(単穴)",
 def tally(pred_dir: str, out_path: str, since: str | None, sleep: float) -> None:
     store = load_results(out_path)
     done = set(store.get("done_race_ids", []))
+    race_detail = store.get("races", {})   # race_id -> レース明細(バッジ/◎の着順)
     agg = store.get("buckets", {})
     _ensure_bucket(agg, "_root")  # ダミーで構造確認
     agg.pop("_root", None)
@@ -147,6 +148,32 @@ def tally(pred_dir: str, out_path: str, since: str | None, sleep: float) -> None
             _accumulate(tmp[strat][bk], hit, fuku, umaban)
             _accumulate(tmp[strat]["全体"], hit, fuku, umaban)
 
+        # レース明細（バッジ or ◎ の馬だけ、着順つきで残す＝サイトで個別表示する用）
+        picks = []
+        for h in pred["horses"]:
+            u = h.get("umaban")
+            is_badge = bool(h.get("hidden_pick"))
+            is_honmei = (h.get("mark") == "◎")
+            if not (is_badge or is_honmei):
+                continue
+            fp = fin.get(u)
+            if fp is None:
+                continue
+            picks.append({
+                "umaban": u, "name": h.get("name"),
+                "mark": h.get("mark") or "", "hidden": is_badge,
+                "finish": fp, "hit": fp <= 3,
+                "pop": h.get("popularity"), "odds_win": h.get("odds_win"),
+                "fuku": (fuku.get(u) if fuku else None),
+            })
+        if picks:
+            race_detail[rid] = {
+                "race_id": rid, "date": pred.get("date"), "track": pred.get("track"),
+                "race_no": pred.get("race_no"), "race_name": pred.get("race_name"),
+                "race_class": pred.get("race_class"),
+                "picks": sorted(picks, key=lambda x: (not x["hidden"], x["finish"])),
+            }
+
         for h in pred["horses"]:
             u = h.get("umaban")
             mk = h.get("mark")
@@ -168,6 +195,7 @@ def tally(pred_dir: str, out_path: str, since: str | None, sleep: float) -> None
         "done_race_ids": sorted(done),
         "n_races": len(done),
         "buckets": out_buckets,
+        "races": race_detail,
         "meta": {"unit": UNIT, "note": "本番予想の事後実測。複勝率=3着内率、複勝回収率=払戻取得レースのみ100円賭け。"},
     }
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
