@@ -219,7 +219,7 @@ def build_race_prediction(race: dict) -> dict:
     return {
         **{k: race.get(k) for k in
            ("race_id", "date", "track", "race_no", "race_name",
-            "distance_m", "surface", "going", "race_class")},
+            "distance_m", "surface", "going", "race_class", "post_time")},
         "updated_at": datetime.now(JST).isoformat(timespec="seconds"),
         "market_overround": round(overround, 3),
         "value_note": hidden_note + value_note,
