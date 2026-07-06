@@ -135,6 +135,10 @@
   .odds{text-align:right;flex:0 0 auto}
   .odds .o{font-family:"Oswald";font-weight:600;font-size:18px}
   .odds .pop{font-size:11px;color:var(--ink-soft)}
+  .odds .fuku{font-size:10.5px;color:var(--turf-deep);margin-top:1px;white-space:nowrap}
+  .pill.post{color:var(--paper)}
+  .pill.next{color:var(--gold);border-color:rgba(203,161,74,.5)}
+  .chip-race.next-race{box-shadow:0 0 0 2px rgba(203,161,74,.5)}
 
   /* ---- the signature: value meter ---- */
   .meter{margin:12px 0 2px}
@@ -235,7 +239,34 @@ async function load(){
   renderStale();
   renderRecord();   // 非同期・待たない（results.json 無ければ非表示）
   renderDigest();   // 非同期・待たない
-  selectRace(RACES[0].race_id);
+  selectRace(await pickInitialRace());
+}
+
+async function pickInitialRace(){
+  // 当日開催なら「今より後で最も発走が近い未発走レース」を初期表示。
+  // それ以外(過去の予想を見ている等)や情報不足なら先頭。
+  try{
+    const jstNow = new Date(Date.now() + 9*3600*1000);
+    const today = jstNow.toISOString().slice(0,10);
+    const nowMin = jstNow.getUTCHours()*60 + jstNow.getUTCMinutes();
+    const todays = RACES.filter(r => r.date === today);
+    if(!todays.length) return RACES[0].race_id;
+    // index.json に post_time が無い場合は各レースJSONから取る（軽く先頭場のぶんだけ）
+    const withTimes = await Promise.all(todays.map(async r => {
+      let pt = r.post_time;
+      if(pt == null){ try{ pt = (await getRace(r.race_id)).post_time; }catch{ pt = null; } }
+      return {rid: r.race_id, min: toMin(pt)};
+    }));
+    const upcoming = withTimes.filter(x => x.min != null && x.min >= nowMin)
+                              .sort((a,b) => a.min - b.min);
+    if(upcoming.length){ NEXT_RID = upcoming[0].rid; return upcoming[0].rid; }
+  }catch(e){}
+  return RACES[0].race_id;
+}
+function toMin(hhmm){
+  if(!hhmm) return null;
+  const m = /^(\d{1,2}):(\d{2})$/.exec(hhmm);
+  return m ? (+m[1])*60 + (+m[2]) : null;
 }
 
 function renderStale(){
@@ -314,7 +345,7 @@ async function renderDigest(){
     <div class="d-wrap">${chips.join("")}</div></div>`;
 }
 
-let ACTIVE_GROUP = null, CURRENT_RID = null;
+let ACTIVE_GROUP = null, CURRENT_RID = null, NEXT_RID = null;
 
 function groupKey(r){
   return (MULTI_DATE && r.date ? r.date + "|" : "") + (r.track || "?");
@@ -346,7 +377,8 @@ function renderNav(){
     .filter(r => groupKey(r) === ACTIVE_GROUP)
     .map(r => {
       const dot = (r.hidden_count > 0) ? `<span class="hdot" title="隠れ複勝候補あり">◆</span>` : "";
-      return `<button class="chip-race ${r.race_id === CURRENT_RID ? 'on' : ''}" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${r.race_no}R${dot}</button>`;
+      const nextCls = (r.race_id === NEXT_RID && r.race_id !== CURRENT_RID) ? ' next-race' : '';
+      return `<button class="chip-race ${r.race_id === CURRENT_RID ? 'on' : ''}${nextCls}" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${r.race_no}R${dot}</button>`;
     }).join("");
 }
 
@@ -395,6 +427,7 @@ function renderRace(race){
     `<span class="pill live">● 更新 ${fmtTime(race.updated_at)}</span>` +
     `<span class="pill">${esc(race.track)} ${race.race_no}R</span>` +
     `<span class="pill">${esc(race.surface)} ${race.distance_m}m</span>` +
+    (race.post_time ? `<span class="pill post">発走 ${esc(race.post_time)}</span>` : "") +
     `<span class="pill">馬場 ${esc(race.going)}</span>` +
     (race.race_class >= 5 ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">重賞・OP／バッジ対象外</span>` : "") +
     (IS_SAMPLE ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">SAMPLE</span>` : "");
@@ -439,6 +472,7 @@ function card(h, scale){
       <div class="odds">
         <div class="o num">${h.odds_win?.toFixed(1) ?? "-"}</div>
         <div class="pop">${h.popularity?h.popularity+"番人気":""}</div>
+        ${(h.odds_place_low!=null&&h.odds_place_high!=null)?`<div class="fuku num">複 ${h.odds_place_low.toFixed(1)}–${h.odds_place_high.toFixed(1)}</div>`:""}
       </div>
     </div>
     <div class="meter">
