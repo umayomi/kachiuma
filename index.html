@@ -66,6 +66,19 @@
   .r-roi.plus{color:var(--turf)} .r-roi.minus{color:var(--paper-2)}
   .r-n{font-size:11px;color:var(--ink-faint);margin-top:4px}
   .r-strat{margin-top:9px;font-size:11.5px;color:var(--ink-faint);line-height:1.7}
+  .r-recent{margin-top:12px;border-top:1px solid var(--ground-edge);padding-top:10px}
+  .r-recent .rr-h{font-size:11.5px;color:var(--paper-2);margin-bottom:8px}
+  .rr-row{display:flex;align-items:center;gap:9px;width:100%;text-align:left;cursor:pointer;
+    background:transparent;border:0;padding:7px 2px;color:var(--paper)}
+  .rr-row+.rr-row{border-top:1px solid rgba(255,255,255,.05)}
+  .rr-race{font-family:"Oswald";font-size:11.5px;color:var(--ink-faint);flex:0 0 auto;min-width:72px}
+  .rr-uma{font-family:"Oswald";font-weight:700;font-size:13px;width:24px;height:24px;flex:0 0 auto;
+    display:grid;place-items:center;border-radius:6px;background:var(--gold);color:#1a1a17}
+  .rr-name{font-size:12.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rr-fin{font-family:"Oswald";font-weight:700;font-size:12.5px;flex:0 0 auto;padding:2px 8px;border-radius:6px}
+  .rr-fin.hit{background:rgba(70,177,124,.22);color:var(--turf)}
+  .rr-fin.miss{background:rgba(255,255,255,.06);color:var(--ink-faint)}
+  .rr-more{font-size:11.5px;color:var(--turf);text-align:center;padding:8px 0 2px;cursor:pointer}
 
   /* ---- daily digest (本日の隠れ複勝候補) ---- */
   .digest{background:var(--ground-2);border:1px solid rgba(203,161,74,.45);border-radius:var(--r);
@@ -290,6 +303,7 @@ async function renderRecord(){
   let store;
   try { store = await getJSON((IS_SAMPLE ? P.sDir.replace("sample","results") : "/data/") + "results.json"); }
   catch { el.innerHTML = ""; return; }
+  _recentStore = store;
   const bk = store.buckets || {};
   const hp = (bk["隠れ複勝候補"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
   const hon = (bk["◎(本命)"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
@@ -317,7 +331,43 @@ async function renderRecord(){
     <div class="r-sub">${esc(store.updated_at ? store.updated_at.slice(0,10) : "")}時点・累計${store.n_races||0}R。複勝=3着以内、回収率は100円賭け換算。</div>
     <div class="r-grid">${cell("◆ 隠れ複勝候補", true, H)}${cell("◎ 本命", false, O)}</div>
     ${seg ? `<div class="r-strat">◆内訳: ${esc(seg)}</div>` : ""}
+    ${renderRecent(store)}
   </div>`;
+}
+
+function renderRecent(store, limit){
+  const races = store.races || {};
+  // バッジ馬を含むレースを日付降順で取り出し、直近を表示
+  const list = Object.values(races)
+    .filter(d => (d.picks || []).some(p => p.hidden))
+    .sort((a,b) => String(b.date).localeCompare(String(a.date)) ||
+                   (b.race_no||0) - (a.race_no||0));
+  if(!list.length) return "";
+  const n = limit || 6;
+  const rows = [];
+  for(const d of list.slice(0, n)){
+    const label = `${(d.date||"").slice(5).split("-").map(x=>parseInt(x,10)).join("/")} ${d.track||""}${d.race_no}R`;
+    for(const p of d.picks.filter(x => x.hidden)){
+      rows.push(`<div class="rr-row">
+        <span class="rr-race">${esc(label)}</span>
+        <span class="rr-uma num">${p.umaban}</span>
+        <span class="rr-name">${esc(p.name||"")}<span style="color:var(--ink-faint);font-size:11px">　${p.pop?p.pop+"番人気":""}</span></span>
+        <span class="rr-fin ${p.hit?'hit':'miss'} num">${p.finish}着</span>
+      </div>`);
+    }
+  }
+  const total = list.length;
+  const more = total > n ? `<div class="rr-more" onclick="expandRecent()">ほか ${total-n}レースを表示 ▾</div>` : "";
+  return `<div class="r-recent" id="rRecent">
+    <div class="rr-h">◆ 直近の隠れ複勝候補の結果（3着以内＝的中）</div>
+    ${rows.join("")}${more}</div>`;
+}
+
+let _recentStore = null;
+function expandRecent(){
+  const el = document.getElementById("rRecent");
+  if(!el || !_recentStore) return;
+  el.outerHTML = renderRecent(_recentStore, 9999);
 }
 
 async function renderDigest(){
