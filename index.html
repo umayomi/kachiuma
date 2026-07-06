@@ -67,7 +67,13 @@
   .r-n{font-size:11px;color:var(--ink-faint);margin-top:4px}
   .r-strat{margin-top:9px;font-size:11.5px;color:var(--ink-faint);line-height:1.7}
   .r-recent{margin-top:12px;border-top:1px solid var(--ground-edge);padding-top:10px}
-  .r-recent .rr-h{font-size:11.5px;color:var(--paper-2);margin-bottom:8px}
+  .r-recent>summary{font-size:12px;color:var(--paper-2);cursor:pointer;list-style:none;
+    -webkit-tap-highlight-color:transparent;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .r-recent>summary::-webkit-details-marker{display:none}
+  .r-recent>summary .rr-caret{color:var(--ink-faint);font-size:11px}
+  .r-recent[open]>summary .rr-caret::after{content:"閉じる ▴"}
+  .r-recent:not([open])>summary .rr-caret::after{content:"開く ▾"}
+  .r-recent .rr-h{font-size:11.5px;color:var(--paper-2);margin:8px 0}
   .rr-row{display:flex;align-items:center;gap:9px;width:100%;text-align:left;cursor:pointer;
     background:transparent;border:0;padding:7px 2px;color:var(--paper)}
   .rr-row+.rr-row{border-top:1px solid rgba(255,255,255,.05)}
@@ -357,17 +363,27 @@ function renderRecent(store, limit){
     }
   }
   const total = list.length;
-  const more = total > n ? `<div class="rr-more" onclick="expandRecent()">ほか ${total-n}レースを表示 ▾</div>` : "";
-  return `<div class="r-recent" id="rRecent">
-    <div class="rr-h">◆ 直近の隠れ複勝候補の結果（3着以内＝的中）</div>
-    ${rows.join("")}${more}</div>`;
+  const more = total > n ? `<div class="rr-more" onclick="expandRecent(event)">ほか ${total-n}レースを表示 ▾</div>` : "";
+  // 直近nレースぶんのバッジ的中率をsummaryに要約（閉じたままでも要点が見える）
+  let hit = 0, cnt = 0;
+  for(const d of list.slice(0, n)) for(const p of d.picks) if(p.hidden){ cnt++; if(p.hit) hit++; }
+  const openAttr = _recentOpen ? " open" : "";
+  return `<details class="r-recent" id="rRecent"${openAttr}
+      ontoggle="try{_recentOpen=this.open}catch(e){}">
+    <summary>◆ 直近の隠れ複勝候補の結果 <span class="rr-caret"></span></summary>
+    <div class="rr-h">直近${Math.min(n,total)}R：3着以内＝的中（緑）</div>
+    ${rows.join("")}${more}</details>`;
 }
 
-let _recentStore = null;
-function expandRecent(){
+let _recentStore = null, _recentOpen = false;
+function expandRecent(ev){
+  if(ev) ev.preventDefault();   // summaryのトグルに巻き込まれないように
   const el = document.getElementById("rRecent");
   if(!el || !_recentStore) return;
+  const open = el.open;
   el.outerHTML = renderRecent(_recentStore, 9999);
+  const el2 = document.getElementById("rRecent");
+  if(el2) el2.open = true;
 }
 
 async function renderDigest(){
