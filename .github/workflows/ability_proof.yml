@@ -170,6 +170,23 @@ jobs:
               if not c: return "クラス不明"
               return "新馬・未勝利" if c <= 1 else ("条件戦(1-3勝)" if c <= 4 else "OP・重賞")
           NRB = {b: 0 for b in BKS}                    # 層ごとのR数
+          # === 観測装置: コース/距離ピンポイント適性が実3着内率と相関するか（スコアは不変） ===
+          # 各層で「適性率>=THR & n>=NMIN の馬」が実際に3着内に来た率を、母数と共に集計。
+          # ジェニファー型(実力top3外×人気4+×高適性)も別途カウント。
+          APT_THR, APT_NMIN = 0.5, 3
+          APT = {k: [0, 0] for k in ("場×距離", "場のみ", "距離のみ")}   # [3着内, 母数]
+          APT_ALL = [0, 0]                              # 全馬ベースライン(適性判定した母集団)
+          APT_HIDDEN = [0, 0]                           # 実力top3外×人気4+×場×距離適性>=THR
+          import re as _re
+          def _venue_track(v):
+              for _t in ("札幌","函館","福島","新潟","東京","中山","中京","京都","阪神","小倉"):
+                  if v and _t in v:
+                      return _t
+              return None
+          def _apt_rate(past, pred_fn):
+              hit = [x for x in past if pred_fn(x)]
+              n = len(hit); t3 = sum(1 for x in hit if x.get("finish_pos") and x["finish_pos"] <= 3)
+              return (t3 / n if n else None), n
           BASE_S = {b: [0, 0] for b in BKS}            # 層内ベースライン(人気4+)
           STRA = {b: [0, 0] for b in BKS}              # 層別 指標A(騎手ON)
           STRAP = {b: [0.0, 0] for b in BKS}           # 層別 複勝払戻
@@ -254,6 +271,34 @@ jobs:
                       if by[u]["finish_pos"] <= 3:
                           BASE_S[rbk][0] += 1
               hidden = {u for u in by if pop[u] >= 4 and by[u]["finish_pos"] <= 3}  # 隠れ複勝馬
+
+              # --- 観測装置: コース/距離適性 vs 実3着内率（スコアには一切影響しない） ---
+              _trk = _venue_track(r.get("track") or "") or (r.get("track") or "")
+              _surf, _dist = r.get("surface"), r.get("distance_m")
+              _top3_ab = set(sorted(evaluable, key=lambda u: -probs_j[u])[:3]) if evaluable else set()
+              for _u in by:
+                  _past = C.career_before(cmap.get(_u, []), ds)
+                  _hit = by[_u]["finish_pos"] <= 3
+                  _layers = {
+                      "場×距離": lambda x: _trk in (x.get("venue") or "") and x.get("surface") == _surf and x.get("distance_m") == _dist,
+                      "場のみ":   lambda x: _trk in (x.get("venue") or "") and x.get("surface") == _surf,
+                      "距離のみ": lambda x: x.get("surface") == _surf and x.get("distance_m") == _dist,
+                  }
+                  _counted_all = False
+                  for _k, _fn in _layers.items():
+                      _rate, _n = _apt_rate(_past, _fn)
+                      if _rate is not None and _rate >= APT_THR and _n >= APT_NMIN:
+                          APT[_k][1] += 1
+                          if _hit: APT[_k][0] += 1
+                          if _k == "場×距離":
+                              if not _counted_all:
+                                  APT_ALL[1] += 1
+                                  if _hit: APT_ALL[0] += 1
+                                  _counted_all = True
+                              # ジェニファー型: 実力top3外 × 人気4+ × 場×距離適性高
+                              if pop[_u] >= 4 and _u not in _top3_ab:
+                                  APT_HIDDEN[1] += 1
+                                  if _hit: APT_HIDDEN[0] += 1
               for u in by:                                   # 人気4+ を実jrで層別→3着内率
                   if pop[u] >= 4:
                       jr = jk_by[u]["rate"] if u in jk_by else None
@@ -362,6 +407,14 @@ jobs:
                   f"{rec(STRAP[b])}")
                  for b in BKS if NRB[b]],
                "    → 層内ベースを上回れない層があれば、その層でのバッジ表示を再検討。", "",
+               "  ◆ 観測: コース/距離ピンポイント適性 vs 実3着内率（適性率>=0.5 & n>=3 の馬）:",
+               *[f"    {k:<8}: {pct(*APT[k])} ({APT[k][0]}/{APT[k][1]})"
+                 for k in ("場×距離", "場のみ", "距離のみ") if APT[k][1]],
+               (f"    ジェニファー型(実力top3外×人気4+×場×距離適性): {pct(*APT_HIDDEN)} "
+                f"({APT_HIDDEN[0]}/{APT_HIDDEN[1]})" if APT_HIDDEN[1] else
+                "    ジェニファー型: 該当なし"),
+               "    → 各層がベースライン(下記◆jr層別の人気4+全体)を明確に上回り、母数が安定するまで",
+               "      重み実装はしない。場×距離>距離のみ の序列と各母数を、期間を広げて観察する。", "",
                "  ◆ 騎手非線形加点 W_JK_HI スイープ（指標A=人気4+実力推しの複勝率。ベース比が伸びる値を採用）:",
                *[f"    W_JK_HI={c:<4}: {pct(*HISW[c])} ({HISW[c][0]}/{HISW[c][1]})  ベース比 {HISW[c][0]/HISW[c][1]*100-base4:+.1f}pt  {rec(HISWP[c])}"
                  if HISW[c][1] else f"    W_JK_HI={c:<4}: 該当なし" for c in JK_HI_CANDS],
