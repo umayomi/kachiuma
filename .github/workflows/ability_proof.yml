@@ -23,14 +23,17 @@ jobs:
           cache: "pip"
       - run: pip install -r requirements.txt selenium
       - name: full-career ability proof (cached, jockey on/off)
+        env:
+          TEST_START: ${{ github.event.inputs.test_start }}
+          TEST_END: ${{ github.event.inputs.test_end }}
         run: |
           python - << 'PY'
           import sys, time, datetime, pathlib, json, os, requests, math
           sys.path += ["scraper", "analysis"]
           import netkeiba as nk, horsedb as hd, career_score as C, jockey_db as J
 
-          te_s = "${{ github.event.inputs.test_start }}"
-          te_e = "${{ github.event.inputs.test_end }}"
+          te_s = os.environ.get("TEST_START", "")
+          te_e = os.environ.get("TEST_END", "")
           MIN_DATA, GAP, UNIT = 3, 0.05, 100
           CACHE = "data/horsedb_cache.json"
 
