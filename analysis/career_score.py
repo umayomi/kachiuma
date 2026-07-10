@@ -23,6 +23,12 @@ CONF_C0 = 3.0        # 出走C0で信頼度0.5（少データは中立寄りに�
 JK_C0 = 3.0          # 騎手は5戦で信頼度0.5（場×距離の薄さを踏まえやや強め）
 MARGIN_BASE = 1.2    # この馬身を境に、近ければ＋・離されれば−
 W_EDGE = 0.0         # 格上挑戦ペナルティ: min(0, class_proven - 今日class) に掛ける。0=OFF(現行)
+W_DIST_PIN = 0.0     # 距離ピンポイント3着内率(同surface×同distance_m)の加点。0=OFF(現行)。
+                     # 観測(528R): 距離のみ適性>=0.5の馬は実3着内率33.7%(ベース12.7%)。距離帯(S/M/C/L)
+                     # の括りW_BANDより細かい「同一距離」の得意さを別項で拾う（ジェニファー型の救済）。
+W_COURSE = 0.0       # 場×距離ピンポイント3着内率(同track×同surface×同distance_m)の加点。0=OFF(現行)。
+                     # 観測(528R): 場×距離適性>=0.5で30.3%。距離ほどではないが補助として。
+PIN_C0 = 3.0         # ピンポイント項の信頼度: n走でn/(n+PIN_C0)。3走で0.5（薄い実績は割引）
 DECAY_HALF_D = None  # 時間減衰の半減期(日)。Noneで全キャリア等価重み(現行)。365なら1年前の走=重み0.5
 _QUAL = {1: 1.0, 2: 0.8, 3: 0.6}  # 着内の質（着順）。クラス実績の質割引に使う。
 
@@ -121,6 +127,11 @@ def features_from_career(past: list, today: dict, race_date: str = None) -> dict
     band, band_n = rate_n(lambda r: r.get("surface") == surf and _band(r.get("distance_m")) == tband)
     dr, dr_n = rate_n(lambda r: DIRECTION.get(_track_of(r.get("venue"))) == tdir)
     go, go_n = rate_n(lambda r: _norm_going(r.get("going")) == going)
+    # 距離ピンポイント（同surface×同distance_m）と 場×距離（+同track）の3着内率。
+    tdist, ttrack = today.get("distance_m"), today.get("track")
+    dist_pin, dist_pin_n = rate_n(lambda r: r.get("surface") == surf and r.get("distance_m") == tdist)
+    course, course_n = rate_n(lambda r: r.get("surface") == surf and r.get("distance_m") == tdist
+                              and (ttrack and ttrack in (r.get("venue") or "")))
 
     # 着内(3着内)走の「質割引クラス」: 勝ち=満点, 2着=0.8, 3着=0.6。
     # 「高い格で勝った」は残し、「高い格で3着」は割り引く（人気薄好走の過大評価を抑制）。
@@ -144,7 +155,9 @@ def features_from_career(past: list, today: dict, race_date: str = None) -> dict
     return {"band": band, "band_n": band_n, "dir": dr, "dir_n": dr_n,
             "going": go, "going_n": go_n, "class_proven": class_proven,
             "class_edge": class_edge, "margin": margin, "n_data": len(past),
-            "today_class": tcls}
+            "today_class": tcls,
+            "dist_pin": dist_pin, "dist_pin_n": dist_pin_n,
+            "course": course, "course_n": course_n}
 
 
 def _conf(n):
@@ -157,8 +170,8 @@ def ability_raw(feat: dict) -> float:
 
 def ability_breakdown(feat: dict) -> dict:
     """rawの各項の寄与点を返す（合計=ability_raw）。なぜこのスコアか、の分解用。"""
-    parts = {"クラス": 0.0, "格上挑戦": 0.0, "着差": 0.0, "距離帯": 0.0, "回り": 0.0,
-             "馬場": 0.0, "騎手": 0.0}
+    parts = {"クラス": 0.0, "格上挑戦": 0.0, "着差": 0.0, "距離帯": 0.0, "距離適性": 0.0,
+             "場適性": 0.0, "回り": 0.0, "馬場": 0.0, "騎手": 0.0}
     cp = feat.get("class_proven")
     # 着内実績ゼロ(None)は「実力未証明」＝実効クラス0とみなす（0点=中立ではなく最下位評価）。
     # これを0点にすると未勝利戦で無実績馬が実績馬より上に浮上するバグになる。
@@ -177,6 +190,11 @@ def ability_breakdown(feat: dict) -> dict:
                             ("馬場", feat.get("going"), feat.get("going_n", 0), W_GOING)):
         if rate is not None:
             parts[key] = w * _conf(n) * (rate - TOP3_BASE)
+    # 距離ピンポイント・場×距離（W=0なら計算しても0で現行と完全一致）。信頼度はPIN_C0で割引。
+    for key, rate, n, w in (("距離適性", feat.get("dist_pin"), feat.get("dist_pin_n", 0), W_DIST_PIN),
+                            ("場適性", feat.get("course"), feat.get("course_n", 0), W_COURSE)):
+        if w and rate is not None:
+            parts[key] = w * (n / (n + PIN_C0)) * (rate - TOP3_BASE)
     jr = feat.get("jk_rate")
     if jr is not None:
         js = feat.get("jk_starts", 0)
@@ -259,4 +277,12 @@ if __name__ == "__main__":
     assert ability_breakdown(f_hi)["格上挑戦"] == 0.0
     W_EDGE = 0.0
     assert ability_breakdown(f_low)["格上挑戦"] == 0.0, "W_EDGE=0で完全無効のはず"
-    print("\nOK: 全キャリア実力スコア 健全（クラス質・馬場正規化・障害分離・減衰/格上挑戦=既定OFF）")
+    # 距離ピンポイント: W=0なら項ゼロ（現行不変）、W>0なら同距離好走馬が加点される
+    fpin = {"dist_pin": 0.8, "dist_pin_n": 5, "course": 0.6, "course_n": 4}
+    assert ability_breakdown(fpin)["距離適性"] == 0.0 and ability_breakdown(fpin)["場適性"] == 0.0, "W=0で無効のはず"
+    W_DIST_PIN = 0.5   # __main__のグローバルを直接書き換え（ability_breakdownは同モジュールを参照）
+    v = ability_breakdown(fpin)["距離適性"]
+    assert v > 0, f"W>0で同距離好走に加点されるはず: {v}"
+    W_DIST_PIN = 0.0
+    assert ability_breakdown(fpin)["距離適性"] == 0.0, "戻したら再び0"
+    print("\nOK: 全キャリア実力スコア 健全（クラス質・馬場正規化・障害分離・減衰/格上挑戦/距離ピンポイント=既定OFF）")
