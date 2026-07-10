@@ -150,6 +150,7 @@ jobs:
           S = {k: {"b": 0, "t3": 0, "w": 0, "pay": 0.0, "fb": 0, "fpay": 0.0} for k in KEYS}
           races_pay = 0   # 複勝払戻が取れたR数（回収率はこの分母でのみ算出）
           NEW_CS = hasattr(C, "W_EDGE") and hasattr(C, "DECAY_HALF_D")
+          NEW_PIN = hasattr(C, "W_DIST_PIN") and hasattr(C, "W_COURSE")
           if not NEW_CS:
               print("!! career_score.py が旧版（W_EDGE/DECAY_HALF_D 無し）→ 新スイープはスキップ")
           n_abst = 0
@@ -199,6 +200,10 @@ jobs:
           DECAY_CANDS = [None, 720, 365, 180]   # 時間減衰 半減期(日)（None=現行・全走等価）
           EDSW = {c: [0, 0] for c in EDGE_CANDS};  EDSWP = {c: [0.0, 0] for c in EDGE_CANDS}
           DCSW = {c: [0, 0] for c in DECAY_CANDS}; DCSWP = {c: [0.0, 0] for c in DECAY_CANDS}
+          PIN_CANDS = [0.0, 0.2, 0.4, 0.6]      # 距離ピンポイント W_DIST_PIN（0=現行）
+          COURSE_CANDS = [0.0, 0.2, 0.4]        # 場×距離 W_COURSE（0=現行・補助項）
+          PNSW = {c: [0, 0] for c in PIN_CANDS};    PNSWP = {c: [0.0, 0] for c in PIN_CANDS}
+          COSW = {c: [0, 0] for c in COURSE_CANDS}; COSWP = {c: [0.0, 0] for c in COURSE_CANDS}
           def _jrbucket(jr):
               if jr is None: return "jr不明"
               if jr < 0.25: return "jr<0.25"
@@ -363,6 +368,17 @@ jobs:
                       pc, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
                       _sweep_pick(pc, DCSW[c], DCSWP[c])
                   C.DECAY_HALF_D = None
+                  if NEW_PIN:
+                      for c in PIN_CANDS:
+                          C.W_DIST_PIN = c
+                          pc, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
+                          _sweep_pick(pc, PNSW[c], PNSWP[c])
+                      C.W_DIST_PIN = 0.0
+                      for c in COURSE_CANDS:
+                          C.W_COURSE = c
+                          pc, _ = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
+                          _sweep_pick(pc, COSW[c], COSWP[c])
+                      C.W_COURSE = 0.0
               C.W_JK_HI = 0.0   # 既定に戻す（他指標は線形=現行のまま）
 
               # --- 騎手なし（現行ロジックそのまま＝回帰ガード） ---
@@ -430,6 +446,13 @@ jobs:
                *([f"    半減期={str(c):<5}: {pct(*DCSW[c])} ({DCSW[c][0]}/{DCSW[c][1]})  ベース比 {DCSW[c][0]/DCSW[c][1]*100-base4:+.1f}pt  {rec(DCSWP[c])}"
                   if DCSW[c][1] else f"    半減期={str(c):<5}: 該当なし" for c in DECAY_CANDS] if NEW_CS else ["    （career_score旧版のためスキップ）"]),
                "    → 近走を重視するほど良いか。複勝率と複回収の両方がNoneを上回る値のみ採用候補。", "",
+               "  ◆ 距離ピンポイント W_DIST_PIN スイープ（指標A・騎手ON固定。0.0=現行）:",
+               *([f"    W_DIST_PIN={c:<4}: {pct(*PNSW[c])} ({PNSW[c][0]}/{PNSW[c][1]})  ベース比 {PNSW[c][0]/PNSW[c][1]*100-base4:+.1f}pt  {rec(PNSWP[c])}"
+                  if PNSW[c][1] else f"    W_DIST_PIN={c:<4}: 該当なし" for c in PIN_CANDS] if NEW_PIN else ["    （career_score旧版のためスキップ）"]),
+               "  ◆ 場×距離 W_COURSE スイープ（指標A・騎手ON固定。0.0=現行・補助項）:",
+               *([f"    W_COURSE={c:<4}: {pct(*COSW[c])} ({COSW[c][0]}/{COSW[c][1]})  ベース比 {COSW[c][0]/COSW[c][1]*100-base4:+.1f}pt  {rec(COSWP[c])}"
+                  if COSW[c][1] else f"    W_COURSE={c:<4}: 該当なし" for c in COURSE_CANDS] if NEW_PIN else ["    （career_score旧版のためスキップ）"]),
+               "    → 観測(528R)で本物と確認した適性信号のスコア注入。複勝率と複回収の両方が0.0を上回る値のみ採用候補。", "",
                "■ 参考: ◎1点・妙味など（◎は市場が強く、実力での上書きは複勝率を上げない）",
                f"{'戦略':<28}{'賭':>5}{'複勝率':>8}{'単勝率':>8}{'単回収率':>9}{'複回収率':>9}"]
           for k in KEYS:
