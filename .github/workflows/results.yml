@@ -2,7 +2,8 @@ name: tally-results
 
 on:
   schedule:
-    - cron: "0 15 * * 0,1"   # 日・月 の JST 0:00（土日開催の結果を翌未明に集計）
+    - cron: "*/30 0-8 * * 6,0"  # 土日 JST 9:00〜17:30 に30分毎（レース確定を順次反映・準リアルタイム）
+    - cron: "0 15 * * 6,0"      # 日・月 JST 0:00（取りこぼしの最終回収。旧指定0,1は月火0時に動くバグだった）
   workflow_dispatch:
     inputs:
       since:
@@ -12,6 +13,10 @@ on:
 
 permissions:
   contents: write
+
+concurrency:
+  group: tally-results
+  cancel-in-progress: false
 
 jobs:
   tally:
