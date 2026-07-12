@@ -304,17 +304,58 @@ function pctRoi(stat){
   return {t3, roi, b: stat.b};
 }
 
+const RECORD_SINCE = "2026-07-01";   // 実績表示の集計開始日（それ以前のデータは保持するが表示に含めない）
+
+function statsFromRaces(races){
+  // results.json の races 明細（バッジ/◎の個別着順）から RECORD_SINCE 以降だけを集計。
+  // 回収率は「的中時の複勝払戻の合計 / (100円×対象数)」。払戻欠損レースは0円扱い（過去実績で取得率100%のため近似で許容）。
+  const acc = {hp:{b:0,t3:0,pay:0}, hon:{b:0,t3:0,pay:0}, seg:{}, nR:0};
+  for(const d of Object.values(races || {})){
+    if(!d.date || d.date < RECORD_SINCE) continue;
+    acc.nR++;
+    const bkName = !d.race_class ? null :
+      (d.race_class <= 1 ? "新馬・未勝利" : d.race_class <= 4 ? "条件戦(1-3勝)" : "OP・重賞");
+    for(const p of (d.picks || [])){
+      const pay = (p.hit && p.fuku) ? p.fuku : 0;
+      if(p.hidden){
+        acc.hp.b++; if(p.hit) acc.hp.t3++; acc.hp.pay += pay;
+        if(bkName){
+          if(!acc.seg[bkName]) acc.seg[bkName] = {b:0, t3:0};
+          acc.seg[bkName].b++; if(p.hit) acc.seg[bkName].t3++;
+        }
+      }
+      if(p.mark === "◎"){ acc.hon.b++; if(p.hit) acc.hon.t3++; acc.hon.pay += pay; }
+    }
+  }
+  return acc;
+}
+
 async function renderRecord(){
   const el = document.getElementById("record");
   let store;
   try { store = await getJSON((IS_SAMPLE ? P.sDir.replace("sample","results") : "/data/") + "results.json"); }
   catch { el.innerHTML = ""; return; }
   _recentStore = store;
-  const bk = store.buckets || {};
-  const hp = (bk["隠れ複勝候補"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
-  const hon = (bk["◎(本命)"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
-  if(!hp.b && !hon.b){ el.innerHTML = ""; return; }
-  const H = pctRoi(hp), O = pctRoi(hon);
+  const fromRaces = Object.keys(store.races || {}).length > 0;
+  let H, O, segAcc = null, headSub;
+  if(fromRaces){
+    const a = statsFromRaces(store.races);
+    if(!a.hp.b && !a.hon.b){ el.innerHTML = ""; return; }   // 7/1以降のデータがまだ無い
+    H = {t3: a.hp.b ? a.hp.t3/a.hp.b*100 : null, roi: a.hp.b ? a.hp.pay/a.hp.b : null, b: a.hp.b};
+    O = {t3: a.hon.b ? a.hon.t3/a.hon.b*100 : null, roi: a.hon.b ? a.hon.pay/a.hon.b : null, b: a.hon.b};
+    segAcc = a.seg;
+    const md = s => s.slice(5,10).split("-").map(x=>parseInt(x,10)).join("/");   // "2026-07-01"→"7/1"
+    const upd = store.updated_at ? `${md(store.updated_at)} ${store.updated_at.slice(11,16)}` : "";
+    headSub = `${md(RECORD_SINCE)}以降・累計${a.nR}R（更新 ${esc(upd)}）。複勝=3着以内、回収率は100円賭け換算。`;
+  } else {
+    // 旧形式（明細なし）へのフォールバック: 従来どおり buckets 全期間
+    const bk = store.buckets || {};
+    const hp = (bk["隠れ複勝候補"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
+    const hon = (bk["◎(本命)"] || {})["全体"] || {b:0,t3:0,fb:0,fpay:0};
+    if(!hp.b && !hon.b){ el.innerHTML = ""; return; }
+    H = pctRoi(hp); O = pctRoi(hon);
+    headSub = `${esc(store.updated_at ? store.updated_at.slice(0,10) : "")}時点・累計${store.n_races||0}R。複勝=3着以内、回収率は100円賭け換算。`;
+  }
   const cell = (label, gold, m) => {
     if(!m.b) return "";
     const roiTxt = m.roi != null ? `複回収 <span class="r-roi ${m.roi>=100?'plus':'minus'}">${m.roi.toFixed(0)}%</span>` : "";
@@ -327,14 +368,14 @@ async function renderRecord(){
   };
   // クラス層別（隠れ複勝候補）の1行サマリー
   const seg = ["新馬・未勝利","条件戦(1-3勝)","OP・重賞"].map(b => {
-    const s = (bk["隠れ複勝候補"] || {})[b];
+    const s = segAcc ? segAcc[b] : ((store.buckets || {})["隠れ複勝候補"] || {})[b];
     if(!s || !s.b) return null;
-    const p = pctRoi(s);
-    return `${b} ${p.t3.toFixed(0)}%(${s.b})`;
+    const t3 = s.t3 / s.b * 100;
+    return `${b} ${t3.toFixed(0)}%(${s.b})`;
   }).filter(Boolean).join(" ／ ");
   el.innerHTML = `<div class="record">
     <h2>実績（本番予想の実測）</h2>
-    <div class="r-sub">${esc(store.updated_at ? store.updated_at.slice(0,10) : "")}時点・累計${store.n_races||0}R。複勝=3着以内、回収率は100円賭け換算。</div>
+    <div class="r-sub">${headSub}</div>
     <div class="r-grid">${cell("◆ 隠れ複勝候補", true, H)}${cell("◎ 本命", false, O)}</div>
     ${seg ? `<div class="r-strat">◆内訳: ${esc(seg)}</div>` : ""}
     ${renderRecent(store)}
