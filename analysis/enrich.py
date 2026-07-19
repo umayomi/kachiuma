@@ -88,9 +88,12 @@ def make_jk_tables(sess):
         atbl = _tbl(all_memo, (sp, dist), surf, dist, ds, "ALL")
         out = {}
         for h in r.get("horses", []):
-            cell, _ = J.resolve(ptbl, atbl, h.get("jockey") or "")
+            cell, src_label = J.resolve(ptbl, atbl, h.get("jockey") or "")
             if cell:
-                out[h["umaban"]] = {"rate": J.rate(cell), "starts": cell["starts"]}
+                out[h["umaban"]] = {"rate": J.rate(cell), "starts": cell["starts"],
+                                    # 表示用: 縮小前の実測複勝率と適用範囲（スコアは"rate"のみ使用）
+                                    "raw": cell.get("place_rate"),
+                                    "scope": ("場" if src_label == "場×距離" else "全")}
         return out
 
     return build
@@ -162,6 +165,12 @@ def enrich_file(path: str, cache: dict, build_jk) -> tuple[int, int]:
         jk_by = build_jk(r, ds)
         probs, feats = C.ability_probs(cmap, {**r, "horses": rated}, ds, jk_by_umaban=jk_by)
         for h in rated:
+            jk = jk_by.get(h["umaban"]) if jk_by else None
+            if jk and jk.get("raw") is not None:
+                # サイト表示用の騎手複勝率（近3年・同条件の実測値。縮小はかけない生値）
+                h["jk_place_rate"] = round(jk["raw"], 3)
+                h["jk_starts"] = jk["starts"]
+                h["jk_scope"] = jk.get("scope")   # 場=場×距離 / 全=全国×距離フォールバック
             p = probs.get(h["umaban"])
             if p and p > 0:
                 h["ability_prob"] = round(p, 4)            # 本番の◎はこの降順で決める（方針b）
