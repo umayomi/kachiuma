@@ -158,6 +158,7 @@
   .pill.post{color:var(--paper)}
   .pill.next{color:var(--gold);border-color:rgba(203,161,74,.5)}
   .chip-race.next-race{box-shadow:0 0 0 2px rgba(203,161,74,.5)}
+  .chip-race.past-race{opacity:.4}
 
   /* ---- the signature: value meter ---- */
   .meter{margin:12px 0 2px}
@@ -257,6 +258,10 @@ async function load(){
   renderNav();
   renderStale();
   renderRecord();   // 非同期・待たない（results.json 無ければ非表示）
+  const _todayJST = new Date(Date.now() + 9*3600*1000).toISOString().slice(0,10);
+  if(!RECORD_TIMER && RACES.some(r => r.date === _todayJST)){
+    RECORD_TIMER = setInterval(renderRecord, 5*60*1000);   // 開催当日のみ・5分毎
+  }
   renderDigest();   // 非同期・待たない
   selectRace(await pickInitialRace());
 }
@@ -276,6 +281,7 @@ async function pickInitialRace(){
       if(pt == null){ try{ pt = (await getRace(r.race_id)).post_time; }catch{ pt = null; } }
       return {rid: r.race_id, min: toMin(pt)};
     }));
+    withTimes.forEach(x => { if(x.min != null && x.min < nowMin) PAST_RIDS.add(x.rid); });
     const upcoming = withTimes.filter(x => x.min != null && x.min >= nowMin)
                               .sort((a,b) => a.min - b.min);
     if(upcoming.length){ NEXT_RID = upcoming[0].rid; return upcoming[0].rid; }
@@ -371,7 +377,7 @@ async function renderRecord(){
     const s = segAcc ? segAcc[b] : ((store.buckets || {})["隠れ複勝候補"] || {})[b];
     if(!s || !s.b) return null;
     const t3 = s.t3 / s.b * 100;
-    return `${b} ${t3.toFixed(0)}%(${s.b})`;
+    return `${b} ${t3.toFixed(0)}%・${s.b}件`;
   }).filter(Boolean).join(" ／ ");
   el.innerHTML = `<div class="record">
     <h2>実績（本番予想の実測）</h2>
@@ -416,7 +422,7 @@ function renderRecent(store, limit){
     ${rows.join("")}${more}</details>`;
 }
 
-let _recentStore = null, _recentOpen = false;
+let _recentStore = null, _recentOpen = false, RECORD_TIMER = null;
 function expandRecent(ev){
   if(ev) ev.preventDefault();   // summaryのトグルに巻き込まれないように
   const el = document.getElementById("rRecent");
@@ -453,6 +459,7 @@ async function renderDigest(){
 }
 
 let ACTIVE_GROUP = null, CURRENT_RID = null, NEXT_RID = null;
+const PAST_RIDS = new Set();   // 当日・発走時刻を過ぎたレース（ナビで薄く表示）
 
 function groupKey(r){
   return (MULTI_DATE && r.date ? r.date + "|" : "") + (r.track || "?");
@@ -484,7 +491,8 @@ function renderNav(){
     .filter(r => groupKey(r) === ACTIVE_GROUP)
     .map(r => {
       const dot = (r.hidden_count > 0) ? `<span class="hdot" title="隠れ複勝候補あり">◆</span>` : "";
-      const nextCls = (r.race_id === NEXT_RID && r.race_id !== CURRENT_RID) ? ' next-race' : '';
+      const nextCls = (r.race_id === NEXT_RID && r.race_id !== CURRENT_RID) ? ' next-race' :
+                      (PAST_RIDS.has(r.race_id) && r.race_id !== CURRENT_RID) ? ' past-race' : '';
       return `<button class="chip-race ${r.race_id === CURRENT_RID ? 'on' : ''}${nextCls}" data-id="${r.race_id}" onclick="selectRace('${r.race_id}')">${r.race_no}R${dot}</button>`;
     }).join("");
 }
