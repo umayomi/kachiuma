@@ -157,6 +157,14 @@
   .odds .fuku{font-size:10.5px;color:var(--turf-deep);margin-top:1px;white-space:nowrap}
   .pill.post{color:var(--paper)}
   .pill.next{color:var(--gold);border-color:rgba(203,161,74,.5)}
+  .jk-strip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0 0}
+  .jk-strip .jk-h{font-size:11px;color:var(--ink-faint);flex:0 0 auto}
+  .jk-chip{font-size:12px;color:var(--paper-2);background:var(--ground-2);
+    border:1px solid var(--ground-edge);border-radius:8px;padding:4px 9px;white-space:nowrap}
+  .jk-chip b{font-family:"Oswald";font-weight:600;color:var(--turf);margin-left:4px}
+  .jk-chip .jkn{font-size:10px;color:var(--ink-faint)}
+  .jkr{font-size:11px;color:var(--ink-soft);margin-left:5px;white-space:nowrap}
+  .jkr.hi{color:var(--turf);font-weight:600}
   .chip-race.next-race{box-shadow:0 0 0 2px rgba(203,161,74,.5)}
   .chip-race.past-race{opacity:.4}
 
@@ -211,6 +219,7 @@
     <div id="trackTabs" class="track-tabs"></div>
     <div id="raceNav" class="race-nav"></div>
     <div class="meta-row" id="meta"></div>
+    <div id="jkStrip"></div>
     <div class="race-title" id="raceTitle"></div>
     <div class="race-sub" id="raceSub"></div>
     <div class="value-note" id="valueNote" style="display:none"></div>
@@ -546,6 +555,7 @@ function renderRace(race){
     `<span class="pill">馬場 ${esc(race.going)}</span>` +
     (race.race_class >= 5 ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">重賞・OP／バッジ対象外</span>` : "") +
     (IS_SAMPLE ? `<span class="pill" style="color:var(--gold);border-color:rgba(203,161,74,.4)">SAMPLE</span>` : "");
+  renderJkStrip(race);
   document.getElementById("raceTitle").textContent = race.race_name;
   document.getElementById("raceSub").innerHTML =
     `${esc(race.date)} ・ 出走${runners.length}頭` +
@@ -559,6 +569,18 @@ function renderRace(race){
     .slice().sort(cmp)
     .map(h=>card(h, maxScale)).join("");
   renderTickets(race.tickets);
+}
+
+function renderJkStrip(race){
+  const el = document.getElementById("jkStrip");
+  const rows = (race.horses || [])
+    .filter(h => h.jk_place_rate != null && (h.jk_starts || 0) >= 5)
+    .sort((a,b) => b.jk_place_rate - a.jk_place_rate)
+    .slice(0, 5);
+  if(rows.length < 2){ el.innerHTML = ""; return; }   // 1人だけなら帯の意味が薄い
+  el.innerHTML = `<div class="jk-strip"><span class="jk-h">騎手複勝率 上位（近3年・同条件）</span>` +
+    rows.map(h => `<span class="jk-chip">${esc(h.jockey||"")}<b class="num">${Math.round(h.jk_place_rate*100)}%</b><span class="jkn num">・${h.jk_starts}騎乗${h.jk_scope==="全"?"＊":""}</span></span>`).join("") +
+    (rows.some(h=>h.jk_scope==="全") ? `<span class="jk-h">＊=全国集計</span>` : "") + `</div>`;
 }
 
 function card(h, scale){
@@ -582,7 +604,7 @@ function card(h, scale){
       <div class="mark ${h.mark==='◎'?'gold':''}">${h.mark||""}</div>
       <div class="name-wrap">
         <div class="name">${esc(h.name)}</div>
-        <div class="jockey">${esc(h.jockey||"")}</div>
+        <div class="jockey">${esc(h.jockey||"")}${h.jk_place_rate!=null?`<span class="jkr num${h.jk_place_rate>=0.30?" hi":""}">複${Math.round(h.jk_place_rate*100)}%</span>`:""}</div>
       </div>
       <div class="odds">
         <div class="o num">${h.odds_win?.toFixed(1) ?? "-"}</div>
