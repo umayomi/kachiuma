@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-18T10:59:58+09:00",
+  "updated_at": "2026-10-18T15:59:03+09:00",
   "done_race_ids": [
     "202601010101",
     "202601010102",
@@ -556,6 +556,14 @@
     "202604040201",
     "202604040202",
     "202604040203",
+    "202604040204",
+    "202604040205",
+    "202604040206",
+    "202604040207",
+    "202604040208",
+    "202604040209",
+    "202604040210",
+    "202604040211",
     "202605030401",
     "202605030402",
     "202605030403",
@@ -655,6 +663,14 @@
     "202605040701",
     "202605040702",
     "202605040703",
+    "202605040704",
+    "202605040705",
+    "202605040706",
+    "202605040707",
+    "202605040708",
+    "202605040709",
+    "202605040710",
+    "202605040711",
     "202606040101",
     "202606040102",
     "202606040103",
@@ -957,6 +973,15 @@
     "202608040612",
     "202608040701",
     "202608040702",
+    "202608040703",
+    "202608040704",
+    "202608040705",
+    "202608040706",
+    "202608040707",
+    "202608040708",
+    "202608040709",
+    "202608040710",
+    "202608040711",
     "202609030401",
     "202609030402",
     "202609030403",
@@ -1186,26 +1211,26 @@
     "202610020811",
     "202610020812"
   ],
-  "n_races": 1184,
+  "n_races": 1209,
   "buckets": {
     "◎(本命)": {
       "新馬・未勝利": {
-        "b": 566,
-        "t3": 299,
-        "fb": 562,
-        "fpay": 46270.0
+        "b": 572,
+        "t3": 303,
+        "fb": 568,
+        "fpay": 46790.0
       },
       "条件戦(1-3勝)": {
-        "b": 267,
-        "t3": 130,
-        "fb": 266,
-        "fpay": 22370.0
+        "b": 277,
+        "t3": 134,
+        "fb": 276,
+        "fpay": 22870.0
       },
       "OP・重賞": {
-        "b": 304,
-        "t3": 146,
-        "fb": 301,
-        "fpay": 26060.0
+        "b": 313,
+        "t3": 151,
+        "fb": 310,
+        "fpay": 26820.0
       },
       "クラス不明": {
         "b": 0,
@@ -1214,30 +1239,30 @@
         "fpay": 0.0
       },
       "全体": {
-        "b": 1137,
-        "t3": 575,
-        "fb": 1129,
-        "fpay": 94700.0
+        "b": 1162,
+        "t3": 588,
+        "fb": 1154,
+        "fpay": 96480.0
       }
     },
     "○(対抗)": {
       "新馬・未勝利": {
-        "b": 567,
-        "t3": 247,
-        "fb": 564,
-        "fpay": 44280.0
+        "b": 573,
+        "t3": 250,
+        "fb": 570,
+        "fpay": 44920.0
       },
       "条件戦(1-3勝)": {
-        "b": 266,
-        "t3": 102,
-        "fb": 263,
-        "fpay": 20350.0
+        "b": 276,
+        "t3": 106,
+        "fb": 273,
+        "fpay": 21310.0
       },
       "OP・重賞": {
-        "b": 307,
-        "t3": 108,
-        "fb": 304,
-        "fpay": 24100.0
+        "b": 316,
+        "t3": 113,
+        "fb": 313,
+        "fpay": 24830.0
       },
       "クラス不明": {
         "b": 0,
@@ -1246,30 +1271,30 @@
         "fpay": 0.0
       },
       "全体": {
-        "b": 1140,
-        "t3": 457,
-        "fb": 1131,
-        "fpay": 88730.0
+        "b": 1165,
+        "t3": 469,
+        "fb": 1156,
+        "fpay": 91060.0
       }
     },
     "▲(単穴)": {
       "新馬・未勝利": {
-        "b": 562,
-        "t3": 189,
-        "fb": 561,
-        "fpay": 46960.0
+        "b": 568,
+        "t3": 191,
+        "fb": 567,
+        "fpay": 47140.0
       },
       "条件戦(1-3勝)": {
-        "b": 270,
-        "t3": 100,
-        "fb": 269,
-        "fpay": 24280.0
+        "b": 280,
+        "t3": 102,
+        "fb": 279,
+        "fpay": 24620.0
       },
       "OP・重賞": {
-        "b": 302,
-        "t3": 92,
-        "fb": 301,
-        "fpay": 23520.0
+        "b": 311,
+        "t3": 96,
+        "fb": 310,
+        "fpay": 24070.0
       },
       "クラス不明": {
         "b": 0,
@@ -1278,30 +1303,30 @@
         "fpay": 0.0
       },
       "全体": {
-        "b": 1134,
-        "t3": 381,
-        "fb": 1131,
-        "fpay": 94760.0
+        "b": 1159,
+        "t3": 389,
+        "fb": 1156,
+        "fpay": 95830.0
       }
     },
     "△(連下)": {
       "新馬・未勝利": {
-        "b": 560,
+        "b": 566,
         "t3": 186,
-        "fb": 560,
+        "fb": 566,
         "fpay": 42350.0
       },
       "条件戦(1-3勝)": {
-        "b": 268,
-        "t3": 81,
-        "fb": 267,
-        "fpay": 20260.0
+        "b": 278,
+        "t3": 85,
+        "fb": 277,
+        "fpay": 20960.0
       },
       "OP・重賞": {
-        "b": 306,
-        "t3": 97,
-        "fb": 303,
-        "fpay": 21910.0
+        "b": 315,
+        "t3": 99,
+        "fb": 312,
+        "fpay": 22160.0
       },
       "クラス不明": {
         "b": 0,
@@ -1310,30 +1335,30 @@
         "fpay": 0.0
       },
       "全体": {
-        "b": 1134,
-        "t3": 364,
-        "fb": 1130,
-        "fpay": 84520.0
+        "b": 1159,
+        "t3": 370,
+        "fb": 1155,
+        "fpay": 85470.0
       }
     },
     "印全体(◎○▲△)": {
       "新馬・未勝利": {
-        "b": 2255,
-        "t3": 921,
-        "fb": 2247,
-        "fpay": 179860.0
+        "b": 2279,
+        "t3": 930,
+        "fb": 2271,
+        "fpay": 181200.0
       },
       "条件戦(1-3勝)": {
-        "b": 1071,
-        "t3": 413,
-        "fb": 1065,
-        "fpay": 87260.0
+        "b": 1111,
+        "t3": 427,
+        "fb": 1105,
+        "fpay": 89760.0
       },
       "OP・重賞": {
-        "b": 1219,
-        "t3": 443,
-        "fb": 1209,
-        "fpay": 95590.0
+        "b": 1255,
+        "t3": 459,
+        "fb": 1245,
+        "fpay": 97880.0
       },
       "クラス不明": {
         "b": 0,
@@ -1342,10 +1367,10 @@
         "fpay": 0.0
       },
       "全体": {
-        "b": 4545,
-        "t3": 1777,
-        "fb": 4521,
-        "fpay": 362710.0
+        "b": 4645,
+        "t3": 1816,
+        "fb": 4621,
+        "fpay": 368840.0
       }
     },
     "隠れ複勝候補": {
@@ -1356,10 +1381,10 @@
         "fpay": 31350.0
       },
       "条件戦(1-3勝)": {
-        "b": 379,
-        "t3": 103,
-        "fb": 378,
-        "fpay": 33340.0
+        "b": 395,
+        "t3": 105,
+        "fb": 394,
+        "fpay": 34020.0
       },
       "OP・重賞": {
         "b": 0,
@@ -1374,10 +1399,10 @@
         "fpay": 0.0
       },
       "全体": {
-        "b": 779,
-        "t3": 206,
-        "fb": 778,
-        "fpay": 64690.0
+        "b": 795,
+        "t3": 208,
+        "fb": 794,
+        "fpay": 65370.0
       }
     }
   },
@@ -33242,6 +33267,674 @@
           "pop": 4,
           "odds_win": 7.5,
           "fuku": 230
+        }
+      ]
+    },
+    "202604040204": {
+      "race_id": "202604040204",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 4,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 14,
+          "name": "ガイストライヒ",
+          "mark": "○",
+          "hidden": true,
+          "finish": 9,
+          "hit": false,
+          "pop": 5,
+          "odds_win": 13.4,
+          "fuku": null
+        },
+        {
+          "umaban": 4,
+          "name": "サトノエスケープ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 1,
+          "hit": true,
+          "pop": 1,
+          "odds_win": 2.7,
+          "fuku": 110
+        }
+      ]
+    },
+    "202604040205": {
+      "race_id": "202604040205",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "race_class": 1,
+      "picks": [
+        {
+          "umaban": 5,
+          "name": "エッシネン",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 12,
+          "hit": false,
+          "pop": 5,
+          "odds_win": 8.4,
+          "fuku": null
+        }
+      ]
+    },
+    "202604040206": {
+      "race_id": "202604040206",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 6,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 13,
+          "name": "ブーケドグレイス",
+          "mark": "▲",
+          "hidden": true,
+          "finish": 5,
+          "hit": false,
+          "pop": 14,
+          "odds_win": 40.2,
+          "fuku": null
+        },
+        {
+          "umaban": 8,
+          "name": "ティティナ",
+          "mark": "△",
+          "hidden": true,
+          "finish": 14,
+          "hit": false,
+          "pop": 12,
+          "odds_win": 27.4,
+          "fuku": null
+        },
+        {
+          "umaban": 2,
+          "name": "サラサチャチャチャ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 11,
+          "hit": false,
+          "pop": 1,
+          "odds_win": 4.6,
+          "fuku": null
+        }
+      ]
+    },
+    "202604040207": {
+      "race_id": "202604040207",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 18,
+          "name": "キャナルクルーズ",
+          "mark": "○",
+          "hidden": true,
+          "finish": 2,
+          "hit": true,
+          "pop": 12,
+          "odds_win": 18.8,
+          "fuku": 500
+        },
+        {
+          "umaban": 13,
+          "name": "フランクスピード",
+          "mark": "▲",
+          "hidden": true,
+          "finish": 15,
+          "hit": false,
+          "pop": 10,
+          "odds_win": 17.3,
+          "fuku": null
+        },
+        {
+          "umaban": 15,
+          "name": "サムハラ",
+          "mark": "◎",
+          "hidden": true,
+          "finish": 17,
+          "hit": false,
+          "pop": 9,
+          "odds_win": 17.0,
+          "fuku": null
+        }
+      ]
+    },
+    "202604040208": {
+      "race_id": "202604040208",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 8,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 2,
+          "name": "ミスヘンリー",
+          "mark": "○",
+          "hidden": true,
+          "finish": 5,
+          "hit": false,
+          "pop": 14,
+          "odds_win": 29.8,
+          "fuku": null
+        },
+        {
+          "umaban": 8,
+          "name": "タイセイブロウ",
+          "mark": "▲",
+          "hidden": true,
+          "finish": 7,
+          "hit": false,
+          "pop": 4,
+          "odds_win": 8.6,
+          "fuku": null
+        },
+        {
+          "umaban": 14,
+          "name": "バーケンティン",
+          "mark": "◎",
+          "hidden": true,
+          "finish": 8,
+          "hit": false,
+          "pop": 12,
+          "odds_win": 26.4,
+          "fuku": null
+        }
+      ]
+    },
+    "202604040209": {
+      "race_id": "202604040209",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 9,
+      "race_name": "松浜特別",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 13,
+          "name": "マイネルクオリア",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 12,
+          "hit": false,
+          "pop": 6,
+          "odds_win": 11.6,
+          "fuku": null
+        }
+      ]
+    },
+    "202604040210": {
+      "race_id": "202604040210",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 10,
+      "race_name": "飛翼特別",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 7,
+          "name": "ピコアーガイル",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 16,
+          "hit": false,
+          "pop": 5,
+          "odds_win": 11.4,
+          "fuku": null
+        }
+      ]
+    },
+    "202604040211": {
+      "race_id": "202604040211",
+      "date": "2026-10-18",
+      "track": "新潟",
+      "race_no": 11,
+      "race_name": "新潟牝馬S",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 5,
+          "name": "カニキュル",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 3,
+          "hit": true,
+          "pop": 3,
+          "odds_win": 4.9,
+          "fuku": 170
+        }
+      ]
+    },
+    "202605040704": {
+      "race_id": "202605040704",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 4,
+      "race_name": "2歳新馬",
+      "race_class": 1,
+      "picks": [
+        {
+          "umaban": 12,
+          "name": "ファクスカエリ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 1,
+          "hit": true,
+          "pop": 1,
+          "odds_win": 3.9,
+          "fuku": 150
+        }
+      ]
+    },
+    "202605040705": {
+      "race_id": "202605040705",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "race_class": 1,
+      "picks": [
+        {
+          "umaban": 1,
+          "name": "スイープラディウス",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 3,
+          "hit": true,
+          "pop": 2,
+          "odds_win": 3.6,
+          "fuku": 120
+        }
+      ]
+    },
+    "202605040706": {
+      "race_id": "202605040706",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 6,
+      "race_name": "2歳1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 5,
+          "name": "タクティシアン",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 6,
+          "hit": false,
+          "pop": 2,
+          "odds_win": 2.8,
+          "fuku": null
+        }
+      ]
+    },
+    "202605040707": {
+      "race_id": "202605040707",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 8,
+          "name": "トランスマーレ",
+          "mark": "○",
+          "hidden": true,
+          "finish": 5,
+          "hit": false,
+          "pop": 7,
+          "odds_win": 11.8,
+          "fuku": null
+        },
+        {
+          "umaban": 12,
+          "name": "ガーヴィ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 2,
+          "hit": true,
+          "pop": 1,
+          "odds_win": 2.5,
+          "fuku": 110
+        }
+      ]
+    },
+    "202605040708": {
+      "race_id": "202605040708",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 8,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 6,
+          "name": "ゴディアンフィンチ",
+          "mark": "○",
+          "hidden": true,
+          "finish": 4,
+          "hit": false,
+          "pop": 8,
+          "odds_win": 16.8,
+          "fuku": null
+        },
+        {
+          "umaban": 12,
+          "name": "ムテキシャチョウ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 5,
+          "hit": false,
+          "pop": 3,
+          "odds_win": 8.6,
+          "fuku": null
+        }
+      ]
+    },
+    "202605040709": {
+      "race_id": "202605040709",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 9,
+      "race_name": "東京ハイJ",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 4,
+          "name": "ホウオウプロサンゲ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 4,
+          "hit": false,
+          "pop": 3,
+          "odds_win": 6.9,
+          "fuku": null
+        }
+      ]
+    },
+    "202605040710": {
+      "race_id": "202605040710",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 10,
+      "race_name": "西湖特別",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 7,
+          "name": "ヘリオトロープ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 1,
+          "hit": true,
+          "pop": 2,
+          "odds_win": 2.8,
+          "fuku": 110
+        }
+      ]
+    },
+    "202605040711": {
+      "race_id": "202605040711",
+      "date": "2026-10-18",
+      "track": "東京",
+      "race_no": 11,
+      "race_name": "ブラジルC",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 6,
+          "name": "ハピ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 3,
+          "hit": true,
+          "pop": 2,
+          "odds_win": 5.1,
+          "fuku": 160
+        }
+      ]
+    },
+    "202608040703": {
+      "race_id": "202608040703",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 3,
+      "race_name": "2歳未勝利",
+      "race_class": 1,
+      "picks": [
+        {
+          "umaban": 7,
+          "name": "ハマナスノサクコロ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 2,
+          "hit": true,
+          "pop": 2,
+          "odds_win": 4.4,
+          "fuku": 130
+        }
+      ]
+    },
+    "202608040704": {
+      "race_id": "202608040704",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 4,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 13,
+          "name": "メティエダール",
+          "mark": "○",
+          "hidden": true,
+          "finish": 11,
+          "hit": false,
+          "pop": 5,
+          "odds_win": 12.3,
+          "fuku": null
+        },
+        {
+          "umaban": 7,
+          "name": "ルージュバロン",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 1,
+          "hit": true,
+          "pop": 1,
+          "odds_win": 2.7,
+          "fuku": 130
+        }
+      ]
+    },
+    "202608040705": {
+      "race_id": "202608040705",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 5,
+      "race_name": "2歳新馬",
+      "race_class": 1,
+      "picks": [
+        {
+          "umaban": 3,
+          "name": "ビンドゥング",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 1,
+          "hit": true,
+          "pop": 1,
+          "odds_win": 1.9,
+          "fuku": 120
+        }
+      ]
+    },
+    "202608040706": {
+      "race_id": "202608040706",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 6,
+      "race_name": "2歳新馬",
+      "race_class": 1,
+      "picks": [
+        {
+          "umaban": 4,
+          "name": "ホウキフジ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 15,
+          "hit": false,
+          "pop": 4,
+          "odds_win": 8.8,
+          "fuku": null
+        }
+      ]
+    },
+    "202608040707": {
+      "race_id": "202608040707",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 7,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 7,
+          "name": "タガノアルトゥーラ",
+          "mark": "▲",
+          "hidden": true,
+          "finish": 1,
+          "hit": true,
+          "pop": 7,
+          "odds_win": 11.6,
+          "fuku": 180
+        },
+        {
+          "umaban": 8,
+          "name": "バリオス",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 2,
+          "hit": true,
+          "pop": 2,
+          "odds_win": 4.4,
+          "fuku": 150
+        }
+      ]
+    },
+    "202608040708": {
+      "race_id": "202608040708",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 8,
+      "race_name": "3歳以上1勝クラス",
+      "race_class": 2,
+      "picks": [
+        {
+          "umaban": 1,
+          "name": "ロングホリデー",
+          "mark": "○",
+          "hidden": true,
+          "finish": 5,
+          "hit": false,
+          "pop": 5,
+          "odds_win": 10.5,
+          "fuku": null
+        },
+        {
+          "umaban": 8,
+          "name": "ウインリュクス",
+          "mark": "▲",
+          "hidden": true,
+          "finish": 8,
+          "hit": false,
+          "pop": 4,
+          "odds_win": 8.0,
+          "fuku": null
+        },
+        {
+          "umaban": 6,
+          "name": "マーゴットレジーナ",
+          "mark": "◎",
+          "hidden": true,
+          "finish": 12,
+          "hit": false,
+          "pop": 6,
+          "odds_win": 12.5,
+          "fuku": null
+        }
+      ]
+    },
+    "202608040709": {
+      "race_id": "202608040709",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 9,
+      "race_name": "宝ケ池特別",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 3,
+          "name": "リアンマヒナ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 1,
+          "hit": true,
+          "pop": 2,
+          "odds_win": 3.1,
+          "fuku": 110
+        }
+      ]
+    },
+    "202608040710": {
+      "race_id": "202608040710",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 10,
+      "race_name": "聚楽第特別",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 8,
+          "name": "ジョータルマエ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 1,
+          "hit": true,
+          "pop": 6,
+          "odds_win": 8.1,
+          "fuku": 210
+        }
+      ]
+    },
+    "202608040711": {
+      "race_id": "202608040711",
+      "date": "2026-10-18",
+      "track": "京都",
+      "race_no": 11,
+      "race_name": "秋華賞",
+      "race_class": 8,
+      "picks": [
+        {
+          "umaban": 5,
+          "name": "タイセイボーグ",
+          "mark": "◎",
+          "hidden": false,
+          "finish": 10,
+          "hit": false,
+          "pop": 12,
+          "odds_win": 59.0,
+          "fuku": null
         }
       ]
     }
